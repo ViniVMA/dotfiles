@@ -172,3 +172,49 @@ git init
 explorer.exe .
 $nu-env-path
 $nu.env-path
+lazygit
+git pull
+nvim
+oh-my-posh init nu
+choco list
+choco upgrade oh-my-posh
+ls
+z strapicms
+z dev/Toro.StrapiCMS/
+clear
+ls
+nvim
+:q
+clear
+z .config
+ls
+choco install hub
+version
+clear
+choco install hub
+nushell.install
+choco list
+scoop list
+choco upgrade nushell
+choco install hub
+clear
+ls
+nvim
+choco install hub
+hub status
+nvim
+hub status --short --branch --renames
+clear
+nvim
+z .config
+nvim
+clear
+nvim
+clear
+z .config
+clear
+z .config
+ls
+cd ..
+z dev/.config
+ls

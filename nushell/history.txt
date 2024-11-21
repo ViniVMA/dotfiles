@@ -1,0 +1,174 @@
+ls
+clear
+ls
+clear
+nvim
+z
+lazyvim
+lazydocker
+lazydit
+lazygit
+clear
+ls
+ls
+$settings
+clear
+ls
+nvim .wezterm.lua
+$nu.env-path
+clear
+nvim .wezterm.lua
+ls
+nvim $nu.env-path
+:q
+nvim $nu.env-path
+$nu.env-path
+nvim
+nvim ../$nu.env-path
+ls
+nvim ../$nu.env-path
+$nu.env-path
+cd C:\Users\Vinicius\AppData\Roaming\nushell
+explorer.exe $nu.env-path
+ls
+$nu.path
+$nu.nu-path
+$nu
+$\
+$
+cd ..
+ls
+clear
+$nu.nu-path
+$nu.env-path
+d
+dsadsa
+oh-my-posh init nu
+source ~/.oh-my-posh.nu
+ls
+oh-my-posh init nu --print | save /mylocation/myscript.nu --force
+clear
+--config 'https://github.com/JanDeDobbeleer/oh-my-posh/blob/main/themes/catppuccin_mocha.omp.json'
+clear
+ds
+clear
+ls
+oh-my-posh init
+oh-my-posh init --debug
+oh-my-posh init nu
+ls
+clear
+ls
+l
+nvim
+git config --global --add safe.directory '*'
+nvim
+clear
+nvim
+choco install fzf
+nvim
+z
+ls
+cd dev
+ls
+cd angular-tuto
+ls
+nvim
+clear
+nvim
+pwsh.exe
+pwsh
+nvim
+clear
+ls
+z ~
+cd ~
+clear
+ls
+nvim .wezterm.lua
+ls
+nvim .wezterm.lua
+ls
+nvim .wezterm.lua
+ls
+nvim
+bo
+nvim
+clear
+ls
+zoxide init nushell | save -f ~/.zoxide.nu
+nvim $nu.env-path
+nvim $nu.config-path
+choco install zoxide
+$nu
+version
+choco uninstall zoxide
+choco uninstall zoxide
+winget install ajeetdsouza.zoxide
+z angular
+z dev
+ls
+z angular-tuto
+ls
+clear
+ls
+nvim
+clear
+nvim $nu.config-path
+nvim $nu.env-path
+clear
+lazyvim
+lazygit
+clear
+nvim
+clear
+nvim
+ls
+clear
+z ~
+clear
+z .wezterm.config
+ls
+z .wezterm.lua
+nvim $nu.env-path
+nvim
+nvim $nu.env-path
+clear
+nvim
+nvim
+clear
+nvim
+choco install hub
+nvim
+clear
+nvim
+ls
+cd ..
+nvim
+clear
+nvim
+clear
+nvim
+oh-my-posh init nu
+clear
+z angular-tuto
+clear
+cd ..
+nvim
+z angular-tuto
+clear
+ls
+nvim
+clear
+z %localappdata%/nvim
+cd %localappdata%/nvim
+clear
+ls
+cd dev
+mkdir .config
+cd .config
+ls
+git init
+explorer.exe .
+$nu-env-path
+$nu.env-path

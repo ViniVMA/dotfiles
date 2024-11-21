@@ -218,3 +218,26 @@ ls
 cd ..
 z dev/.config
 ls
+lazygit
+clear
+ls
+git checkout
+z toro.cms
+z toro.strapi
+nvim
+clear
+z dev/.config
+ls
+z dev/.config
+ls
+z
+ls
+z dev/.config
+ls
+nvim
+clear
+z toro.strapi
+z
+z dev/.config
+ls
+gcmsg "update default integrated shell to nushell"

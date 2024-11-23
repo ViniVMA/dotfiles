@@ -1,0 +1,3 @@
+return {
+  "rgroli/other.nvim",
+}

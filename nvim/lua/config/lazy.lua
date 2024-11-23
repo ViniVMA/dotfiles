@@ -30,7 +30,7 @@ require("lazy").setup({
     version = false, -- always use the latest git commit
     -- version = "*", -- try installing the latest stable version for plugins that support semver
   },
-  install = { colorscheme = { "tokyonight", "habamax" } },
+  -- install = { colorscheme = { "tokyonight", "habamax" } },
   checker = {
     enabled = true, -- check for plugin updates periodically
     notify = false, -- notify on update
@@ -49,5 +49,28 @@ require("lazy").setup({
         "zipPlugin",
       },
     },
+  },
+})
+
+require("cinnamon").setup({
+  -- Enable all provided keymaps
+  keymaps = {
+    basic = true,
+    extra = true,
+  },
+  -- Only scroll the window
+  options = { mode = "window" },
+})
+
+require("other-nvim").setup({
+  mappings = {
+    "livewire",
+    "angular",
+    "laravel",
+    "rails",
+    "golang",
+    "python",
+    "react",
+    "rust",
   },
 })

@@ -3,6 +3,7 @@ return {
   opts = {
     window = {
       position = "right",
+      width = 50,
     },
     filesystem_watchers = {
       enable = true,

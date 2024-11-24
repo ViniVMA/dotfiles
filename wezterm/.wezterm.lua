@@ -16,7 +16,7 @@ config.font = wezterm.font_with_fallback({
 	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })
 
-config.
+
 config.window_background_opacity = 1
 config.window_decorations = "RESIZE"
 config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"

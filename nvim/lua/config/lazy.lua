@@ -62,7 +62,7 @@ require("cinnamon").setup({
   options = { mode = "window" },
 })
 
-require("flutter-tools").setup({})
+-- require("flutter-tools").setup({})
 
 require("other-nvim").setup({
   mappings = {

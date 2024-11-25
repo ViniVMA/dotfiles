@@ -2,7 +2,7 @@ return {
   "neo-tree.nvim",
   opts = {
     window = {
-      position = "right",
+      -- position = "right",
     },
     filesystem_watchers = {
       enable = true,

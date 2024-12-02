@@ -12,6 +12,7 @@ config.default_prog = { "nu" }
 config.colors = require("cyberdream")
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
+	{ family = "CommitMono", scale = 1.2, weight = "Regular" },
 	{ family = "Iosevka Nerd Font", scale = 1.2, weight = "Medium" },
 	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })

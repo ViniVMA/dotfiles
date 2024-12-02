@@ -16,13 +16,12 @@ config.font = wezterm.font_with_fallback({
 	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })
 
-
 config.window_background_opacity = 1
 config.window_decorations = "RESIZE"
-config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"
+-- config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"
 config.window_background_image_hsb = {
 	-- Darken the background image by reducing it to 1/3rd
-	brightness = 0.7,
+	brightness = 0.1,
 
 	-- You can adjust the hue by scaling its value.
 	-- a multiplier of 1.0 leaves the value unchanged.
@@ -30,7 +29,6 @@ config.window_background_image_hsb = {
 
 	-- You can adjust the saturation also.
 	saturation = 1.0,
-	
 }
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000

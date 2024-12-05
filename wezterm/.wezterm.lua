@@ -17,7 +17,7 @@ config.font = wezterm.font_with_fallback({
 	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })
 
-config.window_background_opacity = 1
+config.window_background_opacity = 00.96
 config.window_decorations = "RESIZE"
 -- config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"
 config.window_background_image_hsb = {
@@ -44,6 +44,14 @@ config.inactive_pane_hsb = {
 -- Keys
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 config.keys = {
+
+	-- unbinds
+	{
+		key = "F",
+		mods = "CTRL|SHIFT",
+		action = wezterm.action.DisableDefaultAssignment,
+	},
+
 	-- Send C-a when pressing C-a twice
 	{ key = "a", mods = "LEADER|CTRL", action = act.SendKey({ key = "a", mods = "CTRL" }) },
 	{ key = "c", mods = "LEADER", action = act.ActivateCopyMode },

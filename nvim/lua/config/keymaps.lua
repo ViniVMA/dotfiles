@@ -10,3 +10,5 @@ vim.keymap.set(
   '<cmd>lua require("telescope").extensions.flutter.commands()<cr>',
   { desc = "Flutter Tools" }
 )
+
+vim.keymap.set("n", "<leader>fg", ":GrugFar<CR>", { desc = "GrugFar" })

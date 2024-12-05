@@ -12,3 +12,5 @@ vim.keymap.set(
 )
 
 vim.keymap.set("n", "<leader>fg", ":GrugFar<CR>", { desc = "GrugFar" })
+vim.keymap.set("n", "<C-j>", "j$", { desc = "Move down and to end of line" })
+vim.keymap.set("n", "<C-k>", "k$", { desc = "Move up and to end of line" })

@@ -56,6 +56,7 @@
   "persistence.nvim": { "branch": "main", "commit": "f6aad7dde7fcf54148ccfc5f622c6d5badd0cc3d" },
   "plenary.nvim": { "branch": "master", "commit": "2d9b06177a975543726ce5c73fca176cedbffe9d" },
   "render-markdown.nvim": { "branch": "main", "commit": "43ab6347055622aad11a401dd05b58356542ca3f" },
+  "smear-cursor.nvim": { "branch": "main", "commit": "504936a12b12a9ff823ee000156610e0c2a1eb05" },
   "snacks.nvim": { "branch": "main", "commit": "aac03be3775a0bf3b7ba39c16f1d23c1162a6dcd" },
   "supermaven-nvim": { "branch": "main", "commit": "07d20fce48a5629686aefb0a7cd4b25e33947d50" },
   "tailwindcss-colorizer-cmp.nvim": { "branch": "main", "commit": "3d3cd95e4a4135c250faf83dd5ed61b8e5502b86" },

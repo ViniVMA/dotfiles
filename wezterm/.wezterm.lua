@@ -10,6 +10,7 @@ end
 -- Settings
 config.default_prog = { "nu" }
 config.colors = require("cyberdream")
+config.color_scheme = "carbonfox"
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
 	{ family = "CommitMono", scale = 1.2, weight = "Regular" },
@@ -17,7 +18,9 @@ config.font = wezterm.font_with_fallback({
 	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
 })
 
-config.window_background_opacity = 00.96
+config.window_background_opacity = 0.8
+config.win32_system_backdrop = "Acrylic"
+-- config.window_background_opacity = 00.96
 config.window_decorations = "RESIZE"
 -- config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"
 config.window_background_image_hsb = {

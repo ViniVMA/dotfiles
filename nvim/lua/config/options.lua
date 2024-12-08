@@ -8,3 +8,11 @@ vim.opt.winbar = "%=%m %f"
 
 vim.o.ignorecase = true
 vim.o.smartcase = true
+
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+  update_in_insert = false,
+  severity_sort = false,
+})

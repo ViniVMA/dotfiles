@@ -13,12 +13,11 @@ config.colors = require("cyberdream")
 config.color_scheme = "carbonfox"
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
-	{ family = "CommitMono", scale = 1.2, weight = "Regular" },
-	{ family = "Iosevka Nerd Font", scale = 1.2, weight = "Medium" },
-	{ family = "FantasqueSansM Nerd Font", scale = 1.3 },
+	{ family = "CommitMono", scale = 0.9, weight = "Regular" },
+	{ family = "Iosevka Nerd Font", scale = 0.9, weight = "Medium" },
+	{ family = "FantasqueSansM Nerd Font", scale = 0.9 },
 })
-
-config.window_background_opacity = 0.8
+config.window_background_opacity = 0.7
 config.win32_system_backdrop = "Acrylic"
 -- config.window_background_opacity = 00.96
 config.window_decorations = "RESIZE"
@@ -34,6 +33,8 @@ config.window_background_image_hsb = {
 	-- You can adjust the saturation also.
 	saturation = 1.0,
 }
+config.term = "wezterm"
+
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000
 config.default_workspace = "main"
@@ -45,6 +46,9 @@ config.inactive_pane_hsb = {
 }
 
 -- Keys
+--
+--
+--
 config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = 2000 }
 config.keys = {
 

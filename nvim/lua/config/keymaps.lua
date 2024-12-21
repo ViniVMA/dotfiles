@@ -27,3 +27,7 @@ vim.keymap.set(
   [[:%s/\<<C-r><C-w>\>//g<Left><Left>]],
   { desc = "Search and replace word under the cursor" }
 )
+
+vim.keymap.set("i", "<C-q>", "<cmd>lua require('blink.cmp').show()<CR>")
+
+vim.keymap.set("i", "<C-space>", "<cmd>lua require('blink.cmp').show()<CR>")

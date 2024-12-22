@@ -33,7 +33,21 @@ config.window_background_image_hsb = {
 	-- You can adjust the saturation also.
 	saturation = 1.0,
 }
-config.term = "wezterm"
+
+config.use_dead_keys = false
+config.use_ime = false
+
+config.foreground_text_hsb = {
+	hue = 1.0,
+	saturation = 1.0,
+	brightness = 1.0,
+}
+
+config.max_fps = 240
+-- config.animation_fps = 240
+-- config.term = "wezterm
+--
+config.default_cursor_style = "BlinkingBar"
 
 config.window_close_confirmation = "AlwaysPrompt"
 config.scrollback_lines = 3000

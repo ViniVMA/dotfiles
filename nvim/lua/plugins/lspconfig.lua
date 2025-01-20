@@ -2,6 +2,9 @@ return {
   "neovim/nvim-lspconfig",
   opts = {
     servers = {
+      angularls = {
+        mason = {},
+      },
       azure_pipelines_ls = {
         cmd = { "azure-pipelines-language-server", "--stdio" },
         filetypes = { "yaml" },
@@ -11,16 +14,16 @@ return {
       },
       vtsls = {
         settings = {
-          javascript = {
-            preferences = {
-              importModuleSpecifier = "non-relative",
-            },
-          },
-          typescript = {
-            preferences = {
-              importModuleSpecifier = "non-relative",
-            },
-          },
+          -- javascript = {
+          --   preferences = {
+          --     importModuleSpecifier = "non-relative",
+          --   },
+          -- },
+          -- typescript = {
+          --   preferences = {
+          --     importModuleSpecifier = "non-relative",
+          --   },
+          -- },
         },
       },
     },

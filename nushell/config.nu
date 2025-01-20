@@ -912,6 +912,8 @@ def git_current_branch [] {
   git branch --show-current | str trim -c "\n"
 }
 
+alias vim = nvim
+
 alias s = git status -sb
 alias g = git
 alias ga = git add
@@ -1041,3 +1043,15 @@ alias gunignore = git update-index --no-assume-unchanged
 alias gup = git pull --rebase
 alias gupv = git pull --rebase -v
 alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
+
+
+
+use std "path add"
+
+$env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
+$env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+path add $env.FNM_BIN
+
+
+$env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+path add $env.FNM_MULTISHELL_PATH

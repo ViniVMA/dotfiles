@@ -34,8 +34,8 @@ config.window_background_image_hsb = {
 	saturation = 1.0,
 }
 
-config.use_dead_keys = false
-config.use_ime = false
+config.use_dead_keys = true
+config.use_ime = true
 
 config.foreground_text_hsb = {
 	hue = 1.0,

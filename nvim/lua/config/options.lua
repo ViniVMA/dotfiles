@@ -9,6 +9,8 @@ vim.opt.winbar = "%=%m %f"
 vim.o.ignorecase = true
 vim.o.smartcase = true
 
+vim.g.lazyvim_picker = "fzf"
+
 vim.diagnostic.config({
   virtual_text = true,
   signs = true,

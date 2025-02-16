@@ -13,9 +13,9 @@ config.colors = require("cyberdream")
 config.color_scheme = "carbonfox"
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
-	{ family = "CommitMono", scale = 0.9, weight = "Regular" },
-	{ family = "Iosevka Nerd Font", scale = 0.9, weight = "Medium" },
-	{ family = "FantasqueSansM Nerd Font", scale = 0.9 },
+	{ family = "CommitMono", scale = 1, weight = "Regular" },
+	{ family = "Iosevka Nerd Font", scale = 1, weight = "Medium" },
+	{ family = "FantasqueSansM Nerd Font", scale = 1 },
 })
 config.window_background_opacity = 0.7
 config.win32_system_backdrop = "Acrylic"

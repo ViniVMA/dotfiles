@@ -18,3 +18,8 @@ vim.diagnostic.config({
   update_in_insert = false,
   severity_sort = false,
 })
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  pattern = "*",
+  command = "set ff=unix",
+})

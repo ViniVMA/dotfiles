@@ -17,7 +17,7 @@ config.font = wezterm.font_with_fallback({
 	{ family = "Iosevka Nerd Font", scale = 1, weight = "Medium" },
 	{ family = "FantasqueSansM Nerd Font", scale = 1 },
 })
-config.window_background_opacity = 0.7
+-- config.window_background_opacity = 0.7
 config.win32_system_backdrop = "Acrylic"
 -- config.window_background_opacity = 00.96
 config.window_decorations = "RESIZE"

@@ -3,6 +3,7 @@ return {
   opts = function()
     return {
       dashboard = {
+        enabled = false,
         sections = {
           { section = "header" },
           { icon = " ", title = "Keymaps", section = "keys", indent = 2, padding = 1 },

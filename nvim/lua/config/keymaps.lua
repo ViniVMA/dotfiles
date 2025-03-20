@@ -2,13 +2,6 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
-vim.keymap.set(
-  "n",
-  "<leader>fl",
-  '<cmd>lua require("telescope").extensions.flutter.commands()<cr>',
-  { desc = "Flutter Tools" }
-)
-
 vim.keymap.set("n", "<leader>fg", ":GrugFar<CR>", { desc = "GrugFar" })
 vim.keymap.set("n", "<C-j>", "10j", { desc = "Move down and to end of line" })
 vim.keymap.set("n", "<C-k>", "10k", { desc = "Move up and to end of line" })
@@ -31,3 +24,12 @@ vim.keymap.set(
 vim.keymap.set("i", "<C-q>", "<cmd>lua require('blink.cmp').show()<CR>")
 
 vim.keymap.set("i", "<C-space>", "<cmd>lua require('blink.cmp').show()<CR>")
+
+-- Show git diff
+vim.keymap.set("n", "<leader><leader>v", function()
+  if next(require("diffview.lib").views) == nil then
+    vim.cmd("DiffviewOpen")
+  else
+    vim.cmd("DiffviewClose")
+  end
+end)

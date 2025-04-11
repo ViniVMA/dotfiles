@@ -21,12 +21,12 @@ vim.keymap.set(
   { desc = "Search and replace word under the cursor" }
 )
 
-vim.keymap.set("i", "<C-q>", "<cmd>lua require('blink.cmp').show()<CR>")
+-- vim.keymap.set("i", "<C-q>", "<cmd>lua require('blink.cmp').show()<CR>")
 
-vim.keymap.set("i", "<C-space>", "<cmd>lua require('blink.cmp').show()<CR>")
+-- vim.keymap.set("i", "<C-space>", "<cmd>lua require('blink.cmp').show()<CR>")
 
 -- Show git diff
-vim.keymap.set("n", "<leader><leader>v", function()
+vim.keymap.set("n", "<leader>gv", function()
   if next(require("diffview.lib").views) == nil then
     vim.cmd("DiffviewOpen")
   else

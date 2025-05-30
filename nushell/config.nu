@@ -218,7 +218,7 @@ $env.config = {
         algorithm: "prefix"    # prefix or fuzzy
         sort: "smart" # "smart" (alphabetical for prefix matching, fuzzy score for fuzzy matching) or "alphabetical"
         external: {
-            enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up may be very slow
+            # enable: true # set to false to prevent nushell looking into $env.PATH to find more suggestions, `false` recommended for WSL users as this look up may be very slow
             max_results: 100 # setting it lower can improve completion performance at the cost of omitting some options
             completer: null # check 'carapace_completer' above as an example
         }
@@ -226,8 +226,8 @@ $env.config = {
     }
 
     filesize: {
-        metric: false # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
-        format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
+        # metric: false # true => KB, MB, GB (ISO standard), false => KiB, MiB, GiB (Windows standard)
+        # format: "auto" # b, kb, kib, mb, mib, gb, gib, tb, tib, pb, pib, eb, eib, auto
     }
 
     cursor_shape: {
@@ -1048,10 +1048,23 @@ alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
 
 use std "path add"
 
-$env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
-$env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
-path add $env.FNM_BIN
+# $env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
+# $env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+# path add $env.FNM_BIN
+#
+#
+# $env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+# path add $env.FNM_MULTISHELL_PATH
 
 
-$env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
-path add $env.FNM_MULTISHELL_PATH
+# $env.FNM_DIR = "/opt/homebrew/bin/fnm"
+let $fnm_all_vars = fnm env --shell bash | str  replace -a "export " '' | str replace -a '"' '' |  lines | split column "=" | rename name value | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value };
+
+let $fnm_path: string = $fnm_all_vars.PATH | str replace ":$PATH" ""
+# print "Adding FNM to path: " $fnm_path
+$env.PATH = $env.PATH | append $fnm_path;
+
+# Add env vars
+let $fnm_vars = $fnm_all_vars | reject PATH;
+# print "Adding FNM vars to shell env: " $fnm_vars
+load-env $fnm_vars

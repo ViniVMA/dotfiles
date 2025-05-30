@@ -15,7 +15,7 @@ return {
           completefunctioncalls = true,
           renamefileswithclasses = "prompt",
           updateimportsonrename = true,
-          enablesnippets = false,
+          enablesnippets = true,
         },
       },
       debugger = {

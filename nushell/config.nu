@@ -1048,23 +1048,24 @@ alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
 
 use std "path add"
 
-# $env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
-# $env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
-# path add $env.FNM_BIN
+ $env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
+$env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+ path add $env.FNM_BIN
 #
 #
-# $env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
-# path add $env.FNM_MULTISHELL_PATH
+ $env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
+ path add $env.FNM_MULTISHELL_PATH
 
 
 # $env.FNM_DIR = "/opt/homebrew/bin/fnm"
-let $fnm_all_vars = fnm env --shell bash | str  replace -a "export " '' | str replace -a '"' '' |  lines | split column "=" | rename name value | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value };
+#let $fnm_all_vars = fnm env --shell bash | str  replace -a "export " '' | str replace -a '"' '' |  lines | split column "=" | rename name value | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value };
 
-let $fnm_path: string = $fnm_all_vars.PATH | str replace ":$PATH" ""
+#let $fnm_path: string = $fnm_all_vars.PATH | str replace ":$PATH" ""
 # print "Adding FNM to path: " $fnm_path
-$env.PATH = $env.PATH | append $fnm_path;
+#$env.PATH = $env.PATH | append $fnm_path;
 
 # Add env vars
-let $fnm_vars = $fnm_all_vars | reject PATH;
+
+#let $fnm_vars = $fnm_all_vars | reject PATH;
 # print "Adding FNM vars to shell env: " $fnm_vars
-load-env $fnm_vars
+#load-env $fnm_vars

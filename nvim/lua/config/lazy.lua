@@ -52,27 +52,28 @@ require("lazy").setup({
   },
 })
 
-require("cinnamon").setup({
-  -- Enable all provided keymaps
-  keymaps = {
-    basic = true,
-    extra = true,
-  },
-  -- Only scroll the window
-  options = { mode = "window" },
-})
+-- require("cinnamon").setup({
+--   disabled = true,
+--   -- Enable all provided keymaps
+--   keymaps = {
+--     basic = true,
+--     extra = true,
+--   },
+--   -- Only scroll the window
+--   options = { mode = "window" },
+-- })
 
 -- require("flutter-tools").setup({})
 
-require("other-nvim").setup({
-  mappings = {
-    "livewire",
-    "angular",
-    "laravel",
-    "rails",
-    "golang",
-    "python",
-    "react",
-    "rust",
-  },
-})
+-- require("other-nvim").setup({
+--   mappings = {
+--     "livewire",
+--     "angular",
+--     "laravel",
+--     "rails",
+--     "golang",
+--     "python",
+--     "react",
+--     "rust",
+--   },
+-- })

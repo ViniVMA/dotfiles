@@ -7,139 +7,6 @@
 # And here is the theme collection
 # https://github.com/nushell/nu_scripts/tree/main/themes
 
-let dark_theme = {
-    # color for nushell primitives
-    separator: white
-    leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-    header: green_bold
-    empty: blue
-    # Closures can be used to choose colors for specific values.
-    # The value (in this case, a bool) is piped into the closure.
-    # eg) {|| if $in { 'light_cyan' } else { 'light_gray' } }
-    bool: light_cyan
-    int: white
-    filesize: cyan
-    duration: white
-    date: purple
-    range: white
-    float: white
-    string: white
-    nothing: white
-    binary: white
-    cell-path: white
-    row_index: green_bold
-    record: white
-    list: white
-    block: white
-    hints: dark_gray
-    search_result: { bg: red fg: white }
-    shape_and: purple_bold
-    shape_binary: purple_bold
-    shape_block: blue_bold
-    shape_bool: light_cyan
-    shape_closure: green_bold
-    shape_custom: green
-    shape_datetime: cyan_bold
-    shape_directory: cyan
-    shape_external: cyan
-    shape_externalarg: green_bold
-    shape_external_resolved: light_yellow_bold
-    shape_filepath: cyan
-    shape_flag: blue_bold
-    shape_float: purple_bold
-    # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: white bg: red attr: b }
-    shape_glob_interpolation: cyan_bold
-    shape_globpattern: cyan_bold
-    shape_int: purple_bold
-    shape_internalcall: cyan_bold
-    shape_keyword: cyan_bold
-    shape_list: cyan_bold
-    shape_literal: blue
-    shape_match_pattern: green
-    shape_matching_brackets: { attr: u }
-    shape_nothing: light_cyan
-    shape_operator: yellow
-    shape_or: purple_bold
-    shape_pipe: purple_bold
-    shape_range: yellow_bold
-    shape_record: cyan_bold
-    shape_redirection: purple_bold
-    shape_signature: green_bold
-    shape_string: green
-    shape_string_interpolation: cyan_bold
-    shape_table: blue_bold
-    shape_variable: purple
-    shape_vardecl: purple
-    shape_raw_string: light_purple
-}
-
-let light_theme = {
-    # color for nushell primitives
-    separator: dark_gray
-    leading_trailing_space_bg: { attr: n } # no fg, no bg, attr none effectively turns this off
-    header: green_bold
-    empty: blue
-    # Closures can be used to choose colors for specific values.
-    # The value (in this case, a bool) is piped into the closure.
-    # eg) {|| if $in { 'dark_cyan' } else { 'dark_gray' } }
-    bool: dark_cyan
-    int: dark_gray
-    filesize: cyan_bold
-    duration: dark_gray
-    date: purple
-    range: dark_gray
-    float: dark_gray
-    string: dark_gray
-    nothing: dark_gray
-    binary: dark_gray
-    cell-path: dark_gray
-    row_index: green_bold
-    record: dark_gray
-    list: dark_gray
-    block: dark_gray
-    hints: dark_gray
-    search_result: { fg: white bg: red }
-    shape_and: purple_bold
-    shape_binary: purple_bold
-    shape_block: blue_bold
-    shape_bool: light_cyan
-    shape_closure: green_bold
-    shape_custom: green
-    shape_datetime: cyan_bold
-    shape_directory: cyan
-    shape_external: cyan
-    shape_externalarg: green_bold
-    shape_external_resolved: light_purple_bold
-    shape_filepath: cyan
-    shape_flag: blue_bold
-    shape_float: purple_bold
-    # shapes are used to change the cli syntax highlighting
-    shape_garbage: { fg: white bg: red attr: b }
-    shape_glob_interpolation: cyan_bold
-    shape_globpattern: cyan_bold
-    shape_int: purple_bold
-    shape_internalcall: cyan_bold
-    shape_keyword: cyan_bold
-    shape_list: cyan_bold
-    shape_literal: blue
-    shape_match_pattern: green
-    shape_matching_brackets: { attr: u }
-    shape_nothing: light_cyan
-    shape_operator: yellow
-    shape_or: purple_bold
-    shape_pipe: purple_bold
-    shape_range: yellow_bold
-    shape_record: cyan_bold
-    shape_redirection: purple_bold
-    shape_signature: green_bold
-    shape_string: green
-    shape_string_interpolation: cyan_bold
-    shape_table: blue_bold
-    shape_variable: purple
-    shape_vardecl: purple
-    shape_raw_string: light_purple
-}
 
 # External completer example
 # let carapace_completer = {|spans|
@@ -236,7 +103,7 @@ $env.config = {
         vi_normal: underscore # block, underscore, line, blink_block, blink_underscore, blink_line, inherit to skip setting cursor shape (underscore is the default)
     }
 
-    color_config: $dark_theme # if you want a more interesting theme, you can replace the empty record with `$dark_theme`, `$light_theme` or another custom record
+    # color_config: $dark_theme # if you want a more interesting theme, you can replace the empty record with `$dark_theme`, `$light_theme` or another custom record
     footer_mode: 25 # always, never, number_of_rows, auto
     float_precision: 2 # the precision for displaying floats in tables
     buffer_editor: null # command that will be used to edit the current line buffer with ctrl+o, if unset fallback to $env.VISUAL and $env.EDITOR
@@ -258,7 +125,7 @@ $env.config = {
         # 133;C - Mark pre-execution
         # 133;D;exit - Mark execution finished with exit code
         # This is used to enable terminals to know where the prompt is, the command is, where the command finishes, and where the output of the command is
-        osc133: false 
+        osc133: false
         # osc633 is closely related to osc133 but only exists in visual studio code (vscode) and supports their shell integration features
         # 633;A - Mark prompt start
         # 633;B - Mark prompt end
@@ -899,173 +766,23 @@ $env.config = {
             event: { edit: selectall }
         }
     ]
-
-
 }
 
-source ~/.oh-my-posh.nu
+
+source ./aliases.nu
 source ~/.zoxide.nu
+source ~/.cache/carapace/init.nu
 
+if not (which fnm | is-empty) {
+    ^fnm env --json | from json | load-env
 
-
-def git_current_branch [] {
-  git branch --show-current | str trim -c "\n"
+    $env.PATH = $env.PATH | prepend ($env.FNM_MULTISHELL_PATH | path join (if $nu.os-info.name == 'windows' {''} else {'bin'}))
+    $env.config.hooks.env_change.PWD = (
+        $env.config.hooks.env_change.PWD? | append {
+            condition: {|| ['.nvmrc' '.node-version', 'package.json'] | any {|el| $el | path exists}}
+            code: {|| ^fnm use}
+        }
+    )
 }
 
-alias vim = nvim
-
-alias s = git status -sb
-alias g = git
-alias ga = git add
-alias gaa = git add --all
-alias gapa = git add --patch
-alias gau = git add --update
-alias gb = git branch
-alias gba = git branch -a
-alias gbd = git branch -d
-alias gbl = git blame -b -w
-alias gbnm = git branch --no-merged
-alias gbr = git branch --remote
-alias gbs = git bisect
-alias gbsb = git bisect bad
-alias gbsg = git bisect good
-alias gbsr = git bisect reset
-alias gbss = git bisect start
-alias gc = git commit -v
-alias gc! = git commit -v --amend
-alias gca = git commit -v -a
-alias gca! = git commit -v -a --amend
-alias gcam = git commit -a -m
-alias gcan! = git commit -v -a --no-edit --amend
-alias gcans! = git commit -v -a -s --no-edit --amend
-alias gcb = git checkout -b
-alias gcd = git checkout develop
-alias gcf = git config --list
-alias gcl = git clone --recursive
-alias gclean = git clean -fd
-alias gcm = git checkout master
-alias gcmsg = git commit -m
-alias gcn! = git commit -v --no-edit --amend
-alias gco = git checkout
-alias gcount = git shortlog -sn
-alias gcp = git cherry-pick
-alias gcpa = git cherry-pick --abort
-alias gcpc = git cherry-pick --continue
-alias gcs = git commit -S
-alias gcsm = git commit -s -m
-alias gd = git diff
-alias gdca = git diff --cached
-alias gdt = git diff-tree --no-commit-id --name-only -r
-alias gdw = git diff --word-diff
-alias gf = git fetch
-alias gfa = git fetch --all --prune
-alias gfo = git fetch origin
-alias gg = git gui citool
-alias gga = git gui citool --amend
-alias ggpull = git pull origin (git_current_branch)
-alias ggpur = ggu
-alias ggpush = git push origin (git_current_branch)
-alias ggsup = git branch --set-upstream-to=origin/(git_current_branch)
-alias ghh = git help
-alias gignore = git update-index --assume-unchanged
-alias gk = gitk --all --branches
-alias gke = gitk --all (git log -g --pretty=%h)
-alias gl = git pull
-alias glg = git log --stat
-alias glgg = git log --graph
-alias glgga = git log --graph --decorate --all
-alias glgm = git log --graph --max-count=10
-alias glgp = git log --stat -p
-alias glo = git log --oneline --decorate
-alias globurl = noglob urlglobber
-alias glog = git log --oneline --decorate --graph
-alias gloga = git log --oneline --decorate --graph --all
-alias glol = git log --graph --pretty=\%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\ --abbrev-commit
-alias glola = git log --graph --pretty=\%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset\ --abbrev-commit --all
-alias glp = _git_log_prettily
-alias glum = git pull upstream master
-alias gm = git merge
-alias gmom = git merge origin/master
-alias gmt = git mergetool --no-prompt
-alias gmtvim = git mergetool --no-prompt --tool=vimdiff
-alias gmum = git merge upstream/master
-alias gp = git push
-alias gpd = git push --dry-run
-def gpoat [...tags] {
-	git push origin --all
-	git push origin --tags ...$tags
-}
-def gpristine [] {
-	git reset --hard
-	git clean -dfx
-}
-alias gpsup = git push --set-upstream origin (git_current_branch)
-alias gpu = git push upstream
-alias gpv = git push -v
-alias gr = git remote
-alias gra = git remote add
-alias grb = git rebase
-alias grba = git rebase --abort
-alias grbc = git rebase --continue
-alias grbi = git rebase -i
-alias grbm = git rebase master
-alias grbs = git rebase --skip
-alias grep = grep  --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}
-alias grh = git reset HEAD
-alias grhh = git reset HEAD --hard
-alias grmv = git remote rename
-alias grrm = git remote remove
-alias grset = git remote set-url
-alias grt = cd (git rev-parse --show-toplevel or echo ".")
-alias gru = git reset --
-alias grup = git remote update
-alias grv = git remote -v
-alias gsb = git status -sb
-alias gsd = git svn dcommit
-alias gsi = git submodule init
-alias gsps = git show --pretty=short --show-signature
-alias gsr = git svn rebase
-alias gss = git status -s
-alias gst = git status
-alias gsta = git stash save
-alias gstaa = git stash apply
-alias gstc = git stash clear
-alias gstd = git stash drop
-alias gstl = git stash list
-alias gstp = git stash pop
-alias gsts = git stash show --text
-alias gsu = git submodule update
-alias gts = git tag -s
-def gtv [] {
-	git tag | sort
-}
-alias gunignore = git update-index --no-assume-unchanged
-alias gup = git pull --rebase
-alias gupv = git pull --rebase -v
-alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
-
-
-
-use std "path add"
-
- $env.FNM_DIR = "C:/Users/vinicius.vilela/AppData/Roaming/fnm"
-$env.FNM_BIN = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
- path add $env.FNM_BIN
-#
-#
- $env.FNM_MULTISHELL_PATH = "C:/Users/vinicius.vilela/AppData/Roaming/fnm/bin"
- path add $env.FNM_MULTISHELL_PATH
-
-
-# $env.FNM_DIR = "/opt/homebrew/bin/fnm"
-#let $fnm_all_vars = fnm env --shell bash | str  replace -a "export " '' | str replace -a '"' '' |  lines | split column "=" | rename name value | reduce -f {} {|it, acc| $acc | upsert $it.name $it.value };
-
-#let $fnm_path: string = $fnm_all_vars.PATH | str replace ":$PATH" ""
-# print "Adding FNM to path: " $fnm_path
-#$env.PATH = $env.PATH | append $fnm_path;
-
-# Add env vars
-
-#let $fnm_vars = $fnm_all_vars | reject PATH;
-# print "Adding FNM vars to shell env: " $fnm_vars
-#load-env $fnm_vars
+oh-my-posh init nu --config clean-detailed

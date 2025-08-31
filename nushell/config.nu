@@ -785,4 +785,27 @@ if not (which fnm | is-empty) {
     )
 }
 
+
+
+
+alias kickstart = with-env { NVIM_APPNAME: "kickstart" } { nvim }
+alias eco = with-env { NVIM_APPNAME: "ecovim" } { nvim }
+
+
+
+
+
+def lazy [...args] {
+  with-env { NVIM_APPNAME: "lazyvim" } { ^nvim ...args }
+}
+
+
+
+
+def goose [...args] {
+  with-env { NVIM_APPNAME: "goose" } { ^nvim ...args }
+}
+
+
+
 oh-my-posh init nu --config clean-detailed

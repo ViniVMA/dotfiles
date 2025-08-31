@@ -28,6 +28,10 @@ local function vscode(cmd)
   vim.cmd('call VSCodeNotify("' .. cmd .. '")')
 end
 
+map("n", "<leader>bd", function()
+  vscode("workbench.action.closeActiveEditor")
+end, opts)
+
 map("n", "<leader>ur", function()
   vscode("workbench.action.reloadWindow")
 end, opts)
@@ -79,6 +83,10 @@ map("n", "<leader>cr", function()
   vscode("editor.action.rename")
 end, opts)
 
+map("i", "<C-q>", function()
+  vscode("editor.action.triggerSuggest")
+end, opts)
+
 -- === Search / Telescope-like ===
 map("n", "<leader>/", function()
   vscode("workbench.action.findInFiles")
@@ -125,9 +133,18 @@ end, opts)
 map("n", "<leader>fE", function()
   vscode("workbench.explorer.fileView.toggleVisibility")
 end, opts)
+
 map("n", "<leader>e", function()
-  vscode("workbench.files.action.showActiveFileInExplorer")
+  vscode("workbench.action.toggleSidebarVisibility")
 end, opts)
+
+-- map("n", "<leader>e", function()
+--   vscode("workbench.view.explorer")
+-- end, opts)
+
+-- map("n", "<leader>e", function()
+--   vscode("workbench.files.action.showActiveFileInExplorer")
+-- end, opts)
 map("n", "<leader>E", function()
   vscode("workbench.explorer.fileView.toggleVisibility")
 end, opts)

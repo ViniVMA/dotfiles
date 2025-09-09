@@ -1,5 +1,5 @@
--- bootstrap lazy.nvim, LazyVim and your plugins
-if vim.g.vscode then
-  require("vscode_config.keymaps")
-end
-require("config.lazy")
+require("settings")
+require("autocmds")
+require("keymaps")
+require("lazyvim")
+require("bufferline").setup()

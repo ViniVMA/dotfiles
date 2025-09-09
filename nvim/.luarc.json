@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "Lua.diagnostics.globals": [
+    "vim",
+    "describe",
+    "it",
+    "before_each",
+    "after_each",
+    "pending",
+    "setup",
+    "teardown"
+  ],
+  "Lua.diagnostics.disable": [
+    "missing-fields",
+    "inject-field"
+  ],
+  "Lua.workspace.library": [
+    "${3rd}/luv/library",
+    "/opt/homebrew/Caskroom/neovim-nightly/latest/nvim-macos-arm64/share/nvim/runtime/lua",
+    "/opt/homebrew/Caskroom/neovim-nightly/latest/nvim-macos-arm64/share/nvim/runtime/lua/lsp"
+  ],
+  "Lua.runtime.version": "LuaJIT",
+  "Lua.workspace.checkThirdParty": false,
+  "Lua.completion.callSnippet": "Replace",
+  "Lua.completion.keywordSnippet": "Replace",
+  "Lua.hint.enable": false,
+  "Lua.hint.setType": true,
+  "Lua.hint.paramType": false,
+  "Lua.hint.paramName": "Disable",
+  "Lua.hint.semicolon": "Disable",
+  "Lua.hint.arrayIndex": "Disable",
+  "Lua.format.enable": true,
+  "Lua.format.defaultConfig.indentMode": "Spaces",
+  "Lua.format.defaultConfig.indentSize": 2,
+  "Lua.format.defaultConfig.lineEnding": "LF",
+  "Lua.format.defaultConfig.quoteStyle": "Single",
+  "Lua.format.defaultConfig.alignMultilineFunctions": true,
+  "Lua.format.defaultConfig.alignMultilineTables": true,
+  "Lua.format.defaultConfig.alignMultilineStrings": true,
+  "Lua.telemetry.enable": false
+}

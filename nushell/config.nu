@@ -772,6 +772,7 @@ $env.config = {
 source ./aliases.nu
 source ~/.zoxide.nu
 source ~/.cache/carapace/init.nu
+source ~/.local/share/atuin/init.nu
 
 if not (which fnm | is-empty) {
     ^fnm env --json | from json | load-env
@@ -785,8 +786,6 @@ if not (which fnm | is-empty) {
     )
 }
 
-
-alias lazyvim = with-env { NVIM_APPNAME: "lazyvim" } { nvim }
 
 
 

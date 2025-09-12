@@ -24,6 +24,7 @@ require("lazy").setup({
     { import = "plugins.editor.colorschemes" },
     { import = "plugins.util" },
     { import = "plugins.coding" },
+    { import = "plugins.ai" },
   },
   install = { colorscheme = { "darianmorat/gruvdark.nvim" } },
   checker = { enabled = true },
@@ -36,8 +37,6 @@ require("lazy").setup({
     backdrop = 100,
   },
 })
-
-vim.cmd.colorscheme("gruvdark")
 
 -- return {
 --   "folke/snacks.nvim",

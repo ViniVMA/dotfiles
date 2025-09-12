@@ -11,18 +11,19 @@ if string.find(wezterm.target_triple, "apple") then
 	config.default_prog = { "/bin/zsh", "-l", "-i", "-c", "exec /opt/homebrew/bin/nu" }
 end
 -- config.colors = require("cyberdream")
-config.colors = require("gruvbox-material")
+-- config.colors = require("gruvbox-material")
 
-config.color_scheme = "gruvbox-material"
+-- config.color_scheme = "gruvbox-material"
+config.color_scheme = "Eldritch"
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
-	{ family = "CommitMono", scale = 1.2, weight = "Regular" },
+	{ family = "CommitMono", scale = 1.1, weight = "Regular" },
 	{ family = "Iosevka Nerd Font", scale = 1, weight = "Medium" },
 	{ family = "FantasqueSansM Nerd Font", scale = 1 },
 })
 -- config.window_background_opacity = 0.85
 -- config.win32_system_backdrop = ""
-config.window_background_opacity = 00.99
+-- config.window_background_opacity = 00.99
 config.window_decorations = "RESIZE"
 -- config.window_background_image = wezterm.config_dir .. "/dev/.config/wezterm/wallpapers/grey-sur.png"
 config.window_background_image_hsb = {

@@ -13,11 +13,6 @@ local map = vim.keymap.set
 
 map("n", "<leader>r", ":source $MYVIMRC<CR>", opts)
 
--- map("n", "<leader>f", "<cmd>lua require('fzf-lua').files()<CR>", opts)
--- map("n", "<leader>g", "<cmd>lua require('fzf-lua').live_grep()<CR>", opts)
--- map("n", "<leader>b", "<cmd>lua require('fzf-lua').buffers()<CR>", opts)
--- map("n", "<leader>h", "<cmd>lua require('fzf-lua').help_tags()<CR>", opts)
-
 vim.keymap.set("n", "Q", "q", { desc = "Record macro" })
 vim.keymap.set("n", "q", "<Nop>", { desc = "Disable default recording" })
 
@@ -121,13 +116,6 @@ map("n", "<leader>`", "<cmd>e #<cr>", { desc = "Switch to Other Buffer" })
 map("n", "<leader>bd", function() Snacks.bufdelete() end, { desc = "Delete Buffer" })
 map("n", "<leader>bo", function() Snacks.bufdelete.other() end, { desc = "Delete Other Buffers" })
 map("n", "<leader>bD", "<cmd>:bd<cr>", { desc = "Delete Buffer and Window" })
-
--- Clear search and stop snippet on escape
--- map({ 'i', 'n', 's' }, '<esc>', function()
---   vim.cmd 'noh'
---   LazyVim.cmp.actions.snippet_stop()
---   return '<esc>'
--- end, { expr = true, desc = 'Escape and Clear hlsearch' })
 
 -- https://github.com/mhinz/vim-galore#saner-behavior-of-n-and-n
 map("n", "n", "'Nn'[v:searchforward].'zv'", { expr = true, desc = "Next Search Result" })

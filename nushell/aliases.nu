@@ -133,3 +133,6 @@ alias gunignore = git update-index --no-assume-unchanged
 alias gup = git pull --rebase
 alias gupv = git pull --rebase -v
 alias gwch = git whatchanged -p --abbrev-commit --pretty=medium
+
+alias lazyvim = with-env { NVIM_APPNAME: "lazyvim" } { nvim }
+

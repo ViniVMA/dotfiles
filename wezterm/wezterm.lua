@@ -11,10 +11,9 @@ if string.find(wezterm.target_triple, "apple") then
 	config.default_prog = { "/bin/zsh", "-l", "-i", "-c", "exec /opt/homebrew/bin/nu" }
 end
 -- config.colors = require("cyberdream")
--- config.colors = require("gruvbox-material")
-
+config.colors = require("gruvbox-material")
 -- config.color_scheme = "gruvbox-material"
-config.color_scheme = "Eldritch"
+-- config.color_scheme = "Eldritch"
 -- config.color_scheme = "Tokyo Night"
 config.font = wezterm.font_with_fallback({
 	{ family = "CommitMono", scale = 1.1, weight = "Regular" },

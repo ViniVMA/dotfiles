@@ -87,7 +87,7 @@ M.setup = function(config)
 					"workspace",
 					fmt = function(workspace, window)
 						if window:active_key_table() then
-							return "| " .. window:active_key_table()
+							return "| " .. string.upper(window:active_key_table():gsub("_mode$", ""))
 						end
 						if window:leader_is_active() then
 							-- tabline.set_theme({
@@ -104,7 +104,7 @@ M.setup = function(config)
 						-- 		c = { fg = "#c6b6ee", bg = bg },
 						-- 	},
 						-- }) -- reset to default theme
-						return "| " .. workspace
+						return "| " .. string.upper(workspace)
 					end,
 				},
 			},

@@ -789,6 +789,8 @@ if not (which fnm | is-empty) {
 
 
 
+# Set NODE_OPTIONS for experimental SQLite support
+$env.NODE_OPTIONS = "--experimental-sqlite"
 
-
-oh-my-posh init nu --config clean-detailed
+# oh-my-posh init nu --config avit
+oh-my-posh init nu --config ~/jandedobbeleer.omp.json

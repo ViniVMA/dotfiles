@@ -16,6 +16,6 @@ return {
 	automatically_reload_config = true,
 	enable_kitty_keyboard = true,
 	enable_csi_u_key_encoding = true,
-	default_prog = { "/bin/zsh", "-l", "-i", "-c", "exec /opt/homebrew/bin/nu" },
+	-- default_prog = { "/bin/zsh", "-l", "-i", "-c", "exec /opt/homebrew/bin/nu" },
 	default_workspace = "main",
 }

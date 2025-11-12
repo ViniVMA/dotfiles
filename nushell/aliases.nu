@@ -129,6 +129,7 @@ alias gts = git tag -s
 def gtv [] {
 	git tag | sort
 }
+
 alias gunignore = git update-index --no-assume-unchanged
 alias gup = git pull --rebase
 alias gupv = git pull --rebase -v

@@ -142,3 +142,13 @@ vim.api.nvim_create_autocmd("TermOpen", {
     vim.opt_local.signcolumn = "no"
   end,
 })
+
+-- Setup proper commentstring for Vue files
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("vue_commentstring"),
+  pattern = { "vue" },
+  callback = function()
+    -- Set fallback commentstring for Vue files
+    vim.opt_local.commentstring = "<!-- %s -->"
+  end,
+})

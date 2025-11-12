@@ -1,25 +1,6 @@
 
 export PATH="/opt/homebrew/bin:$PATH"
 
-export PATH="$PATH:$HOME/.puro/bin" # Added by Puro
-export PATH="$PATH:$HOME/.puro/shared/pub_cache/bin" # Added by Puro
-export PATH="$PATH:$HOME/.puro/envs/default/flutter/bin" # Added by Puro
-export PURO_ROOT="/Users/vinicius.vilela/.puro" # Added by Puro
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
-
-# if [[ $TERM_PROGRAM == "WezTerm" && -z "$NU_SHELL_STARTED" && -z "$INSIDE_NUSHELL" ]]; then
-#   export NU_SHELL_STARTED=1
-#   clear
-#   exec /opt/homebrew/bin/nu
-# fi
-
-# fnm
-FNM_PATH="/Users/vinicius.vilela/Library/Application Support/fnm"
-if [ -d "$FNM_PATH" ]; then
-  export PATH="/Users/vinicius.vilela/Library/Application Support/fnm:$PATH"
-  eval "`fnm env`"
-fi
 
 eval "$(oh-my-posh init zsh)"
 
@@ -34,13 +15,11 @@ eval "$(zoxide init zsh)"
 
 
 eval "$(fnm env --use-on-cd --shell zsh)"
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 
 
 alias ls='ls -G'
 alias emulator='open -a Simulator'
-
 
 # Aliases
 alias g='git'
@@ -94,3 +73,10 @@ alias ggpush='git push origin $(current_branch)'
 
 alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
 
+alias vim='nvim'
+
+. "$HOME/.atuin/bin/env"
+
+eval "$(atuin init zsh)"
+
+source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh

@@ -74,14 +74,27 @@ function M.on_attach(client, buffer)
     end
   end
 
-  -- Disable vtsls/tsserver semantic tokens inside Vue files
-  if vim.bo[buffer].filetype == "vue" and (client.name == "vtsls" or client.name == "tsserver") then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
+  -- Handle semantic tokens for Vue files more safely
+  if vim.bo[buffer].filetype == "vue" then
+    -- Disable vtsls/tsserver semantic tokens inside Vue files
+    if (client.name == "vtsls" or client.name == "tsserver") then
+      if client.server_capabilities then
+        client.server_capabilities.semanticTokensProvider = nil
+        -- Also disable in the client config to prevent future requests
+        if client.config and client.config.capabilities then
+          client.config.capabilities.textDocument = client.config.capabilities.textDocument or {}
+          client.config.capabilities.textDocument.semanticTokens = nil
+        end
+      end
+    end
 
-  -- explicitly enable full semantic tokens for vue_ls
-  if client.name == "vue_ls" and client.server_capabilities.semanticTokensProvider then
-    client.server_capabilities.semanticTokensProvider.full = true
+    -- explicitly enable full semantic tokens for vue_ls
+    if client.name == "vue_ls" and client.server_capabilities and client.server_capabilities.semanticTokensProvider then
+      -- Ensure semanticTokensProvider is a table before setting properties
+      if type(client.server_capabilities.semanticTokensProvider) == "table" then
+        client.server_capabilities.semanticTokensProvider.full = true
+      end
+    end
   end
 
   if client.supports_method("textDocument/inlayHint") then

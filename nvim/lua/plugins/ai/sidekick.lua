@@ -41,7 +41,7 @@ return {
     },
     {
       "<leader>ap",
-      function() require("sidekick.cli").select_prompt() end,
+      function() require("sidekick.cli").prompt() end,
       desc = "Sidekick Ask Prompt",
       mode = { "n", "v" },
     },

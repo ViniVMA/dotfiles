@@ -107,10 +107,10 @@ return {
 		-- wezterm.nvim support
 		{
 			key = ";",
-			mod = "CTRL",
+			mods = "CTRL",
 			action = wezterm.action_callback(function(window, pane)
 				local tab = window:active_tab()
-				if util.is_vim(pane) then
+				if utils.is_vim(pane) then
 					if (#tab:panes()) == 1 then
 						pane:split({ direction = "Bottom", size = 0.3 })
 					else
@@ -121,7 +121,6 @@ return {
 				end
 
 				local vim_pane = utils.find_vim_pane(tab)
-				print("finding vim pane", vim_pane)
 				if vim_pane then
 					vim_pane:activate()
 					tab:set_zoomed(true)

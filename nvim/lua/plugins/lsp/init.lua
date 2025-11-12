@@ -83,6 +83,12 @@ return {
       function lsp_utils.on_attach(client, buffer)
         lsp_keymaps.on_attach(client, buffer)
 
+        -- Add semantic tokens error prevention
+        if client.server_capabilities and client.server_capabilities.semanticTokensProvider == nil then
+          -- Create a dummy semantic tokens provider to prevent nil access errors
+          client.server_capabilities.semanticTokensProvider = false
+        end
+
         if opts.inlay_hints.enabled and vim.lsp.inlay_hint then
           if
             vim.api.nvim_buf_is_valid(buffer)
@@ -103,6 +109,44 @@ return {
       end
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
+
+      -- Add global semantic tokens error prevention
+      local original_buf_request = vim.lsp.buf_request
+      vim.lsp.buf_request = function(bufnr, method, params, handler, config)
+        -- Intercept semantic tokens requests and handle nil semanticTokensProvider
+        if method == "textDocument/semanticTokens/full" or method == "textDocument/semanticTokens/range" then
+          local clients = vim.lsp.get_clients({ bufnr = bufnr })
+          local has_semantic_support = false
+          for _, client in ipairs(clients) do
+            if client.server_capabilities and client.server_capabilities.semanticTokensProvider then
+              has_semantic_support = true
+              break
+            end
+          end
+
+          if not has_semantic_support then
+            -- Skip this request if no client supports semantic tokens
+            if handler then
+              handler(nil, { code = -32601, message = "Method not found" }, { method = method })
+            end
+            return
+          end
+        end
+        return original_buf_request(bufnr, method, params, handler, config)
+      end
+
+      -- Add additional protection for the semantic tokens module
+      local ok, semantic = pcall(require, "vim.lsp.semantic_tokens")
+      if ok and semantic.send_request then
+        local original_send_request = semantic.send_request
+        semantic.send_request = function(bufnr, client_id, method, options)
+          local client = vim.lsp.get_client_by_id(client_id)
+          if not client or not client.server_capabilities or not client.server_capabilities.semanticTokensProvider then
+            return
+          end
+          return original_send_request(bufnr, client_id, method, options)
+        end
+      end
 
       local servers = vim.tbl_deep_extend("force", {}, opts.servers)
 

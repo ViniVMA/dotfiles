@@ -12,6 +12,9 @@ return {
       input = { enabled = true },
       notifier = { enabled = true },
       explorer = { enabled = true },
+      lazygit = {
+        enabled = false,
+      },
       picker = {
         enabled = false,
         explorer = {

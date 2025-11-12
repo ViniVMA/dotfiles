@@ -121,6 +121,14 @@ return {
       enable_autocmd = false,
     })
 
+    -- Integrate ts_context_commentstring with vim.cmd.normal
+    local get_option = vim.filetype.get_option
+    vim.filetype.get_option = function(filetype, option)
+      return option == "commentstring"
+        and require("ts_context_commentstring.internal").calculate_commentstring()
+        or get_option(filetype, option)
+    end
+
     -- Setup autotag for Vue and other web filetypes
     require("nvim-ts-autotag").setup({
       opts = {

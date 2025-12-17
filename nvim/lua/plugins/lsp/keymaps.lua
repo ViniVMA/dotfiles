@@ -26,7 +26,7 @@ function M.get()
     { "<leader>cr", vim.lsp.buf.rename, desc = "Rename", has = "rename" },
     { "<leader>cf", function() vim.lsp.buf.format({ async = true }) end, desc = "Format Document" },
     {
-      "<leader>cd",
+      "<leader>ck",
       function()
         require("fzf-lua").diagnostics_document({
           severity = "warn|error",
@@ -77,7 +77,7 @@ function M.on_attach(client, buffer)
   -- Handle semantic tokens for Vue files more safely
   if vim.bo[buffer].filetype == "vue" then
     -- Disable vtsls/tsserver semantic tokens inside Vue files
-    if (client.name == "vtsls" or client.name == "tsserver") then
+    if client.name == "vtsls" or client.name == "tsserver" then
       if client.server_capabilities then
         client.server_capabilities.semanticTokensProvider = nil
         -- Also disable in the client config to prevent future requests

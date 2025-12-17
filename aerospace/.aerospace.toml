@@ -245,6 +245,12 @@ run = ['layout tiling', 'move-node-to-workspace 𝙱̲rowsing']
 if.app-id = 'com.tinyspeck.slackmacgap'
 run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
 
+# Notion Calendar
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'
+run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+
+
 # Zoom
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'

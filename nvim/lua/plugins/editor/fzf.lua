@@ -2,6 +2,7 @@ return {
   {
     "ibhagwan/fzf-lua",
     cmd = { "FzfLua" },
+    event = "VeryLazy",
     dependencies = {
       "echasnovski/mini.icons",
       opts = {},

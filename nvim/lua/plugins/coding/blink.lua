@@ -15,6 +15,9 @@ return {
       ["<C-q>"] = {
         function(cmp) cmp.show({}) end,
       },
+      ["<C-Space>"] = {
+        function(cmp) cmp.show({}) end,
+      },
     },
 
     appearance = {

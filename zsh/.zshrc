@@ -14,7 +14,7 @@ eval "$(zoxide init zsh)"
 
 
 
-eval "$(fnm env --use-on-cd --shell zsh)"
+# eval "$(fnm env --use-on-cd --shell zsh)"
 
 
 
@@ -80,3 +80,4 @@ alias vim='nvim'
 eval "$(atuin init zsh)"
 
 source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
+eval "$(~/.local/bin/mise activate zsh)"

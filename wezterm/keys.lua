@@ -50,7 +50,8 @@ return {
 		},
 	},
 	keys = {
-		{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
+		{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\n" }) },
+		{ key = "Space", mods = "CTRL", action = wezterm.action({ SendString = "\x00" }) },
 		{ key = ".", mods = mods.l, action = act.ActivateCommandPalette },
 		{ key = "Enter", mods = mods.l, action = act.ToggleFullScreen },
 		{ key = "f", mods = mods.l, action = act.Search({ CaseInSensitiveString = "" }) },

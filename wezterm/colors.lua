@@ -1,11 +1,11 @@
 local utils = require("lib.utils")
 local wezterm = require("wezterm") --[[@as Wezterm]]
 
-local light = "Gruvbox Material (Gogh)"
-local dark = "Gruvbox Material (Gogh)"
+local koda = require("colors.koda")
+local koda_light = require("colors.koda-light")
 
 ---@type StrictConfig
 return {
-	color_scheme = utils.scheme_for_appearance(wezterm.gui.get_appearance(), dark, light),
-	color_scheme_dirs = { "~/.config/wezterm/colors/" },
+	colors = utils.scheme_for_appearance(wezterm.gui.get_appearance(), koda.colors(), koda_light.colors()),
+	window_frame = utils.scheme_for_appearance(wezterm.gui.get_appearance(), koda.window_frame(), koda_light.window_frame()),
 }

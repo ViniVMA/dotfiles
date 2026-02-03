@@ -41,6 +41,10 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 # Also see: https://nikitabobko.github.io/AeroSpace/goodies#disable-hide-app
 automatically-unhide-macos-hidden-apps = true
 
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE'
+]
+
 # Possible values: (qwerty|dvorak|colemak)
 # See https://nikitabobko.github.io/AeroSpace/guide#key-mapping
 [key-mapping]
@@ -135,22 +139,22 @@ alt-w = 'workspace 𝚆̲riting'
 alt-v = 'workspace 𝚅̲M'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
-alt-shift-b = 'move-node-to-workspace 𝙱̲rowsing'
-alt-shift-c = 'move-node-to-workspace 𝙲̲ommunication'
-alt-shift-d = 'move-node-to-workspace 𝙳̲evelopment'
-alt-shift-e = 'move-node-to-workspace 𝙴̲xtra'
-alt-shift-f = 'move-node-to-workspace 𝙵̲ile_Management'
-alt-shift-g = 'move-node-to-workspace 𝙶̲aming'
+alt-shift-b = 'move-node-to-workspace 𝙱̲rowsing --focus-follows-window'
+alt-shift-c = 'move-node-to-workspace 𝙲̲ommunication --focus-follows-window'
+alt-shift-d = 'move-node-to-workspace 𝙳̲evelopment --focus-follows-window'
+alt-shift-e = 'move-node-to-workspace 𝙴̲xtra --focus-follows-window'
+alt-shift-f = 'move-node-to-workspace 𝙵̲ile_Management --focus-follows-window'
+alt-shift-g = 'move-node-to-workspace 𝙶̲aming --focus-follows-window'
 # alt-shift-t = 'move-node-to-workspace Learn_Linux_𝚃̲V'
-alt-shift-m = 'move-node-to-workspace 𝙼̲usic'
-alt-shift-o = 'move-node-to-workspace 𝙾̲ther'
-alt-shift-p = 'move-node-to-workspace 𝙿̲lanning'
-alt-shift-1 = 'move-node-to-workspace Project_𝟷̲'
-alt-shift-2 = 'move-node-to-workspace Project_𝟸̲'
-alt-shift-r = 'move-node-to-workspace 𝚁̲esearch'
-alt-shift-s = 'move-node-to-workspace 𝚂̲ystem_Administration'
-alt-shift-w = 'move-node-to-workspace 𝚆̲riting'
-alt-shift-v = 'move-node-to-workspace 𝚅̲M'
+alt-shift-m = 'move-node-to-workspace 𝙼̲usic --focus-follows-window'
+alt-shift-o = 'move-node-to-workspace 𝙾̲ther --focus-follows-window'
+alt-shift-p = 'move-node-to-workspace 𝙿̲lanning --focus-follows-window'
+alt-shift-1 = 'move-node-to-workspace Project_𝟷̲ --focus-follows-window'
+alt-shift-2 = 'move-node-to-workspace Project_𝟸̲ --focus-follows-window'
+alt-shift-r = 'move-node-to-workspace 𝚁̲esearch --focus-follows-window'
+alt-shift-s = 'move-node-to-workspace 𝚂̲ystem_Administration --focus-follows-window'
+alt-shift-w = 'move-node-to-workspace 𝚆̲riting --focus-follows-window'
+alt-shift-v = 'move-node-to-workspace 𝚅̲M --focus-follows-window'
 
 # # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 # alt-1 = 'workspace 1'

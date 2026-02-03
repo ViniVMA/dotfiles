@@ -1,66 +1,98 @@
 local wezterm = require("wezterm") --[[@as Wezterm]]
+local utils = require("lib.utils")
 
 local M = {}
 
-local bg = "#101010"
-local blue = "#83adc3"
-local yellow = "#d8a16c"
+-- Koda dark colors
+local dark = {
+	bg = "#101010",
+	bg_alt = "#1f1f1f",
+	fg = "#ffffff",
+	fg_dim = "#a5adce",
+	accent = "#5abfb5", -- cyan
+	yellow = "#d9ba73",
+	pink = "#f4b8e4",
+	green = "#a3d6a3",
+}
+
+-- Koda light colors
+local light = {
+	bg = "#faf9f5",
+	bg_alt = "#e8e7e3",
+	fg = "#3a3a3a",
+	fg_dim = "#6a6a6a",
+	accent = "#007d7d", -- cyan
+	yellow = "#926200",
+	pink = "#a200d1",
+	green = "#407f00",
+}
+
+local colors = utils.scheme_for_appearance(wezterm.gui.get_appearance(), dark, light)
 
 M.setup = function(config)
 	local tabline = wezterm.plugin.require("https://github.com/michaelbrusegard/tabline.wez")
 	tabline.setup({
 		options = {
 			icons_enabled = true,
-			theme = "Gruvbox Material (Gogh)",
 			theme_overrides = {
 				normal_mode = {
-					a = { fg = bg, bg = blue },
-					b = { fg = "#ffffff", bg = "#1f1f1f" },
-					c = { fg = "#c6b6ee", bg = bg },
+					a = { fg = colors.bg, bg = "#a5adce" },
+					b = { fg = "#a5adce", bg = "#000000" },
+					c = { fg = colors.bg, bg = "#ffffff" },
+					x = { fg = colors.bg, bg = "#ffffff" },
+					y = { fg = "#ffffff", bg = "#000000" },
+					z = { fg = colors.bg, bg = "#a5adce" },
 				},
-				-- 	copy_mode = {
-				-- 		a = { fg = bg, bg = yellow },
-				-- 		b = { fg = yellow, bg = "#1f1f1f" },
-				-- 		c = { fg = "#c6b6ee", bg = "#151515" },
-				-- 	},
-				-- 	search_mode = {
-				-- 		a = { fg = "#000000", bg = "#d2ebbe" },
-				-- 		b = { fg = "#d2ebbe", bg = "#313244" },
-				-- 		c = { fg = "#c6b6ee", bg = "#151515" },
-				-- 	},
-				-- 	window_mode = {
-				-- 		a = { fg = bg, bg = "#cba8f7" },
-				-- 		b = { fg = "#cba6f7", bg = "#313244" },
-				-- 		c = { fg = "#cdd6f4", bg = "#181825" },
-				-- 	},
+				copy_mode = {
+					a = { fg = colors.bg, bg = "#ff5733" },
+					b = { fg = "#ff5733", bg = "#000000" },
+					c = { fg = colors.bg, bg = "#ffffff" },
+					x = { fg = colors.bg, bg = "#ffffff" },
+					y = { fg = "#ffffff", bg = "#000000" },
+					z = { fg = colors.bg, bg = "#ff5733" },
+				},
+				search_mode = {
+					a = { fg = colors.bg, bg = "#8ec772" },
+					b = { fg = "#8ec772", bg = "#000000" },
+					c = { fg = colors.bg, bg = "#ffffff" },
+					x = { fg = colors.bg, bg = "#ffffff" },
+					y = { fg = "#ffffff", bg = "#000000" },
+					z = { fg = colors.bg, bg = "#8ec772" },
+				},
 				move_tab_mode = {
-					a = { fg = bg, bg = "#cba8f7" },
-					b = { fg = "#cba6f7", bg = "#313244" },
-					c = { fg = "#cdd6f4", bg = "#181825" },
+					a = { fg = colors.bg, bg = "#f2a4db" },
+					b = { fg = "#f2a4db", bg = "#000000" },
+					c = { fg = colors.bg, bg = "#ffffff" },
+					x = { fg = colors.bg, bg = "#ffffff" },
+					y = { fg = "#ffffff", bg = "#000000" },
+					z = { fg = colors.bg, bg = "#f2a4db" },
 				},
 				resize_pane_mode = {
-					a = { fg = bg, bg = "#cba8f7" },
-					b = { fg = "#cba6f7", bg = "#313244" },
-					c = { fg = "#cdd6f4", bg = "#181825" },
+					a = { fg = colors.bg, bg = "#ff7676" },
+					b = { fg = "#ff7676", bg = "#000000" },
+					c = { fg = colors.bg, bg = "#ffffff" },
+					x = { fg = colors.bg, bg = "#ffffff" },
+					y = { fg = "#ffffff", bg = "#000000" },
+					z = { fg = colors.bg, bg = "#ff7676" },
 				},
 
 				tab = {
-					active = { fg = bg, bg = yellow },
-					inactive = { fg = "#cdd6f4", bg = bg },
-					inactive_hover = { fg = "#f5c2e7", bg = "#181825" },
+					active = { fg = "#ffffff", bg = "#000000" },
+					inactive = { fg = "#000000", bg = "#ffffff" },
+					inactive_hover = { fg = "#ffffff", bg = "#000000" },
 				},
 			},
 			section_separators = {
-				left = wezterm.nerdfonts.pl_left_hard_divider,
-				right = wezterm.nerdfonts.pl_right_hard_divider,
+				left = wezterm.nerdfonts.ple_lower_left_triangle,
+				right = wezterm.nerdfonts.ple_upper_right_triangle,
 			},
 			component_separators = {
 				left = wezterm.nerdfonts.pl_left_soft_divider,
 				right = wezterm.nerdfonts.pl_right_soft_divider,
 			},
 			tab_separators = {
-				left = wezterm.nerdfonts.pl_left_hard_divider,
-				right = wezterm.nerdfonts.pl_right_hard_divider,
+				left = wezterm.nerdfonts.ple_lower_left_triangle,
+				right = wezterm.nerdfonts.ple_upper_right_triangle,
 			},
 		},
 		sections = {
@@ -108,22 +140,20 @@ M.setup = function(config)
 					end,
 				},
 			},
-			tabline_c = {
-				-- " "
-			},
 			tab_active = {
 				"index",
 				-- { "parent", padding = 0 },
 				-- "/",
 				{ "cwd", padding = { left = 0, right = 1 } },
 				{ "zoomed", padding = 0 },
+				"",
 			},
 			tab_inactive = {
 				"index",
 				-- { "process", padding = { left = 0, right = 1 } },
 				{ "cwd", padding = { left = 0, right = 1 } },
 			},
-			tabline_x = { "" },
+			tabline_x = {},
 			tabline_y = {
 				"ram",
 				"cpu",

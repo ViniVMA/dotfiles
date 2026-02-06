@@ -146,7 +146,6 @@ M.setup = function(config)
 				-- "/",
 				{ "cwd", padding = { left = 0, right = 1 } },
 				{ "zoomed", padding = 0 },
-				"",
 			},
 			tab_inactive = {
 				"index",
@@ -171,7 +170,7 @@ M.setup = function(config)
 	-- specific tabline config
 	config.use_fancy_tab_bar = false
 	config.tab_bar_at_bottom = false
-	config.hide_tab_bar_if_only_one_tab = false
+	config.hide_tab_bar_if_only_one_tab = true
 	config.window_decorations = "NONE"
 
 	tabline.apply_to_config(config)

@@ -55,7 +55,7 @@ return {
 		{ key = "f", mods = mods.a, action = act.Search({ CaseInSensitiveString = "" }) },
 		{ key = "t", mods = mods.a, action = act({ SpawnTab = "CurrentPaneDomain" }) },
 		-- using "ALT|SHIFT" here to handle windows differences
-		{ key = "|", mods = mods.a, action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+		{ key = "\\", mods = mods.a, action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
 		{ key = "-", mods = mods.a, action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
 		{ key = "h", mods = mods.a, action = act({ ActivatePaneDirection = "Left" }) },
 		{ key = "j", mods = mods.a, action = act({ ActivatePaneDirection = "Down" }) },

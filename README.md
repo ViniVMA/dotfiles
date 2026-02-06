@@ -98,7 +98,7 @@ Terminal emulator. All keybinds use **Alt** as modifier. Font: Maple Mono (16pt)
 | Key | Action |
 |-----|--------|
 | `Alt + t` | New tab |
-| `Alt + \|` | Split horizontal |
+| `Alt + \` | Split horizontal |
 | `Alt + -` | Split vertical |
 | `Alt + h/j/k/l` | Focus pane left / down / up / right |
 | `Alt + H` / `Alt + L` | Previous / next tab |

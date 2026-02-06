@@ -10,6 +10,8 @@ local wezterm = require("wezterm") --[[@as Wezterm]]
 
 ---@type StrictConfig
 return {
+	send_composed_key_when_left_alt_is_pressed = false,
+	send_composed_key_when_right_alt_is_pressed = false,
 	force_reverse_video_cursor = true,
 	-- term = "wezterm",
 	hyperlink_rules = wezterm.default_hyperlink_rules(),

@@ -33,6 +33,10 @@ return {
       menu = {
         draw = {
           treesitter = { "lsp", "path", "buffer", "snippets" },
+          columns = {
+            { "kind_icon" },
+            { "label", "label_description", gap = 1 },
+          },
         },
         direction_priority = function()
           local ctx = require("blink.cmp").get_context()

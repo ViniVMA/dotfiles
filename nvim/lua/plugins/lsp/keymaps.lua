@@ -11,7 +11,7 @@ function M.get()
     { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
     { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
     { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
-    { "K", function() return vim.lsp.buf.hover() end, desc = "Hover" },
+    { "K", function() return M.merged_hover() end, desc = "Hover" },
     { "gK", function() return vim.lsp.buf.signature_help() end, desc = "Signature Help", has = "signatureHelp" },
     {
       "<c-k>",
@@ -39,6 +39,48 @@ function M.get()
   }
 
   return M._keys
+end
+
+function M.merged_hover()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr, method = "textDocument/hover" })
+
+  if #clients == 0 then return end
+  if #clients == 1 then return vim.lsp.buf.hover() end
+
+  local params = vim.lsp.util.make_position_params(0, clients[1].offset_encoding)
+  local results = {}
+  local remaining = #clients
+
+  for _, client in ipairs(clients) do
+    client:request("textDocument/hover", params, function(err, result)
+      if not err and result and result.contents then
+        local text = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+        if text and #text > 0 then
+          -- Tag each result with the client name
+          table.insert(results, { client = client.name, lines = text })
+        end
+      end
+
+      remaining = remaining - 1
+      if remaining == 0 then
+        vim.schedule(function()
+          if #results == 0 then return end
+
+          local merged = {}
+          for i, entry in ipairs(results) do
+            if i > 1 then table.insert(merged, "---") end
+            vim.list_extend(merged, entry.lines)
+          end
+
+          vim.lsp.util.open_floating_preview(merged, "markdown", {
+            focus_id = "merged_hover",
+            border = "rounded",
+          })
+        end)
+      end
+    end, bufnr)
+  end
 end
 
 function M.has_capability(buffer, method)

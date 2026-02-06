@@ -274,6 +274,8 @@ return {
         "eslint-lsp",
         "css-lsp",
         "html-lsp",
+        "emmet-language-server",
+        "css-variables-language-server",
       },
     },
     config = function(_, opts)

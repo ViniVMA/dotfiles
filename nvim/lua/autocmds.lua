@@ -152,3 +152,12 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.commentstring = "<!-- %s -->"
   end,
 })
+
+-- Auto bracket spacing for Vue templates: {{ }} -> {{ | }}
+vim.api.nvim_create_autocmd("FileType", {
+  group = augroup("vue_bracket_spacing"),
+  pattern = { "vue" },
+  callback = function(event)
+    vim.keymap.set("i", "{{", "{{  }}<Left><Left><Left>", { buffer = event.buf, silent = true })
+  end,
+})

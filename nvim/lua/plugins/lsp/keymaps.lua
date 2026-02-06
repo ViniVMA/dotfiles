@@ -6,10 +6,10 @@ function M.get()
   if M._keys then return M._keys end
 
   M._keys = {
-    { "gd", vim.lsp.buf.definition, desc = "Goto Definition", has = "definition" },
-    { "gr", vim.lsp.buf.references, desc = "References", nowait = true },
-    { "gI", vim.lsp.buf.implementation, desc = "Goto Implementation" },
-    { "gy", vim.lsp.buf.type_definition, desc = "Goto T[y]pe Definition" },
+    { "gd", function() require("fzf-lua").lsp_definitions() end, desc = "Goto Definition", has = "definition" },
+    { "gr", function() require("fzf-lua").lsp_references() end, desc = "References", nowait = true },
+    { "gI", function() require("fzf-lua").lsp_implementations() end, desc = "Goto Implementation" },
+    { "gy", function() require("fzf-lua").lsp_typedefs() end, desc = "Goto T[y]pe Definition" },
     { "gD", vim.lsp.buf.declaration, desc = "Goto Declaration" },
     { "K", function() return M.merged_hover() end, desc = "Hover" },
     { "gK", function() return vim.lsp.buf.signature_help() end, desc = "Signature Help", has = "signatureHelp" },

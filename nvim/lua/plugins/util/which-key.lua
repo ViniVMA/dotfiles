@@ -16,6 +16,8 @@ return {
         { "<leader>g", group = "git" },
         { "<leader>gd", group = "diffview" },
         { "<leader>gh", group = "hunks" },
+        { "<leader>gl", group = "log" },
+        { "<leader>o", group = "octo" },
         { "<leader>q", group = "quit/session" },
         { "<leader>s", group = "search" },
         { "<leader>a", group = "AI" },

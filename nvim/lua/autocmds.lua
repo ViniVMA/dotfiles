@@ -158,6 +158,6 @@ vim.api.nvim_create_autocmd("FileType", {
   group = augroup("vue_bracket_spacing"),
   pattern = { "vue" },
   callback = function(event)
-    vim.keymap.set("i", "{{", "{{  }}<Left><Left><Left>", { buffer = event.buf, silent = true })
+    vim.keymap.set("i", "{{", "{{  }}<Left><Left><Left>", { buffer = event.buf, silent = true, desc = "Vue Template Brackets" })
   end,
 })

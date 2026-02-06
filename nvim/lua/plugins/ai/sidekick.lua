@@ -7,6 +7,17 @@ return {
         backend = "zellij",
         enabled = false,
       },
+      win = {
+        layout = "float",
+        wo = {
+          winbar = " %{mode() ==# 't' ? ' TERMINAL' : ' NORMAL'}",
+        },
+        float = {
+          width = 0.8,
+          height = 0.8,
+          border = "rounded",
+        },
+      },
     },
   },
   keys = {
@@ -29,9 +40,43 @@ return {
     },
     {
       "<leader>aa",
-      function() require("sidekick.cli").toggle({ focus = true }) end,
-      desc = "Sidekick Toggle CLI",
+      function()
+        local Config = require("sidekick.config")
+        local Terminal = require("sidekick.cli.terminal")
+        Config.cli.win.layout = "float"
+        for _, term in ipairs(Terminal.sessions()) do
+          if term.opts and term:is_open() and term.opts.layout ~= "float" then
+            term:hide()
+          end
+          if term.opts then term.opts.layout = "float" end
+        end
+        require("sidekick.cli").toggle({ focus = true })
+      end,
+      desc = "Sidekick Toggle CLI (Float)",
       mode = { "n", "v" },
+    },
+    {
+      "<leader>as",
+      function()
+        local Config = require("sidekick.config")
+        local Terminal = require("sidekick.cli.terminal")
+        Config.cli.win.layout = "right"
+        for _, term in ipairs(Terminal.sessions()) do
+          if term.opts and term:is_open() and term.opts.layout ~= "right" then
+            term:hide()
+          end
+          if term.opts then term.opts.layout = "right" end
+        end
+        require("sidekick.cli").toggle({ focus = true })
+      end,
+      desc = "Sidekick Toggle CLI (Split)",
+      mode = { "n", "v" },
+    },
+    {
+      "<c-q>",
+      function() require("sidekick.cli").toggle() end,
+      mode = { "t" },
+      desc = "Sidekick Toggle CLI",
     },
     {
       "<leader>ac",

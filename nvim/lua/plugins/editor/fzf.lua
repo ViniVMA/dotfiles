@@ -57,8 +57,8 @@ return {
     config = function() require("fzf-lua").register_ui_select() end,
 
     keys = {
-      { "<c-j>", "<c-j>", ft = "fzf", mode = "t", nowait = true },
-      { "<c-k>", "<c-k>", ft = "fzf", mode = "t", nowait = true },
+      { "<c-j>", "<c-j>", ft = "fzf", mode = "t", nowait = true, desc = "FZF Navigate Down" },
+      { "<c-k>", "<c-k>", ft = "fzf", mode = "t", nowait = true, desc = "FZF Navigate Up" },
       {
         "<leader>,",
         "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",

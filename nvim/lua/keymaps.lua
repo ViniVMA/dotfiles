@@ -11,12 +11,12 @@ local opts = { noremap = true, silent = true }
 --
 local map = vim.keymap.set
 
-map("n", "<leader>r", ":source $MYVIMRC<CR>", opts)
+map("n", "<leader>r", ":source $MYVIMRC<CR>", { noremap = true, silent = true, desc = "Reload Config" })
 
 vim.keymap.set("n", "Q", "q", { desc = "Record macro" })
 vim.keymap.set("n", "q", "<Nop>", { desc = "Disable default recording" })
 
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear Search Highlight" })
 
 map("n", "<leader>qq", "<cmd>qa<cr>", { desc = "Quit All" })
 
@@ -59,17 +59,17 @@ map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 vim.keymap.set("n", "<leader>fg", ":GrugFar<CR>", { desc = "GrugFar" })
 
 -- Move 10 lines up and down holding ctrl
-vim.keymap.set("v", "<C-k>", "10k", { desc = "Move down 10 lines up" })
-vim.keymap.set("n", "<C-k>", "10k", { desc = "Move down 10 lines up" })
-vim.keymap.set("n", "<C-j>", "10j", { desc = "Move down 10 lines down" })
-vim.keymap.set("v", "<C-j>", "10j", { desc = "Move down 10 lines down" })
+vim.keymap.set("v", "<C-k>", "10k", { desc = "Move 10 Lines Up" })
+vim.keymap.set("n", "<C-k>", "10k", { desc = "Move 10 Lines Up" })
+vim.keymap.set("n", "<C-j>", "10j", { desc = "Move 10 Lines Down" })
+vim.keymap.set("v", "<C-j>", "10j", { desc = "Move 10 Lines Down" })
 
 -- Move selected lines with shift+j or shift+k
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 
 -- clear search highlight
-vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear Search Highlight" })
 
 -- Search and replace word under the cursor
 vim.keymap.set(
@@ -129,8 +129,8 @@ map("o", "N", "'nN'[v:searchforward]", { expr = true, desc = "Prev Search Result
 map({ "i", "x", "n", "s" }, "<C-s>", "<cmd>w<cr><esc>", { desc = "Save File" })
 
 -- better indenting
-map("v", "<", "<gv")
-map("v", ">", ">gv")
+map("v", "<", "<gv", { desc = "Indent Left" })
+map("v", ">", ">gv", { desc = "Indent Right" })
 
 -- commenting
 map("n", "gco", "o<esc>Vcx<esc><cmd>normal gcc<cr>fxa<bs>", { desc = "Add Comment Below" })

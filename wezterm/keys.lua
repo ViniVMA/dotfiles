@@ -10,7 +10,6 @@ local act = wezterm.action
 local key_mod_panes = "CTRL|SHIFT"
 local NONE = "NONE"
 local mods = {
-	l = "LEADER",
 	c = "CTRL",
 	a = "ALT",
 	s = "SHIFT",
@@ -19,7 +18,6 @@ local mods = {
 
 ---@type StrictConfig
 return {
-	leader = { key = "a", mods = mods.c, timeout_milliseconds = 2000 },
 	key_tables = {
 		search_mode = {
 			{ key = "c", mods = mods.c, action = act.CopyMode("Close") },
@@ -52,48 +50,48 @@ return {
 	keys = {
 		{ key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\n" }) },
 		{ key = "Space", mods = "CTRL", action = wezterm.action({ SendString = "\x00" }) },
-		{ key = ".", mods = mods.l, action = act.ActivateCommandPalette },
-		{ key = "Enter", mods = mods.l, action = act.ToggleFullScreen },
-		{ key = "f", mods = mods.l, action = act.Search({ CaseInSensitiveString = "" }) },
-		{ key = "t", mods = mods.l, action = act({ SpawnTab = "CurrentPaneDomain" }) },
-		-- using "LEADER|SHIFT" here to handle windows differences
-		{ key = "|", mods = mods.l, action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
-		{ key = "-", mods = mods.l, action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
-		{ key = "h", mods = mods.l, action = act({ ActivatePaneDirection = "Left" }) },
-		{ key = "j", mods = mods.l, action = act({ ActivatePaneDirection = "Down" }) },
-		{ key = "k", mods = mods.l, action = act({ ActivatePaneDirection = "Up" }) },
-		{ key = "l", mods = mods.l, action = act({ ActivatePaneDirection = "Right" }) },
-		{ key = "H", mods = mods.l, action = act({ ActivateTabRelative = -1 }) },
-		{ key = "L", mods = mods.l, action = act({ ActivateTabRelative = 1 }) },
+		{ key = ".", mods = mods.a, action = act.ActivateCommandPalette },
+		{ key = "Enter", mods = mods.a, action = act.ToggleFullScreen },
+		{ key = "f", mods = mods.a, action = act.Search({ CaseInSensitiveString = "" }) },
+		{ key = "t", mods = mods.a, action = act({ SpawnTab = "CurrentPaneDomain" }) },
+		-- using "ALT|SHIFT" here to handle windows differences
+		{ key = "|", mods = mods.a, action = act({ SplitHorizontal = { domain = "CurrentPaneDomain" } }) },
+		{ key = "-", mods = mods.a, action = act({ SplitVertical = { domain = "CurrentPaneDomain" } }) },
+		{ key = "h", mods = mods.a, action = act({ ActivatePaneDirection = "Left" }) },
+		{ key = "j", mods = mods.a, action = act({ ActivatePaneDirection = "Down" }) },
+		{ key = "k", mods = mods.a, action = act({ ActivatePaneDirection = "Up" }) },
+		{ key = "l", mods = mods.a, action = act({ ActivatePaneDirection = "Right" }) },
+		{ key = "H", mods = mods.a, action = act({ ActivateTabRelative = -1 }) },
+		{ key = "L", mods = mods.a, action = act({ ActivateTabRelative = 1 }) },
 		{ key = "{", mods = key_mod_panes, action = act({ ActivateTabRelative = -1 }) },
 		{ key = "}", mods = key_mod_panes, action = act({ ActivateTabRelative = 1 }) },
-		{ key = "q", mods = mods.l, action = act({ CloseCurrentPane = { confirm = true } }) },
-		{ key = "x", mods = mods.l, action = act.PaneSelect({ mode = "SwapWithActiveKeepFocus" }) },
-		{ key = "z", mods = mods.l, action = act.TogglePaneZoomState },
-		{ key = "s", mods = mods.l, action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
+		{ key = "q", mods = mods.a, action = act({ CloseCurrentPane = { confirm = true } }) },
+		{ key = "x", mods = mods.a, action = act.PaneSelect({ mode = "SwapWithActiveKeepFocus" }) },
+		{ key = "z", mods = mods.a, action = act.TogglePaneZoomState },
+		{ key = "s", mods = mods.a, action = act.ShowLauncherArgs({ flags = "FUZZY|WORKSPACES" }) },
 		{ key = "LeftArrow", mods = "SHIFT|ALT", action = act.AdjustPaneSize({ "Left", 5 }) },
 		{ key = "RightArrow", mods = "SHIFT|ALT", action = act.AdjustPaneSize({ "Right", 5 }) },
 		{ key = "DownArrow", mods = "SHIFT|ALT", action = act.AdjustPaneSize({ "Down", 5 }) },
 		{ key = "UpArrow", mods = "SHIFT|ALT", action = act.AdjustPaneSize({ "Up", 5 }) },
 		{ key = "UpArrow", mods = mods.a, action = act.ScrollByLine(-1) },
 		{ key = "DownArrow", mods = mods.a, action = act.ScrollByLine(1) },
-		{ key = "[", mods = mods.l, action = act.ActivateCopyMode },
+		{ key = "[", mods = mods.a, action = act.ActivateCopyMode },
 
 		-- Key table for moving tabs around
-		{ key = "m", mods = "LEADER", action = act.ActivateKeyTable({ name = "move_tab_mode", one_shot = false }) },
+		{ key = "m", mods = "ALT", action = act.ActivateKeyTable({ name = "move_tab_mode", one_shot = false }) },
 
 		-- We can make separate keybindings for resizing panes
 		-- But Wezterm offers custom "mode" in the name of "KeyTable"
 		{
 			key = "r",
-			mods = "LEADER",
+			mods = "ALT",
 			action = act.ActivateKeyTable({ name = "resize_pane_mode", one_shot = false }),
 		},
 
 		-- open url quick select
 		{
 			key = "i",
-			mods = mods.l,
+			mods = mods.a,
 			action = wezterm.action({
 				QuickSelectArgs = {
 					patterns = quick_select_patterns,
@@ -131,42 +129,42 @@ return {
 		-- utilities
 		{
 			key = "d",
-			mods = mods.l,
+			mods = mods.a,
 			action = act.SpawnCommandInNewTab({
 				args = { utils.get_cmd("lazydocker") },
 			}),
 		},
 		{
 			key = "e",
-			mods = mods.l,
+			mods = mods.a,
 			action = act.SpawnCommandInNewTab({
 				args = { utils.get_cmd("nvim") },
 			}),
 		},
 		-- {
 		-- 	key = "g",
-		-- 	mods = mods.l,
+		-- 	mods = mods.a,
 		-- 	action = act.SpawnCommandInNewTab({
 		-- 		args = { utils.get_cmd("lazygit") },
 		-- 	}),
 		-- },
 		{
 			key = "c",
-			mods = mods.l,
+			mods = mods.a,
 			action = act.SpawnCommandInNewTab({
 				args = { utils.get_cmd("claude") },
 			}),
 		},
 		-- Tab navigation by index
-		{ key = "1", mods = mods.l, action = act.ActivateTab(0) },
-		{ key = "2", mods = mods.l, action = act.ActivateTab(1) },
-		{ key = "3", mods = mods.l, action = act.ActivateTab(2) },
-		{ key = "4", mods = mods.l, action = act.ActivateTab(3) },
-		{ key = "5", mods = mods.l, action = act.ActivateTab(4) },
-		{ key = "6", mods = mods.l, action = act.ActivateTab(5) },
-		{ key = "7", mods = mods.l, action = act.ActivateTab(6) },
-		{ key = "8", mods = mods.l, action = act.ActivateTab(7) },
-		{ key = "9", mods = mods.l, action = act.ActivateTab(8) },
+		{ key = "1", mods = mods.a, action = act.ActivateTab(0) },
+		{ key = "2", mods = mods.a, action = act.ActivateTab(1) },
+		{ key = "3", mods = mods.a, action = act.ActivateTab(2) },
+		{ key = "4", mods = mods.a, action = act.ActivateTab(3) },
+		{ key = "5", mods = mods.a, action = act.ActivateTab(4) },
+		{ key = "6", mods = mods.a, action = act.ActivateTab(5) },
+		{ key = "7", mods = mods.a, action = act.ActivateTab(6) },
+		{ key = "8", mods = mods.a, action = act.ActivateTab(7) },
+		{ key = "9", mods = mods.a, action = act.ActivateTab(8) },
 	},
 	mouse_bindings = {
 		{

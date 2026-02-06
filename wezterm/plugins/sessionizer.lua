@@ -10,10 +10,10 @@ M.setup = function(config)
 	}
 
 	for _, key_mapping in ipairs({
-		{ key = "P", mods = "LEADER", action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }) },
+		{ key = "P", mods = "ALT", action = wezterm.action.ShowLauncherArgs({ flags = "WORKSPACES" }) },
 		{
 			key = "p",
-			mods = "LEADER",
+			mods = "ALT",
 			action = sessionizer.show({
 				schema = schema,
 				processing = {

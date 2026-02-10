@@ -8,7 +8,7 @@
 start-at-login = true
 
 after-startup-command = [
-  'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+  'exec-and-forget borders active_color=0x66808080 inactive_color=0x00000000 width=6.0 style=round',
   'workspace 𝙲̲ommunication',
   'layout accordion horizontal',
   'workspace 𝙳̲evelopment',
@@ -157,7 +157,11 @@ cmd-alt-ctrl-shift-v = 'workspace 𝚅̲M'
 
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
-cmd-alt-ctrl-shift-backtick = 'workspace-back-and-forth'
+cmd-alt-ctrl-shift-space = 'workspace-back-and-forth'
+cmd-alt-ctrl-shift-backtick = '''exec-and-forget bash -c '\
+  osascript -e "tell application \"System Events\" to set autohide of dock preferences to not (autohide of dock preferences)" \
+  && aerospace flatten-workspace-tree'
+'''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
 cmd-alt-ctrl-shift-a = 'mode service'

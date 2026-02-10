@@ -3,17 +3,13 @@ local wezterm = require("wezterm") --[[@as Wezterm]]
 
 ---@type StrictConfig
 return {
-	font_size = 16,
+	font_size = 15,
 	font = wezterm.font_with_fallback({
+		fonts.geist_mono,
 		fonts.maple_mono,
-		fonts.monaspace,
-
+		fonts.departure_mono,
 		fonts.commit_mono,
-		-- fonts.mononoki,
-		-- fonts.monolisa,
-		-- fonts.cascadia_code,
-		-- fonts.jetbrains,
-		-- fonts.jetbrains_styled,
+		fonts.monaspace,
 	}),
 	adjust_window_size_when_changing_font_size = false,
 	use_fancy_tab_bar = true,

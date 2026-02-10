@@ -1,6 +1,8 @@
 local wezterm = require("wezterm") --[[@as Wezterm]]
 
 return {
+	geist_mono = { family = "Geist Mono", weight = "Regular" },
+	departure_mono = { family = "Departure Mono", weight = "Regular" },
 	monaspace = { family = "Monaspace Krypton", scale = 1.2, weight = "Regular" },
 	commit_mono = { family = "CommitMono", scale = 1.1, weight = "Regular" },
 	monaco = {

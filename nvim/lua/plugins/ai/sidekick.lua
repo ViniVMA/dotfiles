@@ -3,15 +3,19 @@ return {
   opts = {
     -- add any options here
     cli = {
+      tools = {
+        claude = {
+          cmd = { "claude", "--allow-dangerously-skip-permissions" },
+        },
+      },
       mux = {
         backend = "zellij",
         enabled = false,
       },
       win = {
-        layout = "bottom",
-        -- wo = {
-        --   winbar = "%{g:actual_curwin == win_getid() ? ' ' .. (mode() ==# 't' ? ' TERMINAL' : ' NORMAL') : ''}",
-        -- },
+        wo = {
+          winhighlight = "Normal:Normal,NormalNC:Normal,EndOfBuffer:Normal,SignColumn:Normal",
+        },
         split = {
           height = 0.40,
         },

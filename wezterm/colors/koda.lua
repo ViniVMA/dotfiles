@@ -13,7 +13,7 @@ function M.colors()
 		selection_bg = "#333333",
 
 		scrollbar_thumb = "#333333",
-		split = "#333333",
+		split = "#555555",
 
 		ansi = {
 			"#101010",

@@ -74,6 +74,7 @@ alias ggpush='git push origin $(current_branch)'
 alias ggpnp='git pull origin $(current_branch) && git push origin $(current_branch)'
 
 alias vim='nvim'
+alias claude='claude --allow-dangerously-skip-permissions'
 
 . "$HOME/.atuin/bin/env"
 

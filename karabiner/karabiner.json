@@ -29,6 +29,19 @@
                                 "to_if_alone": [{ "key_code": "escape" }]
                             }
                         ]
+                    },
+                    {
+                        "description": "Disable physical Escape key (use Caps Lock instead)",
+                        "manipulators": [
+                            {
+                                "type": "basic",
+                                "from": {
+                                    "key_code": "escape",
+                                    "modifiers": { "optional": ["any"] }
+                                },
+                                "to": [{ "key_code": "vk_none" }]
+                            }
+                        ]
                     }
                 ]
             },

@@ -6,5 +6,15 @@ return {
     { "[;", function() require("dropbar.api").goto_context_start() end, desc = "Dropbar Goto Context Start" },
     { "];", function() require("dropbar.api").select_next_context() end, desc = "Dropbar Select Next Context" },
   },
-  opts = {},
+  opts = {
+    bar = {
+      sources = function(buf, _)
+        local sources = require("dropbar.sources")
+        if vim.bo[buf].buftype == "terminal" then
+          return { sources.terminal }
+        end
+        return { sources.path }
+      end,
+    },
+  },
 }

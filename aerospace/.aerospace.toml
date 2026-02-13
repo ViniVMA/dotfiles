@@ -127,9 +127,12 @@ cmd-alt-ctrl-shift-o = 'workspace 𝙾̲ther'
 cmd-alt-ctrl-shift-p = 'workspace 𝙿̲lanning'
 cmd-alt-ctrl-shift-1 = 'workspace Project_𝟷̲'
 cmd-alt-ctrl-shift-2 = 'workspace Project_𝟸̲'
+cmd-alt-ctrl-shift-3 = 'workspace Project_𝟹̲'
+cmd-alt-ctrl-shift-4 = 'workspace Project_𝟺̲'
 cmd-alt-ctrl-shift-r = 'workspace 𝚁̲esearch'
 cmd-alt-ctrl-shift-s = 'workspace 𝚂̲ystem_Administration'
 cmd-alt-ctrl-shift-w = 'workspace 𝚆̲riting'
+cmd-alt-ctrl-shift-t = 'workspace 𝚃̲ooling'
 cmd-alt-ctrl-shift-v = 'workspace 𝚅̲M'
 
 # # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
@@ -175,8 +178,60 @@ comma = ['layout accordion horizontal vertical', 'mode main']
 r = ['flatten-workspace-tree', 'mode main'] # reset layout
 f = [
   'layout floating tiling',
+  '''exec-and-forget osascript -l JavaScript -e '
+ObjC.import("AppKit");
+var se = Application("System Events");
+var p = se.processes.whose({frontmost: true})[0];
+var w = p.windows[0];
+var sz = w.size();
+var pos = w.position();
+var mainH = $.NSScreen.mainScreen.frame.size.height;
+var cx = pos[0] + sz[0] / 2;
+var cy = mainH - pos[1] - sz[1] / 2;
+var screens = $.NSScreen.screens;
+var screen = $.NSScreen.mainScreen;
+for (var i = 0; i < screens.count; i++) {
+  var s = screens.objectAtIndex(i);
+  var f = s.frame;
+  if (cx >= f.origin.x && cx < f.origin.x + f.size.width &&
+      cy >= f.origin.y && cy < f.origin.y + f.size.height) {
+    screen = s; break;
+  }
+}
+var vf = screen.visibleFrame;
+var newX = Math.round(vf.origin.x + (vf.size.width - sz[0]) / 2);
+var newY = Math.round(mainH - (vf.origin.y + (vf.size.height - sz[1]) / 2) - sz[1]);
+w.position = [newX, newY];
+'
+''',
   'mode main',
-] # Toggle between floating and tiling layout
+] # Toggle between floating and tiling layout, center if floating
+shift-c = ['''exec-and-forget osascript -l JavaScript -e '
+ObjC.import("AppKit");
+var se = Application("System Events");
+var p = se.processes.whose({frontmost: true})[0];
+var w = p.windows[0];
+var sz = w.size();
+var pos = w.position();
+var mainH = $.NSScreen.mainScreen.frame.size.height;
+var cx = pos[0] + sz[0] / 2;
+var cy = mainH - pos[1] - sz[1] / 2;
+var screens = $.NSScreen.screens;
+var screen = $.NSScreen.mainScreen;
+for (var i = 0; i < screens.count; i++) {
+  var s = screens.objectAtIndex(i);
+  var f = s.frame;
+  if (cx >= f.origin.x && cx < f.origin.x + f.size.width &&
+      cy >= f.origin.y && cy < f.origin.y + f.size.height) {
+    screen = s; break;
+  }
+}
+var vf = screen.visibleFrame;
+var newX = Math.round(vf.origin.x + (vf.size.width - sz[0]) / 2);
+var newY = Math.round(mainH - (vf.origin.y + (vf.size.height - sz[1]) / 2) - sz[1]);
+w.position = [newX, newY];
+'
+''', 'mode main'] # Center focused floating window on current monitor
 backspace = ['close-all-windows-but-current', 'mode main']
 
 # sticky is not yet supported https://github.com/nikitabobko/AeroSpace/issues/2
@@ -205,12 +260,15 @@ o = ['move-node-to-workspace 𝙾̲ther --focus-follows-window', 'mode main']
 p = ['move-node-to-workspace 𝙿̲lanning --focus-follows-window', 'mode main']
 1 = ['move-node-to-workspace Project_𝟷̲ --focus-follows-window', 'mode main']
 2 = ['move-node-to-workspace Project_𝟸̲ --focus-follows-window', 'mode main']
+3 = ['move-node-to-workspace Project_𝟹̲ --focus-follows-window', 'mode main']
+4 = ['move-node-to-workspace Project_𝟺̲ --focus-follows-window', 'mode main']
 s = ['move-node-to-workspace 𝚂̲ystem_Administration --focus-follows-window', 'mode main']
 w = ['move-node-to-workspace 𝚆̲riting --focus-follows-window', 'mode main']
 v = ['move-node-to-workspace 𝚅̲M --focus-follows-window', 'mode main']
 shift-f = ['move-node-to-workspace 𝙵̲ile_Management --focus-follows-window', 'mode main']
 shift-r = ['move-node-to-workspace 𝚁̲esearch --focus-follows-window', 'mode main']
-t = ['move-workspace-to-monitor --wrap-around next', 'mode main']
+t = ['move-node-to-workspace 𝚃̲ooling --focus-follows-window', 'mode main']
+n = ['move-workspace-to-monitor --wrap-around next', 'mode main']
 
 down = 'volume down'
 up = 'volume up'
@@ -224,16 +282,25 @@ if.app-id = 'com.github.wez.wezterm'
 run = ['layout tiling', 'move-node-to-workspace 𝙳̲evelopment']
 
 
-# Wezterm
+# Zed
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
-# if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙳̲evelopment']
+run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
+
+# VS Code
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
+
+# Postman
+[[on-window-detected]]
+if.app-id = 'com.postmanlabs.mac'
+run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
 
 #Google Chrome
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = ['layout tiling', 'move-node-to-workspace 𝙳̲evelopment']
+run = ['layout tiling', 'move-node-to-workspace Project_𝟸̲']
 
 # Bitwarden
 [[on-window-detected]]
@@ -311,3 +378,158 @@ run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
 if.app-id = 'com.todoist.mac.Todoist'
 if.during-aerospace-startup = true
 run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+
+# Safari
+[[on-window-detected]]
+if.app-id = 'com.apple.Safari'
+run = ['layout tiling', 'move-node-to-workspace 𝙱̲rowsing']
+
+# WhatsApp
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+
+# Messages
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+
+# FaceTime
+[[on-window-detected]]
+if.app-id = 'com.apple.FaceTime'
+run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+
+# Mail
+[[on-window-detected]]
+if.app-id = 'com.apple.mail'
+run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+
+# VinylPod
+[[on-window-detected]]
+if.app-id = 'com.tinfine.MusicWidget'
+run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+
+# Apple Music
+[[on-window-detected]]
+if.app-id = 'com.apple.Music'
+run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+
+# Podcasts
+[[on-window-detected]]
+if.app-id = 'com.apple.podcasts'
+run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+
+# Reminders
+[[on-window-detected]]
+if.app-id = 'com.apple.reminders'
+run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+
+# Notes
+[[on-window-detected]]
+if.app-id = 'com.apple.Notes'
+run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+
+# Calendar
+[[on-window-detected]]
+if.app-id = 'com.apple.iCal'
+run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+
+# Freeform
+[[on-window-detected]]
+if.app-id = 'com.apple.freeform'
+run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+
+# Photos
+[[on-window-detected]]
+if.app-id = 'com.apple.Photos'
+run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+
+# Image Capture
+[[on-window-detected]]
+if.app-id = 'com.apple.Image-Capture'
+run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+
+# Activity Monitor
+[[on-window-detected]]
+if.app-id = 'com.apple.ActivityMonitor'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Disk Utility
+[[on-window-detected]]
+if.app-id = 'com.apple.DiskUtility'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Console
+[[on-window-detected]]
+if.app-id = 'com.apple.Console'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Terminal
+[[on-window-detected]]
+if.app-id = 'com.apple.Terminal'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# System Information
+[[on-window-detected]]
+if.app-id = 'com.apple.SystemProfiler'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Company Portal
+[[on-window-detected]]
+if.app-id = 'com.microsoft.CompanyPortalMac'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Super App Store (Jamf Self Service)
+[[on-window-detected]]
+if.app-id = 'com.jamfsoftware.selfservice.mac'
+run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+
+# Keeper Password Manager
+[[on-window-detected]]
+if.app-id = 'com.keepersecurity.passwordmanager'
+run = ['layout tiling', 'move-node-to-workspace 𝙴̲xtra']
+
+# Passwords
+[[on-window-detected]]
+if.app-id = 'com.apple.Passwords'
+run = ['layout tiling', 'move-node-to-workspace 𝙴̲xtra']
+
+# Claude Island
+[[on-window-detected]]
+if.app-id = 'com.celestial.ClaudeIsland'
+run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+
+# Pieces
+[[on-window-detected]]
+if.app-id = 'com.pieces.x'
+run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+
+# Dictionary
+[[on-window-detected]]
+if.app-id = 'com.apple.Dictionary'
+run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+
+# Books
+[[on-window-detected]]
+if.app-id = 'com.apple.iBooksX'
+run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+
+# KIRA
+[[on-window-detected]]
+if.app-id = 'com.krafton.kira'
+run = ['layout tiling', 'move-node-to-workspace 𝙶̲aming']
+
+# Chess
+[[on-window-detected]]
+if.app-id = 'com.apple.Chess'
+run = ['layout tiling', 'move-node-to-workspace 𝙶̲aming']
+
+# TeamViewer
+[[on-window-detected]]
+if.app-id = 'com.teamviewer.TeamViewer'
+run = ['layout tiling', 'move-node-to-workspace 𝚅̲M']
+
+# Screen Sharing
+[[on-window-detected]]
+if.app-id = 'com.apple.ScreenSharing'
+run = ['layout tiling', 'move-node-to-workspace 𝚅̲M']

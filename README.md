@@ -53,8 +53,9 @@ Tiling window manager. All main bindings use **Hyper** (Caps Lock held).
 | `Hyper + r` | Workspace: Research |
 | `Hyper + s` | Workspace: System Administration |
 | `Hyper + w` | Workspace: Writing |
+| `Hyper + t` | Workspace: Tooling |
 | `Hyper + v` | Workspace: VM |
-| `Hyper + 1` / `Hyper + 2` | Workspace: Project 1 / Project 2 |
+| `Hyper + 1-4` | Workspace: Project 1–4 |
 | `` Hyper + ` `` | Workspace back-and-forth |
 | `Hyper + a` | Enter service mode |
 
@@ -69,9 +70,9 @@ Tiling window manager. All main bindings use **Hyper** (Caps Lock held).
 | `r` | Reset (flatten) workspace |
 | `f` | Toggle floating / tiling |
 | `Backspace` | Close all windows but current |
-| `b/c/d/e/g/m/o/p/s/w/v/1/2` | Move window to named workspace |
+| `b/c/d/e/g/m/o/p/s/t/w/v/1-4` | Move window to named workspace |
 | `Shift + f` / `Shift + r` | Move to File Management / Research |
-| `t` | Move workspace to next monitor |
+| `n` | Move workspace to next monitor |
 | `Up` / `Down` | Volume up / down |
 | `Shift + Down` | Mute |
 | `Esc` | Reload config + exit service mode |
@@ -80,14 +81,19 @@ Tiling window manager. All main bindings use **Hyper** (Caps Lock held).
 
 | App | Workspace |
 |-----|-----------|
-| Wezterm, Zed, Chrome | Development |
-| Slack, Zoom, Notion Calendar | Communication |
-| Zen Browser | Browsing |
-| Spotify | Music |
-| Finder, Preview | File Management |
-| System Preferences, App Store | System Administration |
-| Todoist, TextEdit | Planning |
-| Bitwarden | Extra |
+| WezTerm | Development |
+| Zed, VS Code, Postman | Tooling |
+| Chrome | Project 2 |
+| Slack, Zoom, Notion Calendar, WhatsApp, Messages, FaceTime, Mail | Communication |
+| Zen Browser, Safari | Browsing |
+| Spotify, VinylPod, Apple Music, Podcasts | Music |
+| Reminders, Notes, Calendar, Freeform, Todoist*, TextEdit* | Planning |
+| Finder, Preview, Photos, Image Capture | File Management |
+| System Settings, App Store, Activity Monitor, Disk Utility, Console, Terminal, System Information, Company Portal, Super App Store | System Administration |
+| Bitwarden, Keeper, Passwords | Extra |
+| Claude Island, Pieces, Dictionary, Books | Research |
+| KIRA, Chess | Gaming |
+| TeamViewer, Screen Sharing | VM |
 
 ## Wezterm
 

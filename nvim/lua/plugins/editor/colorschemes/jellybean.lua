@@ -3,7 +3,9 @@ return {
   enabled = false,
   lazy = false,
   priority = 1000,
-  opts = {}, -- Optional
+  opts = {
+    transparent = true,
+  }, -- Optional
   init = function()
     -- vim.cmd.colorscheme("jellybeans")
     vim.cmd.colorscheme("jellybeans-mono")

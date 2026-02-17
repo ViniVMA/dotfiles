@@ -1,6 +1,6 @@
 # dotfiles
 
-macOS dev environment — Neovim, Wezterm, AeroSpace, Karabiner, Zsh. Everything symlinked from `~/dev/dotfiles`.
+macOS dev environment — Neovim, Wezterm, AeroSpace, Karabiner, SketchyBar, Zsh. Everything symlinked from `~/dev/dotfiles`.
 
 ## Installation
 
@@ -8,10 +8,15 @@ macOS dev environment — Neovim, Wezterm, AeroSpace, Karabiner, Zsh. Everything
 
 ```bash
 # CLI tools
-brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode
+brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode ical-buddy
 
 # GUI apps
-brew install --cask wezterm nikitabobko/tap/aerospace karabiner-elements
+brew install --cask wezterm nikitabobko/tap/aerospace karabiner-elements font-hack-nerd-font sf-symbols
+
+# SketchyBar
+brew install felixkratz/formulae/sketchybar
+brew services start sketchybar
+curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.31/sketchybar-app-font.ttf -o ~/Library/Fonts/sketchybar-app-font.ttf
 ```
 
 ### Symlinks
@@ -21,6 +26,7 @@ brew install --cask wezterm nikitabobko/tap/aerospace karabiner-elements
 ln -s ~/dev/dotfiles/nvim ~/.config/nvim
 ln -s ~/dev/dotfiles/wezterm ~/.config/wezterm
 ln -s ~/dev/dotfiles/karabiner ~/.config/karabiner
+ln -s ~/dev/dotfiles/sketchybar ~/.config/sketchybar
 
 # Individual files
 ln -s ~/dev/dotfiles/zsh/.zshrc ~/.zshrc
@@ -320,6 +326,7 @@ dotfiles/
 ├── wezterm/        # Wezterm terminal (modular Lua config)
 ├── aerospace/      # AeroSpace tiling window manager
 ├── karabiner/      # Karabiner-Elements (Caps Lock -> Hyper key)
+├── sketchybar/     # SketchyBar status bar (AeroSpace workspaces, battery, clock, calendar)
 ├── zsh/            # Zsh config (.zshrc)
 ├── lazygit/        # LazyGit config (not symlinked)
 ├── nushell/        # Nushell config (not symlinked)

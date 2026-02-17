@@ -102,7 +102,8 @@ return {
     if opts.ensure_installed ~= "all" then
       local default_parsers = {
         "bash", "c", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc",
-        "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "json", "yaml"
+        "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "json", "yaml",
+        "go", "gomod", "gosum", "gotmpl"
       }
       opts.ensure_installed = opts.ensure_installed or {}
       for _, parser in ipairs(default_parsers) do

@@ -1,3 +1,4 @@
+---@diagnostic disable: undefined-field
 local wezterm = require("wezterm") --[[@as Wezterm]]
 local utils = require("lib.utils")
 

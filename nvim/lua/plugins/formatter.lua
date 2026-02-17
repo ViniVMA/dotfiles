@@ -62,6 +62,7 @@ return {
         markdown = { "biome", "prettierd" },
         graphql = { "prettierd" },
         lua = { "stylua" },
+        go = { "goimports", "gofumpt" },
       },
       formatters = {
         injected = { options = { ignore_errors = true } },

@@ -276,6 +276,10 @@ return {
         "html-lsp",
         "emmet-language-server",
         "css-variables-language-server",
+        "gopls",
+        "goimports",
+        "gofumpt",
+        "golangci-lint",
       },
     },
     config = function(_, opts)

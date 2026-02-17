@@ -10,6 +10,7 @@ return {
       typescriptreact = { "eslint_d", "biomejs" },
       vue = { "eslint_d" },
       lua = { "selene" },
+      go = { "golangcilint" },
     },
   },
   config = function(_, opts)

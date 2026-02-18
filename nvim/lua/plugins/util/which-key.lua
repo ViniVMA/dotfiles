@@ -21,6 +21,7 @@ return {
         { "<leader>q", group = "quit/session" },
         { "<leader>s", group = "search" },
         { "<leader>a", group = "AI" },
+        { "<leader>t", group = "toggle" },
         { "<leader>u", group = "ui", icon = { icon = "󰙵 ", color = "cyan" } },
         { "<leader>x", group = "diagnostics/quickfix", icon = { icon = "󱖫 ", color = "green" } },
         { "[", group = "prev" },

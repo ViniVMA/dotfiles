@@ -58,7 +58,7 @@ update_track() {
 mouse_clicked() {
   case "$NAME" in
     "$DEFAULT_NAME")
-      open -a Spotify
+      osascript -e 'tell application "Spotify" to playpause'
       ;;
     "$DEFAULT_NAME.next")
       osascript -e 'tell application "Spotify" to play next track'

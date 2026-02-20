@@ -6,19 +6,19 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 source "$CONFIG_DIR/colors.sh"
 
 ##### Bar Appearance #####
-BG=0x651e1e2e
+BG=0x40000000
 FONT_COLOR=0xffcdd6f4
-ITEM_COLOR=0x503d3c53
+ITEM_COLOR=0x00000000
 ITEM_PADDING=8
 GAP=6
 
 sketchybar --bar \
   position=top \
   margin=17 y_offset=12 height=38 \
-  corner_radius=6 blur_radius=5 \
-  border_width=1 border_color=0x28222222 \
+  corner_radius=12 blur_radius=30 \
+  border_width=0 \
   padding_left=17 padding_right=20 \
-  shadow.color=0x28000000 shadow.angle=0 \
+  shadow.color=0x20000000 shadow.angle=90 shadow.distance=3 shadow.drawing=on \
   color=$BG
 
 ##### Changing Defaults #####
@@ -29,7 +29,7 @@ sketchybar --default \
   icon.padding_left=$ITEM_PADDING \
   background.color=$ITEM_COLOR \
   background.padding_right=$GAP background.height=25 \
-  background.corner_radius=6
+  background.corner_radius=8
 
 ##### Left Items #####
 
@@ -42,13 +42,6 @@ sketchybar --add item os left \
   label.padding_left=0 label.padding_right=6 \
   background.drawing=off \
   background.padding_right=$GAP
-
-# Clock (left side, before front app)
-sketchybar --add item clock left \
-  --set clock \
-  script="$PLUGIN_DIR/clock.sh" \
-  update_freq=10 \
-  --subscribe clock mouse.entered mouse.exited mouse.clicked
 
 # Front app
 sketchybar --add item front-app left \
@@ -76,6 +69,48 @@ sketchybar --add item weather left \
   --subscribe weather mouse.clicked
 
 ##### Right Items #####
+
+# Clock
+sketchybar --add item clock right \
+  --set clock \
+  script="$PLUGIN_DIR/clock.sh" \
+  background.padding_right=$GAP \
+  update_freq=10 \
+  --subscribe clock mouse.entered mouse.exited mouse.clicked
+
+# Connectivity (disabled)
+# sketchybar --add item spacer.connectivity right \
+#   --set spacer.connectivity \
+#   background.drawing=off \
+#   icon="" label="" \
+#   width=6
+#
+# sketchybar --add item wifi right \
+#   --set wifi \
+#   script="$PLUGIN_DIR/wifi.sh" \
+#   background.drawing=off \
+#   background.padding_right=0 \
+#   icon.padding_left=4 icon.padding_right=0 \
+#   label.padding_left=0 label.padding_right=4 \
+#   update_freq=30 \
+#   --subscribe wifi mouse.entered mouse.exited mouse.clicked
+#
+# sketchybar --add item bluetooth right \
+#   --set bluetooth \
+#   script="$PLUGIN_DIR/bluetooth.sh" \
+#   background.drawing=off \
+#   background.padding_right=0 \
+#   icon.padding_left=4 icon.padding_right=0 \
+#   label.padding_left=0 label.padding_right=4 \
+#   update_freq=30 \
+#   --subscribe bluetooth mouse.entered mouse.exited mouse.clicked
+#
+# sketchybar --add bracket connectivity wifi bluetooth \
+#   --set connectivity \
+#   background.color=$ITEM_COLOR \
+#   background.corner_radius=6 \
+#   background.height=25 \
+#   background.padding_right=$GAP
 
 # Battery
 sketchybar --add item battery right \
@@ -113,41 +148,6 @@ sketchybar --add item spotify right \
   script="$PLUGIN_DIR/spotify.sh" \
   --subscribe spotify spotify_change mouse.clicked
 
-SPOTIFY_ICON_SIZE=19
-SPOTIFY_CONTROL_GAP=0
-
-sketchybar --add item spotify.next right \
-  --set spotify.next \
-  icon=󰒭 icon.font.size=$SPOTIFY_ICON_SIZE \
-  label.padding_left=0 label.padding_right=7 \
-  background.drawing=off \
-  background.padding_right=$GAP \
-  script="$PLUGIN_DIR/spotify.sh" \
-  --subscribe spotify.next mouse.clicked
-
-sketchybar --add item spotify.playpause right \
-  --set spotify.playpause \
-  icon= \
-  icon.font.size=15 \
-  icon.y_offset=1 icon.padding_left=9 \
-  label.padding_left=0 label.padding_right=7 \
-  background.drawing=off \
-  background.padding_right=$SPOTIFY_CONTROL_GAP \
-  script="$PLUGIN_DIR/spotify.sh" \
-  --subscribe spotify.playpause mouse.clicked
-
-sketchybar --add item spotify.back right \
-  --set spotify.back \
-  icon=󰒮 \
-  label.padding_left=0 label.padding_right=7 \
-  icon.padding_left=8 icon.font.size=$SPOTIFY_ICON_SIZE \
-  background.drawing=off \
-  background.padding_right=$SPOTIFY_CONTROL_GAP \
-  script="$PLUGIN_DIR/spotify.sh" \
-  --subscribe spotify.back mouse.clicked
-
-sketchybar --add bracket spotify_controls \
-  spotify.next spotify.playpause spotify.back
 
 ##### Menu bar monitor (hide sketchybar when macOS menu bar appears) #####
 MONITOR_PID="/tmp/sketchybar-menubar-monitor.pid"

@@ -1,13 +1,16 @@
 import Cocoa
 
-var barHidden = false
-var hideTimer: Timer?
 let sketchybarPath: String = {
     let paths = ["/opt/homebrew/bin/sketchybar", "/usr/local/bin/sketchybar"]
     return paths.first { FileManager.default.fileExists(atPath: $0) } ?? "sketchybar"
 }()
 
+var sketchybarHidden = false
+var menuBarActivated = false
+
 func toggleBar(hidden: Bool) {
+    guard hidden != sketchybarHidden else { return }
+    sketchybarHidden = hidden
     let task = Process()
     task.executableURL = URL(fileURLWithPath: sketchybarPath)
     task.arguments = ["--bar", "hidden=\(hidden ? "on" : "off")"]
@@ -29,49 +32,44 @@ func activateMenuBar() {
     postKey(code: 0x78, flags: flags, keyDown: false)
 }
 
-func dismissMenuBar() {
-    // Escape (keycode 0x35)
-    postKey(code: 0x35, keyDown: true)
-    postKey(code: 0x35, keyDown: false)
+func isMenuBarVisible() -> Bool {
+    let windowList = CGWindowListCopyWindowInfo([.optionOnScreenOnly], kCGNullWindowID) as? [[String: Any]] ?? []
+    return windowList.contains { info in
+        (info[kCGWindowLayer as String] as? Int) == 24
+    }
 }
 
-func checkMouse() {
+func check() {
     let mouseLocation = NSEvent.mouseLocation
-    guard let screen = NSScreen.screens.first(where: {
+    let screen = NSScreen.screens.first(where: {
         NSMouseInRect(mouseLocation, $0.frame, false)
-    }) else { return }
+    })
 
-    let screenTop = screen.frame.maxY
-    let atTop = mouseLocation.y >= screenTop - 20
-
-    if atTop && !barHidden {
-        hideTimer?.invalidate()
-        hideTimer = nil
-        barHidden = true
-        toggleBar(hidden: true)
-        activateMenuBar()
-    } else if !atTop && barHidden {
-        if hideTimer == nil {
-            dismissMenuBar()
-            hideTimer = Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { _ in
-                barHidden = false
-                toggleBar(hidden: false)
-                hideTimer = nil
-            }
+    // Activate native menu bar when mouse is in the top 20px zone
+    if let screen = screen {
+        let atTop = mouseLocation.y >= screen.frame.maxY - 15
+        if atTop && !menuBarActivated {
+            menuBarActivated = true
+            activateMenuBar()
+        } else if !atTop {
+            menuBarActivated = false
         }
     }
+
+    // Toggle sketchybar based on native menu bar visibility
+    let menuBarOnScreen = isMenuBarVisible()
+    toggleBar(hidden: menuBarOnScreen)
 }
 
 let app = NSApplication.shared
 app.setActivationPolicy(.accessory)
 
 NSEvent.addGlobalMonitorForEvents(matching: .mouseMoved) { _ in
-    checkMouse()
+    check()
 }
 
-// Periodic fallback check
 Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { _ in
-    checkMouse()
+    check()
 }
 
 app.run()

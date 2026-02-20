@@ -37,7 +37,34 @@ if [[ $CHARGING != "" ]]; then
   ICON_COLOR=0xffeed49f
 fi
 
-sketchybar --set $NAME \
-  icon=$ICON \
-  label="${PERCENTAGE}%" \
-  icon.color=${ICON_COLOR}
+# Show time remaining on hover
+case "$SENDER" in
+  "mouse.entered")
+    RAW_TIME=$(pmset -g batt | grep -Eo '\d+:\d+' | head -1)
+    if [[ -n "$RAW_TIME" ]]; then
+      HOURS=${RAW_TIME%%:*}
+      MINS=${RAW_TIME##*:}
+      if [[ "$HOURS" -gt 0 ]]; then
+        TIME_LEFT="${HOURS}h${MINS}m"
+      else
+        TIME_LEFT="${MINS}m"
+      fi
+      if [[ $CHARGING != "" ]]; then
+        sketchybar --set $NAME label="${TIME_LEFT} to full"
+      else
+        sketchybar --set $NAME label="${TIME_LEFT} left"
+      fi
+    else
+      sketchybar --set $NAME label="Calculating..."
+    fi
+    ;;
+  "mouse.exited")
+    sketchybar --set $NAME label="${PERCENTAGE}%"
+    ;;
+  *)
+    sketchybar --set $NAME \
+      icon=$ICON \
+      label="${PERCENTAGE}%" \
+      icon.color=${ICON_COLOR}
+    ;;
+esac

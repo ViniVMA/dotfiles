@@ -43,7 +43,14 @@ sketchybar --add item os left \
   background.drawing=off \
   background.padding_right=$GAP
 
-# Front app (right of Apple logo)
+# Clock (left side, before front app)
+sketchybar --add item clock left \
+  --set clock \
+  script="$PLUGIN_DIR/clock.sh" \
+  update_freq=10 \
+  --subscribe clock mouse.entered mouse.exited mouse.clicked
+
+# Front app
 sketchybar --add item front-app left \
   --set front-app \
   script="$PLUGIN_DIR/front-app.sh" \
@@ -51,11 +58,14 @@ sketchybar --add item front-app left \
   click_script="$PLUGIN_DIR/front-app-click.sh" \
   --subscribe front-app front_app_switched
 
-# Username
-sketchybar --add item user left \
-  --set user \
-  label="$(whoami)" label.font.style="Bold" \
-  icon=󰀄 icon.color=0xffc7ea46
+# Mic/camera in-use indicator
+sketchybar --add item mic left \
+  --set mic \
+  icon=󰍬 icon.color=0xffed8796 \
+  label="" \
+  drawing=off \
+  script="$PLUGIN_DIR/mic.sh" \
+  update_freq=5
 
 # Weather
 sketchybar --add item weather left \
@@ -65,28 +75,21 @@ sketchybar --add item weather left \
   update_freq=1500 \
   --subscribe weather mouse.clicked
 
-# Moon phase
-sketchybar --add item moon-phase left \
-  --set moon-phase \
-  icon= \
-  script="$PLUGIN_DIR/moon-phase.sh" \
-  update_freq=3600 \
-  --subscribe moon-phase mouse.clicked
-
 ##### Right Items #####
-
-# Clock
-sketchybar --add item clock right \
-  --set clock \
-  script="$PLUGIN_DIR/clock.sh" \
-  background.padding_right=0 \
-  update_freq=10
 
 # Battery
 sketchybar --add item battery right \
   --set battery \
   script="$PLUGIN_DIR/battery.sh" \
-  update_freq=60
+  update_freq=30 \
+  --subscribe battery mouse.entered mouse.exited
+
+# Volume
+sketchybar --add item volume right \
+  --set volume \
+  script="$PLUGIN_DIR/volume.sh" \
+  update_freq=30 \
+  --subscribe volume volume_change mouse.clicked
 
 # Aerospace Workspace (native macOS menu on click)
 sketchybar --add event aerospace_workspace_change
@@ -99,12 +102,6 @@ sketchybar --add item aerospace right \
   script="$PLUGIN_DIR/aerospace.sh" \
   click_script="$PLUGIN_DIR/aerospace-click.sh" \
   --subscribe aerospace aerospace_workspace_change
-
-# WiFi (available if needed)
-# sketchybar --add item wifi left \
-#   --set wifi \
-#   script="$PLUGIN_DIR/wifi.sh" \
-#   --subscribe wifi wifi_change
 
 # Spotify
 sketchybar --add event spotify_change com.spotify.client.PlaybackStateChanged
@@ -130,7 +127,7 @@ sketchybar --add item spotify.next right \
 
 sketchybar --add item spotify.playpause right \
   --set spotify.playpause \
-  icon= \
+  icon= \
   icon.font.size=15 \
   icon.y_offset=1 icon.padding_left=9 \
   label.padding_left=0 label.padding_right=7 \

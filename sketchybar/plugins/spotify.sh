@@ -38,16 +38,20 @@ update_track() {
 
       sketchybar --set $NAME \
         label="${ARTIST} - ${TRACK}" \
-        icon=$MAIN_PLAYING_ICON icon.color=$PLAYING_COLOR
+        icon=$MAIN_PLAYING_ICON icon.color=$PLAYING_COLOR \
+        label.width=dynamic icon.width=dynamic \
+        background.drawing=on
     else
       sketchybar --set $NAME \
-        label="$PLAYER_STATE" \
-        icon=$MAIN_PAUSED_ICON icon.color=$PAUSED_COLOR
+        label="" icon="" \
+        label.width=0 icon.width=0 \
+        background.drawing=off
     fi
   else
     sketchybar --set $NAME \
-      label="Unknown" \
-      icon=$MAIN_PAUSED_ICON icon.color=$PAUSED_COLOR
+      label="" icon="" \
+      label.width=0 icon.width=0 \
+      background.drawing=off
   fi
 }
 

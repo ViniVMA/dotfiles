@@ -1,5 +1,8 @@
 #!/bin/bash
 
+LOCAL="$(date '+%a %b %d %Y %H:%M')"
+UTC="$(TZ=UTC date '+%H:%M') UTC"
+
 sketchybar --set $NAME \
-  label="$(date '+%a %b %d %Y %-I:%M %p')" \
-  icon="" icon.color=0xffff9cbe
+  label="${LOCAL}  │  ${UTC}" \
+  icon="" icon.color=0xffff9cbe

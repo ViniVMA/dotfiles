@@ -64,7 +64,7 @@ case $INFO in
     ;;
   *)
     ICON_COLOR=0xffff94c6
-    ICON=
+    ICON=󰘔
     ;;
 esac
 

@@ -111,6 +111,8 @@ sketchybar --add event spotify_change com.spotify.client.PlaybackStateChanged
 sketchybar --add item spotify right \
   --set spotify \
   background.padding_left=$GAP \
+  label.max_chars=30 \
+  scroll_texts=on \
   script="$PLUGIN_DIR/spotify.sh" \
   --subscribe spotify spotify_change mouse.clicked
 
@@ -122,7 +124,7 @@ sketchybar --add item spotify.next right \
   icon=󰒭 icon.font.size=$SPOTIFY_ICON_SIZE \
   label.padding_left=0 label.padding_right=7 \
   background.drawing=off \
-  background.padding_right=0 \
+  background.padding_right=$GAP \
   script="$PLUGIN_DIR/spotify.sh" \
   --subscribe spotify.next mouse.clicked
 

@@ -1,34 +1,62 @@
 #!/usr/bin/env bash
 
-source "$CONFIG_DIR/plugins/icon_map.sh"
-source "$CONFIG_DIR/colors.sh"
+# Get focused workspace
+FOCUSED="${FOCUSED_WORKSPACE:-$(aerospace list-workspaces --focused 2>/dev/null)}"
 
-if [ "$1" = "$FOCUSED_WORKSPACE" ]; then
-  sketchybar --set $NAME background.drawing=on \
-    background.color=$SPACE_ACTIVE_BG_COLOR \
-    icon.color=$SPACE_ACTIVE_COLOR \
-    label.color=$SPACE_ACTIVE_COLOR
-else
-  sketchybar --set $NAME background.drawing=off \
-    icon.color=$SPACE_INACTIVE_COLOR \
-    label.color=$SPACE_INACTIVE_COLOR
-fi
+# Map workspace ID to display name
+get_display_name() {
+  case "$1" in
+    *rowsing) echo "Browsing" ;;
+    *ommunication) echo "Communication" ;;
+    *evelopment) echo "Development" ;;
+    *xtra) echo "Extra" ;;
+    *ile_Management) echo "File Mgmt" ;;
+    *aming) echo "Gaming" ;;
+    *usic) echo "Music" ;;
+    *ther) echo "Other" ;;
+    *lanning) echo "Planning" ;;
+    *esearch) echo "Research" ;;
+    *ystem_Administration) echo "Sys Admin" ;;
+    *riting) echo "Writing" ;;
+    *ooling) echo "Tooling" ;;
+    *VM | *M) echo "VM" ;;
+    *ject_*1*) echo "Project 1" ;;
+    *ject_*2*) echo "Project 2" ;;
+    *ject_*3*) echo "Project 3" ;;
+    *ject_*4*) echo "Project 4" ;;
+    *) echo "$1" ;;
+  esac
+}
 
-# Update app icons for this workspace
-apps=$(aerospace list-windows --workspace $1 2>/dev/null | awk -F' \| ' '{print $2}' | sort -u)
+# Map workspace to icon
+get_workspace_icon() {
+  case "$1" in
+    *rowsing) echo "󰖟" ;;
+    *ommunication) echo "󰭹" ;;
+    *evelopment) echo "" ;;
+    *xtra) echo "" ;;
+    *ile_Management) echo "󰉋" ;;
+    *aming) echo "󰊗" ;;
+    *usic) echo "󰎆" ;;
+    *ther) echo "" ;;
+    *lanning) echo "󰃭" ;;
+    *esearch) echo "" ;;
+    *ystem_Administration) echo "" ;;
+    *riting) echo "󰏫" ;;
+    *ooling) echo "" ;;
+    *VM | *M) echo "" ;;
+    *ject_*1*) echo "󱎔" ;;
+    *ject_*2*) echo "󱎗" ;;
+    *ject_*3*) echo "󱎚" ;;
+    *ject_*4*) echo "󱎝" ;;
+    *) echo "" ;;
+  esac
+}
 
-icon_string=""
-if [ -n "$apps" ]; then
-  for app in $apps; do
-    __icon_map "$app"
-    if [ "$icon_result" != ":default:" ]; then
-      icon_string+="$icon_result"
-    fi
-  done
-fi
+# Update main bar item with focused workspace
+DISPLAY_NAME=$(get_display_name "$FOCUSED")
+MAIN_ICON=$(get_workspace_icon "$FOCUSED")
 
-if [ -n "$icon_string" ]; then
-  sketchybar --set $NAME label="$icon_string" label.drawing=on
-else
-  sketchybar --set $NAME label.drawing=off
-fi
+sketchybar --set aerospace \
+  label="$DISPLAY_NAME" \
+  icon="$MAIN_ICON"

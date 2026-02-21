@@ -167,7 +167,7 @@ cmd-alt-ctrl-shift-backtick = '''exec-and-forget bash -c '\
 '''
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#mode
-cmd-alt-ctrl-shift-a = 'mode service'
+cmd-alt-ctrl-shift-a = ['mode service', 'exec-and-forget ~/.config/sketchybar/plugins/aerospace-service-watcher.sh']
 
 # 'service' binding mode declaration.
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes

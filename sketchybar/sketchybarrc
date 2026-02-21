@@ -138,6 +138,17 @@ sketchybar --add item aerospace right \
   click_script="$PLUGIN_DIR/aerospace-click.sh" \
   --subscribe aerospace aerospace_workspace_change
 
+sketchybar --add item aerospace_service right \
+  --set aerospace_service \
+  icon.drawing=off \
+  label="[S]" \
+  label.font="SF Pro:Bold:12.0" \
+  label.color=0xfff5a97f \
+  label.padding_left=0 \
+  label.padding_right=2 \
+  background.padding_right=0 \
+  drawing=off
+
 # Spotify
 sketchybar --add event spotify_change com.spotify.client.PlaybackStateChanged
 sketchybar --add item spotify right \

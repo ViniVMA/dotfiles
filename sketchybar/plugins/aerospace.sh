@@ -57,6 +57,19 @@ get_workspace_icon() {
 DISPLAY_NAME=$(get_display_name "$FOCUSED")
 MAIN_ICON=$(get_workspace_icon "$FOCUSED")
 
+# Check service mode state
+if [ "$(aerospace list-modes --current 2>/dev/null)" = "service" ]; then
+  sketchybar --set aerospace_service drawing=on
+  ICON_COLOR="0xfff5a97f"   # ORANGE
+  LABEL_COLOR="0xfff5a97f"  # ORANGE
+else
+  sketchybar --set aerospace_service drawing=off
+  ICON_COLOR="0xffc6a0f6"   # MAGENTA (default)
+  LABEL_COLOR="0xffffffff"  # WHITE (default)
+fi
+
 sketchybar --set aerospace \
   label="$DISPLAY_NAME" \
-  icon="$MAIN_ICON"
+  icon="$MAIN_ICON" \
+  icon.color="$ICON_COLOR" \
+  label.color="$LABEL_COLOR"

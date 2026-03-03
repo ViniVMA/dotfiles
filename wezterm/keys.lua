@@ -117,12 +117,12 @@ return {
 							SendKey = { key = ";", mods = "CTRL" },
 						}, pane)
 					end
-				end
-
-				local vim_pane = utils.find_vim_pane(tab)
-				if vim_pane then
-					vim_pane:activate()
-					tab:set_zoomed(true)
+				else
+					local vim_pane = utils.find_vim_pane(tab)
+					if vim_pane then
+						vim_pane:activate()
+						tab:set_zoomed(true)
+					end
 				end
 			end),
 		},

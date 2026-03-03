@@ -20,10 +20,10 @@ get_display_name() {
     *riting) echo "Writing" ;;
     *ooling) echo "Tooling" ;;
     *VM | *M) echo "VM" ;;
-    *ject_*1*) echo "Project 1" ;;
-    *ject_*2*) echo "Project 2" ;;
-    *ject_*3*) echo "Project 3" ;;
-    *ject_*4*) echo "Project 4" ;;
+    *ject_𝟷*) echo "Project 1" ;;
+    *ject_𝟸*) echo "Project 2" ;;
+    *ject_𝟹*) echo "Project 3" ;;
+    *ject_𝟺*) echo "Project 4" ;;
     *) echo "$1" ;;
   esac
 }
@@ -45,10 +45,10 @@ get_workspace_icon() {
     *riting) echo "󰏫" ;;
     *ooling) echo "" ;;
     *VM | *M) echo "" ;;
-    *ject_*1*) echo "󱎔" ;;
-    *ject_*2*) echo "󱎗" ;;
-    *ject_*3*) echo "󱎚" ;;
-    *ject_*4*) echo "󱎝" ;;
+    *ject_𝟷*) echo "󰬺" ;;   # nf-md-numeric_1
+    *ject_𝟸*) echo "󰬻" ;;   # nf-md-numeric_2
+    *ject_𝟹*) echo "󰬼" ;;   # nf-md-numeric_3
+    *ject_𝟺*) echo "󰬽" ;;   # nf-md-numeric_4
     *) echo "" ;;
   esac
 }
@@ -68,8 +68,15 @@ else
   LABEL_COLOR="0xffffffff"  # WHITE (default)
 fi
 
+# Use larger icon for project workspaces (bare numbers are small)
+case "$FOCUSED" in
+  *ject_*) ICON_FONT_SIZE=28 ; DISPLAY_NAME="" ;;
+  *) ICON_FONT_SIZE=16 ;;
+esac
+
 sketchybar --set aerospace \
   label="$DISPLAY_NAME" \
   icon="$MAIN_ICON" \
   icon.color="$ICON_COLOR" \
-  label.color="$LABEL_COLOR"
+  label.color="$LABEL_COLOR" \
+  icon.font.size="$ICON_FONT_SIZE"

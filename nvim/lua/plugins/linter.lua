@@ -4,11 +4,10 @@ return {
   opts = {
     events = { "BufWritePost", "BufReadPost", "InsertLeave" },
     linters_by_ft = {
-      javascript = { "eslint_d", "biomejs" },
-      javascriptreact = { "eslint_d", "biomejs" },
-      typescript = { "eslint_d", "biomejs" },
-      typescriptreact = { "eslint_d", "biomejs" },
-      vue = { "eslint_d" },
+      javascript = { "biomejs" },
+      javascriptreact = { "biomejs" },
+      typescript = { "biomejs" },
+      typescriptreact = { "biomejs" },
       lua = { "selene" },
       go = { "golangcilint" },
     },

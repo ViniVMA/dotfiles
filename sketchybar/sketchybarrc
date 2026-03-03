@@ -129,11 +129,23 @@ sketchybar --add item volume right \
 # Aerospace Workspace (native macOS menu on click)
 sketchybar --add event aerospace_workspace_change
 
+sketchybar --add item aerospace_name right \
+  --set aerospace_name \
+  icon.drawing=off \
+  label.font="SF Pro:Bold:12.0" \
+  label.padding_left=0 \
+  background.padding_right=$GAP \
+  background.color=$ITEM_COLOR
+
 sketchybar --add item aerospace right \
   --set aerospace \
   icon.font="Hack Nerd Font:Regular:16" \
   icon.color=0xffc6a0f6 \
   label.font="SF Pro:Bold:12.0" \
+  label.color=0xffc6a0f6 \
+  label.padding_right=0 \
+  background.padding_right=0 \
+  background.color=$ITEM_COLOR \
   script="$PLUGIN_DIR/aerospace.sh" \
   click_script="$PLUGIN_DIR/aerospace-click.sh" \
   --subscribe aerospace aerospace_workspace_change

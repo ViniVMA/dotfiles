@@ -9,9 +9,9 @@ start-at-login = true
 
 after-startup-command = [
   'exec-and-forget borders active_color=0x66808080 inactive_color=0x00000000 width=6.0 style=round',
-  'workspace 𝙲̲ommunication',
+  'workspace Communication',
   'layout accordion horizontal',
-  'workspace 𝙳̲evelopment',
+  'workspace Development',
 ]
 
 # Normalizations. See: https://nikitabobko.github.io/AeroSpace/guide#normalization
@@ -116,24 +116,24 @@ cmd-alt-ctrl-shift-minus = 'resize smart -50'
 cmd-alt-ctrl-shift-equal = 'resize smart +50'
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
-cmd-alt-ctrl-shift-b = 'workspace 𝙱̲rowsing'
-cmd-alt-ctrl-shift-c = 'workspace 𝙲̲ommunication'
-cmd-alt-ctrl-shift-d = 'workspace 𝙳̲evelopment'
-cmd-alt-ctrl-shift-e = 'workspace 𝙴̲xtra'
-cmd-alt-ctrl-shift-f = 'workspace 𝙵̲ile_Management'
-cmd-alt-ctrl-shift-g = 'workspace 𝙶̲aming'
-cmd-alt-ctrl-shift-m = 'workspace 𝙼̲usic'
-cmd-alt-ctrl-shift-o = 'workspace 𝙾̲ther'
-cmd-alt-ctrl-shift-p = 'workspace 𝙿̲lanning'
-cmd-alt-ctrl-shift-1 = 'workspace Project_𝟷̲'
-cmd-alt-ctrl-shift-2 = 'workspace Project_𝟸̲'
-cmd-alt-ctrl-shift-3 = 'workspace Project_𝟹̲'
-cmd-alt-ctrl-shift-4 = 'workspace Project_𝟺̲'
-cmd-alt-ctrl-shift-r = 'workspace 𝚁̲esearch'
-cmd-alt-ctrl-shift-s = 'workspace 𝚂̲ystem_Administration'
-cmd-alt-ctrl-shift-w = 'workspace 𝚆̲riting'
-cmd-alt-ctrl-shift-t = 'workspace 𝚃̲ooling'
-cmd-alt-ctrl-shift-v = 'workspace 𝚅̲M'
+cmd-alt-ctrl-shift-b = 'workspace Browsing'
+cmd-alt-ctrl-shift-c = 'workspace Communication'
+cmd-alt-ctrl-shift-d = 'workspace Development'
+cmd-alt-ctrl-shift-e = 'workspace Extra'
+cmd-alt-ctrl-shift-f = 'workspace File_Management'
+cmd-alt-ctrl-shift-g = 'workspace Gaming'
+cmd-alt-ctrl-shift-m = 'workspace Music'
+cmd-alt-ctrl-shift-o = 'workspace Other'
+cmd-alt-ctrl-shift-p = 'workspace Planning'
+cmd-alt-ctrl-shift-1 = 'workspace Project_1'
+cmd-alt-ctrl-shift-2 = 'workspace Project_2'
+cmd-alt-ctrl-shift-3 = 'workspace Project_3'
+cmd-alt-ctrl-shift-4 = 'workspace Project_4'
+cmd-alt-ctrl-shift-r = 'workspace Research'
+cmd-alt-ctrl-shift-s = 'workspace System_Administration'
+cmd-alt-ctrl-shift-w = 'workspace Writing'
+cmd-alt-ctrl-shift-t = 'workspace Tooling'
+cmd-alt-ctrl-shift-v = 'workspace VM'
 
 # # See: https://nikitabobko.github.io/AeroSpace/commands#workspace
 # alt-1 = 'workspace 1'
@@ -250,24 +250,24 @@ shift-k = ['join-with up', 'mode main']
 shift-l = ['join-with right', 'mode main']
 
 # Move node to workspace (was alt-shift-<letter>)
-b = ['move-node-to-workspace 𝙱̲rowsing --focus-follows-window', 'mode main']
-c = ['move-node-to-workspace 𝙲̲ommunication --focus-follows-window', 'mode main']
-d = ['move-node-to-workspace 𝙳̲evelopment --focus-follows-window', 'mode main']
-e = ['move-node-to-workspace 𝙴̲xtra --focus-follows-window', 'mode main']
-g = ['move-node-to-workspace 𝙶̲aming --focus-follows-window', 'mode main']
-m = ['move-node-to-workspace 𝙼̲usic --focus-follows-window', 'mode main']
-o = ['move-node-to-workspace 𝙾̲ther --focus-follows-window', 'mode main']
-p = ['move-node-to-workspace 𝙿̲lanning --focus-follows-window', 'mode main']
-1 = ['move-node-to-workspace Project_𝟷̲ --focus-follows-window', 'mode main']
-2 = ['move-node-to-workspace Project_𝟸̲ --focus-follows-window', 'mode main']
-3 = ['move-node-to-workspace Project_𝟹̲ --focus-follows-window', 'mode main']
-4 = ['move-node-to-workspace Project_𝟺̲ --focus-follows-window', 'mode main']
-s = ['move-node-to-workspace 𝚂̲ystem_Administration --focus-follows-window', 'mode main']
-w = ['move-node-to-workspace 𝚆̲riting --focus-follows-window', 'mode main']
-v = ['move-node-to-workspace 𝚅̲M --focus-follows-window', 'mode main']
-shift-f = ['move-node-to-workspace 𝙵̲ile_Management --focus-follows-window', 'mode main']
-shift-r = ['move-node-to-workspace 𝚁̲esearch --focus-follows-window', 'mode main']
-t = ['move-node-to-workspace 𝚃̲ooling --focus-follows-window', 'mode main']
+b = ['move-node-to-workspace Browsing --focus-follows-window', 'mode main']
+c = ['move-node-to-workspace Communication --focus-follows-window', 'mode main']
+d = ['move-node-to-workspace Development --focus-follows-window', 'mode main']
+e = ['move-node-to-workspace Extra --focus-follows-window', 'mode main']
+g = ['move-node-to-workspace Gaming --focus-follows-window', 'mode main']
+m = ['move-node-to-workspace Music --focus-follows-window', 'mode main']
+o = ['move-node-to-workspace Other --focus-follows-window', 'mode main']
+p = ['move-node-to-workspace Planning --focus-follows-window', 'mode main']
+1 = ['move-node-to-workspace Project_1 --focus-follows-window', 'mode main']
+2 = ['move-node-to-workspace Project_2 --focus-follows-window', 'mode main']
+3 = ['move-node-to-workspace Project_3 --focus-follows-window', 'mode main']
+4 = ['move-node-to-workspace Project_4 --focus-follows-window', 'mode main']
+s = ['move-node-to-workspace System_Administration --focus-follows-window', 'mode main']
+w = ['move-node-to-workspace Writing --focus-follows-window', 'mode main']
+v = ['move-node-to-workspace VM --focus-follows-window', 'mode main']
+shift-f = ['move-node-to-workspace File_Management --focus-follows-window', 'mode main']
+shift-r = ['move-node-to-workspace Research --focus-follows-window', 'mode main']
+t = ['move-node-to-workspace Tooling --focus-follows-window', 'mode main']
 n = ['move-workspace-to-monitor --wrap-around next', 'mode main']
 
 down = 'volume down'
@@ -279,257 +279,257 @@ shift-down = ['volume set 0', 'mode main']
 [[on-window-detected]]
 if.app-id = 'com.github.wez.wezterm'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙳̲evelopment']
+run = ['layout tiling', 'move-node-to-workspace Development']
 
 
 # Zed
 [[on-window-detected]]
 if.app-id = 'dev.zed.Zed'
-run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
+run = ['layout tiling', 'move-node-to-workspace Tooling']
 
 # VS Code
 [[on-window-detected]]
 if.app-id = 'com.microsoft.VSCode'
-run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
+run = ['layout tiling', 'move-node-to-workspace Tooling']
 
 # Postman
 [[on-window-detected]]
 if.app-id = 'com.postmanlabs.mac'
-run = ['layout tiling', 'move-node-to-workspace 𝚃̲ooling']
+run = ['layout tiling', 'move-node-to-workspace Tooling']
 
 #Google Chrome
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
-run = ['layout tiling', 'move-node-to-workspace Project_𝟸̲']
+run = ['layout tiling', 'move-node-to-workspace Project_2']
 
 # Bitwarden
 [[on-window-detected]]
 if.app-id = 'com.bitwarden.desktop'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙴̲xtra']
+run = ['layout tiling', 'move-node-to-workspace Extra']
 
 
 # Zen Browser
 [[on-window-detected]]
 if.app-id = 'app.zen-browser.zen'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙱̲rowsing']
+run = ['layout tiling', 'move-node-to-workspace Browsing']
 
 
 # Slack
 [[on-window-detected]]
 if.app-id = 'com.tinyspeck.slackmacgap'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # Notion Calendar
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 
 # Zoom
 [[on-window-detected]]
 if.app-id = 'us.zoom.xos'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 
 # Spotify
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+run = ['layout tiling', 'move-node-to-workspace Music']
 
 
 # Finder
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+run = ['layout tiling', 'move-node-to-workspace File_Management']
 
 
 [[on-window-detected]]
 if.app-id = 'com.apple.Preview'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+run = ['layout tiling', 'move-node-to-workspace File_Management']
 
 
 # System Preferences
 [[on-window-detected]]
 if.app-id = 'com.apple.systempreferences'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 
 # App Store
 [[on-window-detected]]
 if.app-id = 'com.apple.AppStore'
 # if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 
 # TextEdit
 [[on-window-detected]]
 if.app-id = 'com.apple.TextEdit'
 if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Todoist
 [[on-window-detected]]
 if.app-id = 'com.todoist.mac.Todoist'
 if.during-aerospace-startup = true
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Safari
 [[on-window-detected]]
 if.app-id = 'com.apple.Safari'
-run = ['layout tiling', 'move-node-to-workspace 𝙱̲rowsing']
+run = ['layout tiling', 'move-node-to-workspace Browsing']
 
 # WhatsApp
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # Messages
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # FaceTime
 [[on-window-detected]]
 if.app-id = 'com.apple.FaceTime'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # Mail
 [[on-window-detected]]
 if.app-id = 'com.apple.mail'
-run = ['layout tiling', 'move-node-to-workspace 𝙲̲ommunication']
+run = ['layout tiling', 'move-node-to-workspace Communication']
 
 # VinylPod
 [[on-window-detected]]
 if.app-id = 'com.tinfine.MusicWidget'
-run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+run = ['layout tiling', 'move-node-to-workspace Music']
 
 # Apple Music
 [[on-window-detected]]
 if.app-id = 'com.apple.Music'
-run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+run = ['layout tiling', 'move-node-to-workspace Music']
 
 # Podcasts
 [[on-window-detected]]
 if.app-id = 'com.apple.podcasts'
-run = ['layout tiling', 'move-node-to-workspace 𝙼̲usic']
+run = ['layout tiling', 'move-node-to-workspace Music']
 
 # Reminders
 [[on-window-detected]]
 if.app-id = 'com.apple.reminders'
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Notes
 [[on-window-detected]]
 if.app-id = 'com.apple.Notes'
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Calendar
 [[on-window-detected]]
 if.app-id = 'com.apple.iCal'
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Freeform
 [[on-window-detected]]
 if.app-id = 'com.apple.freeform'
-run = ['layout tiling', 'move-node-to-workspace 𝙿̲lanning']
+run = ['layout tiling', 'move-node-to-workspace Planning']
 
 # Photos
 [[on-window-detected]]
 if.app-id = 'com.apple.Photos'
-run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+run = ['layout tiling', 'move-node-to-workspace File_Management']
 
 # Image Capture
 [[on-window-detected]]
 if.app-id = 'com.apple.Image-Capture'
-run = ['layout tiling', 'move-node-to-workspace 𝙵̲ile_Management']
+run = ['layout tiling', 'move-node-to-workspace File_Management']
 
 # Activity Monitor
 [[on-window-detected]]
 if.app-id = 'com.apple.ActivityMonitor'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Disk Utility
 [[on-window-detected]]
 if.app-id = 'com.apple.DiskUtility'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Console
 [[on-window-detected]]
 if.app-id = 'com.apple.Console'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Terminal
 [[on-window-detected]]
 if.app-id = 'com.apple.Terminal'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # System Information
 [[on-window-detected]]
 if.app-id = 'com.apple.SystemProfiler'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Company Portal
 [[on-window-detected]]
 if.app-id = 'com.microsoft.CompanyPortalMac'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Super App Store (Jamf Self Service)
 [[on-window-detected]]
 if.app-id = 'com.jamfsoftware.selfservice.mac'
-run = ['layout tiling', 'move-node-to-workspace 𝚂̲ystem_Administration']
+run = ['layout tiling', 'move-node-to-workspace System_Administration']
 
 # Keeper Password Manager
 [[on-window-detected]]
 if.app-id = 'com.keepersecurity.passwordmanager'
-run = ['layout tiling', 'move-node-to-workspace 𝙴̲xtra']
+run = ['layout tiling', 'move-node-to-workspace Extra']
 
 # Passwords
 [[on-window-detected]]
 if.app-id = 'com.apple.Passwords'
-run = ['layout tiling', 'move-node-to-workspace 𝙴̲xtra']
+run = ['layout tiling', 'move-node-to-workspace Extra']
 
 # Claude Island
 [[on-window-detected]]
 if.app-id = 'com.celestial.ClaudeIsland'
-run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+run = ['layout tiling', 'move-node-to-workspace Research']
 
 # Pieces
 [[on-window-detected]]
 if.app-id = 'com.pieces.x'
-run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+run = ['layout tiling', 'move-node-to-workspace Research']
 
 # Dictionary
 [[on-window-detected]]
 if.app-id = 'com.apple.Dictionary'
-run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+run = ['layout tiling', 'move-node-to-workspace Research']
 
 # Books
 [[on-window-detected]]
 if.app-id = 'com.apple.iBooksX'
-run = ['layout tiling', 'move-node-to-workspace 𝚁̲esearch']
+run = ['layout tiling', 'move-node-to-workspace Research']
 
 # KIRA
 [[on-window-detected]]
 if.app-id = 'com.krafton.kira'
-run = ['layout tiling', 'move-node-to-workspace 𝙶̲aming']
+run = ['layout tiling', 'move-node-to-workspace Gaming']
 
 # Chess
 [[on-window-detected]]
 if.app-id = 'com.apple.Chess'
-run = ['layout tiling', 'move-node-to-workspace 𝙶̲aming']
+run = ['layout tiling', 'move-node-to-workspace Gaming']
 
 # TeamViewer
 [[on-window-detected]]
 if.app-id = 'com.teamviewer.TeamViewer'
-run = ['layout tiling', 'move-node-to-workspace 𝚅̲M']
+run = ['layout tiling', 'move-node-to-workspace VM']
 
 # Screen Sharing
 [[on-window-detected]]
 if.app-id = 'com.apple.ScreenSharing'
-run = ['layout tiling', 'move-node-to-workspace 𝚅̲M']
+run = ['layout tiling', 'move-node-to-workspace VM']

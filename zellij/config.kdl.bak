@@ -1,0 +1,160 @@
+theme "koda"
+default_layout "default"
+default_shell "zsh"
+pane_frames false
+simplified_ui false
+default_mode "normal"
+mouse_mode true
+copy_on_select true
+scrollback_editor "/opt/homebrew/bin/nvim"
+session_serialization true
+// mirror wezterm inactive pane dimming
+styled_underlines true
+
+ui {
+    pane_frames {
+        rounded_corners true
+        hide_session_name true
+    }
+}
+
+keybinds clear-defaults=true {
+    // --- Shared bindings (work in all modes except locked) ---
+    shared_except "locked" {
+        // Pane navigation (Alt+h/j/k/l)
+        bind "Alt h" { MoveFocus "Left"; }
+        bind "Alt j" { MoveFocus "Down"; }
+        bind "Alt k" { MoveFocus "Up"; }
+        bind "Alt l" { MoveFocus "Right"; }
+
+        // Tab navigation
+        bind "Alt H" { GoToPreviousTab; }
+        bind "Alt L" { GoToNextTab; }
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+        bind "Alt 4" { GoToTab 4; }
+        bind "Alt 5" { GoToTab 5; }
+        bind "Alt 6" { GoToTab 6; }
+        bind "Alt 7" { GoToTab 7; }
+        bind "Alt 8" { GoToTab 8; }
+        bind "Alt 9" { GoToTab 9; }
+
+        // Splits
+        bind "Alt \\" { NewPane "Right"; }
+        bind "Alt -" { NewPane "Down"; }
+
+        // Pane actions
+        bind "Alt q" { CloseFocus; }
+        bind "Alt z" { ToggleFocusFullscreen; }
+        bind "Alt x" { ToggleFloatingPanes; }
+
+        // Tab management
+        bind "Alt t" { NewTab; }
+
+        // Resize with arrow keys (quick, 5-unit)
+        bind "Alt Shift Left" { Resize "Increase Left"; }
+        bind "Alt Shift Right" { Resize "Increase Right"; }
+        bind "Alt Shift Down" { Resize "Increase Down"; }
+        bind "Alt Shift Up" { Resize "Increase Up"; }
+
+        // Scrolling
+        bind "Alt Up" { ScrollUp; }
+        bind "Alt Down" { ScrollDown; }
+
+        // Modes
+        bind "Alt r" { SwitchToMode "Resize"; }
+        bind "Alt m" { SwitchToMode "Move"; }
+        bind "Alt s" { SwitchToMode "Session"; }
+        bind "Alt [" { SwitchToMode "Scroll"; }
+        bind "Alt f" { SwitchToMode "EnterSearch"; SearchInput 0; }
+        // Fullscreen is handled by WezTerm (Alt+Enter)
+
+        // Utilities — spawn in new pane (floating)
+        bind "Alt d" {
+            Run "zsh" "-l" "-c" "lazydocker" {
+                close_on_exit true
+            }
+        }
+        bind "Alt e" {
+            Run "zsh" "-l" "-c" "nvim" {
+                close_on_exit true
+            }
+        }
+        bind "Alt c" {
+            Run "zsh" "-l" "-c" "claude" {
+                close_on_exit true
+            }
+        }
+
+        // Sessionizer (zoxide + fzf)
+        bind "Alt p" {
+            Run "zsh" "-l" "-c" "$HOME/.config/zellij/scripts/sessionizer.sh" {
+                close_on_exit true
+                in_place true
+            }
+        }
+
+        // Quick scrollback edit
+        bind "Alt i" { EditScrollback; }
+    }
+
+    // --- Normal mode ---
+    normal {
+    }
+
+    // --- Resize mode (Alt+r to enter) ---
+    resize {
+        bind "h" { Resize "Increase Left"; }
+        bind "j" { Resize "Increase Down"; }
+        bind "k" { Resize "Increase Up"; }
+        bind "l" { Resize "Increase Right"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // --- Move mode (Alt+m to enter) ---
+    move {
+        bind "h" { MoveTab "Left"; }
+        bind "j" { MovePane "Down"; }
+        bind "k" { MovePane "Up"; }
+        bind "l" { MoveTab "Right"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // --- Scroll mode (Alt+[ to enter) ---
+    scroll {
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // --- Search mode ---
+    entersearch {
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Search"; }
+    }
+
+    search {
+        bind "n" { Search "down"; }
+        bind "N" { Search "up"; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // --- Session mode ---
+    session {
+        bind "d" { Detach; }
+        bind "Esc" { SwitchToMode "Normal"; }
+        bind "Enter" { SwitchToMode "Normal"; }
+    }
+
+    // --- Locked mode (nothing works except unlock) ---
+    locked {
+        bind "Alt g" { SwitchToMode "Normal"; }
+    }
+}

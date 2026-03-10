@@ -85,4 +85,16 @@ eval "$(~/.local/bin/mise activate zsh)"
 
 . "$HOME/.local/bin/env"
 
+# Update Zellij tab name to current directory basename
+function _zellij_tab_name() {
+    if [[ -n "$ZELLIJ" ]]; then
+        local tab_name="${PWD##*/}"
+        [[ -z "$tab_name" ]] && tab_name="/"
+        (( ${#tab_name} > 20 )) && tab_name="${tab_name:0:19}…"
+        command zellij action rename-tab "$tab_name"
+    fi
+}
+chpwd_functions+=(_zellij_tab_name)
+_zellij_tab_name
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

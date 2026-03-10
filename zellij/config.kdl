@@ -1,0 +1,139 @@
+keybinds clear-defaults=true {
+    locked {
+        bind "Alt Esc" { SwitchToMode "normal"; }
+    }
+    resize {
+        bind "h" { Resize "Increase left"; }
+        bind "j" { Resize "Increase down"; }
+        bind "k" { Resize "Increase up"; }
+        bind "l" { Resize "Increase right"; }
+    }
+    move {
+        bind "h" { MovePane "left"; }
+        bind "j" { MovePane "down"; }
+        bind "k" { MovePane "up"; }
+        bind "l" { MovePane "right"; }
+        bind "[" { MoveTab "left"; }
+        bind "]" { MoveTab "right"; }
+    }
+    scroll {
+        bind "d" { HalfPageScrollDown; }
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "u" { HalfPageScrollUp; }
+    }
+    search {
+        bind "N" { Search "up"; }
+        bind "n" { Search "down"; }
+    }
+    session {
+        bind "d" { Detach; }
+    }
+    shared_except "locked" {
+        // Navigation
+        bind "Alt h" { MoveFocus "left"; }
+        bind "Alt j" { MoveFocus "down"; }
+        bind "Alt k" { MoveFocus "up"; }
+        bind "Alt l" { MoveFocus "right"; }
+        bind "Alt H" { GoToPreviousTab; }
+        bind "Alt L" { GoToNextTab; }
+        bind "Alt 1" { GoToTab 1; }
+        bind "Alt 2" { GoToTab 2; }
+        bind "Alt 3" { GoToTab 3; }
+        bind "Alt 4" { GoToTab 4; }
+        bind "Alt 5" { GoToTab 5; }
+        bind "Alt 6" { GoToTab 6; }
+        bind "Alt 7" { GoToTab 7; }
+        bind "Alt 8" { GoToTab 8; }
+        bind "Alt 9" { GoToTab 9; }
+
+        // Pane & tab lifecycle
+        bind "Alt \\" { NewPane "right"; }
+        bind "Alt -" { NewPane "down"; }
+        bind "Alt q" { CloseFocus; }
+        bind "Alt z" { ToggleFocusFullscreen; }
+        bind "Alt x" { ToggleFloatingPanes; }
+        bind "Alt t" { NewTab; }
+        bind "Alt i" { EditScrollback; }
+
+        // Modes
+        bind "Alt r" { SwitchToMode "resize"; }
+        bind "Alt m" { SwitchToMode "move"; }
+        bind "Alt [" { SwitchToMode "scroll"; }
+        bind "Alt /" { SwitchToMode "entersearch"; SearchInput 0; }
+        bind "Alt s" { SwitchToMode "session"; }
+
+        // Quick launchers
+        bind "Alt c" {
+            Run "zsh" "-ic" "claude" {
+                close_on_exit true
+            }
+        }
+        bind "Alt d" {
+            Run "zsh" "-ic" "lazydocker" {
+                close_on_exit true
+            }
+        }
+        bind "Alt e" {
+            Run "zsh" "-ic" "nvim" {
+                close_on_exit true
+            }
+        }
+        bind "Alt g" {
+            Run "zsh" "-ic" "lazygit" {
+                close_on_exit true
+            }
+        }
+        bind "Alt p" {
+            Run "zsh" "-ic" "$HOME/.config/zellij/scripts/sessionizer.sh" {
+                in_place true
+            }
+        }
+    }
+    shared_among "resize" "scroll" "entersearch" "search" "session" "move" {
+        bind "esc" { SwitchToMode "normal"; }
+    }
+    shared_among "resize" "scroll" "search" "session" "move" {
+        bind "enter" { SwitchToMode "normal"; }
+    }
+    entersearch {
+        bind "enter" { SwitchToMode "search"; }
+    }
+}
+
+plugins {
+    about location="zellij:about"
+    compact-bar location="zellij:compact-bar"
+    configuration location="zellij:configuration"
+    filepicker location="zellij:strider" {
+        cwd "/"
+    }
+    plugin-manager location="zellij:plugin-manager"
+    session-manager location="zellij:session-manager"
+    status-bar location="zellij:status-bar"
+    strider location="zellij:strider"
+    tab-bar location="zellij:tab-bar"
+    welcome-screen location="zellij:session-manager" {
+        welcome_screen true
+    }
+}
+
+load_plugins {
+}
+
+web_client {
+    font "monospace"
+}
+
+simplified_ui false
+theme "koda"
+default_mode "normal"
+default_shell "zsh"
+default_layout "default"
+mouse_mode true
+pane_frames false
+copy_on_select true
+scrollback_editor "/opt/homebrew/bin/nvim"
+session_serialization false
+styled_underlines true
+show_startup_tips false

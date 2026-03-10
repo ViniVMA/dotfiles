@@ -1,0 +1,15 @@
+themes {
+    koda {
+        fg "#ffffff"
+        bg "#101010"
+        black "#101010"
+        red "#ff7676"
+        green "#a3d6a3"
+        yellow "#d9ba73"
+        blue "#a5adce"
+        magenta "#f4b8e4"
+        cyan "#5abfb5"
+        white "#ffffff"
+        orange "#ff5733"
+    }
+}

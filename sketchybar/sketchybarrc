@@ -68,6 +68,12 @@ sketchybar --add item weather left \
   update_freq=1500 \
   --subscribe weather mouse.clicked
 
+# CPU + RAM
+sketchybar --add item sysinfo left \
+  --set sysinfo \
+  script="$PLUGIN_DIR/sysinfo.sh" \
+  update_freq=30
+
 ##### Right Items #####
 
 # Clock

@@ -1,6 +1,7 @@
 return {
   "zbirenbaum/copilot.lua",
   opts = {
+    copilot_node_command = { "mise", "x", "node@22", "--", "node" },
     suggestion = {
       auto_trigger = true,
       keymap = {

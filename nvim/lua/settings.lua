@@ -29,6 +29,7 @@ opt.incsearch = true -- Show matches as you type
 
 -- Visual settings
 opt.title = true -- Set terminal title (shown in Zellij pane header)
+opt.titlestring = "Nvim"
 opt.termguicolors = true -- Enable 24-bit colors
 opt.signcolumn = "yes" -- Always show sign column
 opt.showmatch = true -- Highlight matching brackets

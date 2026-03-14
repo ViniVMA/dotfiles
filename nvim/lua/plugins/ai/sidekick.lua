@@ -8,6 +8,28 @@ return {
           cmd = { "claude", "--allow-dangerously-skip-permissions" },
         },
       },
+      prompts = {
+        -- Refactoring & cleanup
+        simplify = "Simplify {this}. Reduce complexity, remove unnecessary abstractions, and make it more readable.",
+        extract = "Extract reusable logic from {this} into well-named functions.",
+        modernize = "Refactor {this} to use modern JavaScript/TypeScript idioms and best practices.",
+        naming = "Suggest better names for the variables, functions, and types in {this}. Explain your reasoning.",
+
+        -- Writing & implementation
+        implement = "Implement {this}. Follow existing patterns in the codebase.",
+        errors = "Add proper error handling to {this}. Use appropriate error types and messages.",
+        types = "Add or improve TypeScript types for {this}. Prefer strict types over 'any'. Use existing type definitions where possible.",
+
+        -- Debugging & quality
+        debug = "Help me debug {this}. Trace the logic, identify potential issues, and suggest fixes.",
+        security = "Review {file} for security vulnerabilities. Check for injection, auth issues, data exposure, and OWASP top 10 concerns.",
+        perf = "Analyze {this} for performance issues. Identify bottlenecks, unnecessary computations, and suggest improvements.",
+        readable = "Rewrite {this} to be more readable. Prioritize clarity over cleverness.",
+
+        -- TypeScript-specific
+        tserror = "Explain this TypeScript error and fix it:\n{diagnostics}",
+        enum = "Convert {this} from a TypeScript enum to an `as const` object pattern with a matching type alias.",
+      },
       mux = {
         backend = "zellij",
         enabled = true,
@@ -35,10 +57,10 @@ return {
       desc = "Goto/Apply Next Edit Suggestion",
     },
     {
-      "<c-.>",
-      function() require("sidekick.cli").focus() end,
+      "<c-\\>",
+      function() require("sidekick.cli").toggle() end,
       mode = { "n", "x", "i", "t" },
-      desc = "Sidekick Switch Focus",
+      desc = "Sidekick Toggle",
     },
     {
       "<leader>aa",

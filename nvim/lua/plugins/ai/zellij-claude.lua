@@ -81,8 +81,8 @@ local function is_claude_pane()
   if not ok then
     return false
   end
-  local text = table.concat(content, "\n"):lower()
-  return text:find("claude") ~= nil
+  local text = table.concat(content, "\n")
+  return text:find("Claude Code") ~= nil
 end
 
 local function find_claude_direction_by_screen()

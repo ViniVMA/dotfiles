@@ -65,7 +65,8 @@ keybinds clear-defaults=true {
 
         // Quick launchers
         bind "Alt c" {
-            Run "zsh" "-ic" "claude" {
+            Run "zsh" "-ic" "claude --allow-dangerously-skip-permissions" {
+                direction "Right"
                 close_on_exit true
             }
         }

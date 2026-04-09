@@ -1,3 +1,10 @@
+# OPENSPEC:START
+# OpenSpec shell completions configuration
+fpath=("/Users/vini/.oh-my-zsh/custom/completions" $fpath)
+autoload -Uz compinit
+compinit
+# OPENSPEC:END
+
 
 export PATH="/opt/homebrew/bin:$PATH"
 

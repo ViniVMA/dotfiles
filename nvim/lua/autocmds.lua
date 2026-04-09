@@ -153,6 +153,22 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Show intro screen when last buffer is closed
+vim.api.nvim_create_autocmd("BufDelete", {
+  group = augroup("show_intro"),
+  callback = function()
+    vim.schedule(function()
+      local bufs = vim.tbl_filter(function(buf)
+        return vim.api.nvim_buf_is_valid(buf) and vim.bo[buf].buflisted
+      end, vim.api.nvim_list_bufs())
+
+      if #bufs == 0 or (#bufs == 1 and vim.api.nvim_buf_get_name(bufs[1]) == "" and vim.api.nvim_buf_line_count(bufs[1]) <= 1) then
+        vim.cmd("intro")
+      end
+    end)
+  end,
+})
+
 -- Auto bracket spacing for Vue templates: {{ }} -> {{ | }}
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup("vue_bracket_spacing"),

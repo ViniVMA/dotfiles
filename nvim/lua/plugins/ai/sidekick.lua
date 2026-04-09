@@ -57,7 +57,7 @@ return {
       desc = "Goto/Apply Next Edit Suggestion",
     },
     {
-      "<c-\\>",
+      "<C-a>",
       function() require("sidekick.cli").toggle() end,
       mode = { "n", "x", "i", "t" },
       desc = "Sidekick Toggle",
@@ -67,6 +67,12 @@ return {
       function() require("sidekick.cli").toggle({ name = "claude", focus = true }) end,
       desc = "Sidekick Claude Toggle",
       mode = { "n", "v" },
+    },
+    {
+      "<C-x>",
+      function() require("sidekick.cli").focus() end,
+      mode = { "n", "t" },
+      desc = "Sidekick Focus/Blur",
     },
     {
       "<c-q>",
@@ -81,7 +87,7 @@ return {
       mode = { "n", "v" },
     },
     {
-      "<leader>ap",
+      "<leader>az",
       function() require("sidekick.cli").prompt() end,
       desc = "Sidekick Ask Prompt",
       mode = { "n", "v" },

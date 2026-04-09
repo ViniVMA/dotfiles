@@ -47,11 +47,11 @@ map("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
 map("n", "<leader>|", "<C-W>v", { desc = "Split Window Right", remap = true })
 map("n", "<leader>wd", "<C-W>c", { desc = "Delete Window", remap = true })
 
--- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
--- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
--- vim.keymap.set("n", "<C-S-l>", "<C-w>L", { desc = "Move window to the right" })
--- vim.keymap.set("n", "<C-S-j>", "<C-w>J", { desc = "Move window to the lower" })
--- vim.keymap.set("n", "<C-S-k>", "<C-w>K", { desc = "Move window to the upper" })
+-- Resize windows using <C-S-hjkl>
+map("n", "<C-S-h>", "<cmd>vertical resize -2<cr>", { desc = "Decrease Window Width" })
+map("n", "<C-S-l>", "<cmd>vertical resize +2<cr>", { desc = "Increase Window Width" })
+map("n", "<C-S-j>", "<cmd>resize -2<cr>", { desc = "Decrease Window Height" })
+map("n", "<C-S-k>", "<cmd>resize +2<cr>", { desc = "Increase Window Height" })
 
 -- quit
 

@@ -1,4 +1,7 @@
-local function find_claude_direction()
+local DIRECTIONS = { "right", "left", "down", "up" }
+local OPPOSITES = { right = "left", left = "right", down = "up", up = "down" }
+
+local function find_claude_direction_from_layout()
   local layout = vim.fn.system("zellij action dump-layout")
   if vim.v.shell_error ~= 0 then
     return nil
@@ -35,17 +38,8 @@ local function find_claude_direction()
     if not focus_line and line:match("^%s*pane ") and line:find("focus=true") then
       focus_line, focus_indent = i, indent
     end
-    if not claude_line and line:match("^%s*pane ") then
-      local is_claude = line:find('command="claude"')
-      if not is_claude then
-        local next = lines[i + 1]
-        if next and next:match("^%s*args ") and next:find('"claude') then
-          is_claude = true
-        end
-      end
-      if is_claude then
-        claude_line, claude_indent = i, indent
-      end
+    if not claude_line and line:match("^%s*pane ") and line:find("claude") then
+      claude_line, claude_indent = i, indent
     end
   end
 
@@ -79,11 +73,47 @@ local function find_claude_direction()
   end
 end
 
+local function is_claude_pane()
+  local tmpfile = os.tmpname()
+  vim.fn.system("zellij action dump-screen " .. tmpfile)
+  local ok, content = pcall(vim.fn.readfile, tmpfile)
+  os.remove(tmpfile)
+  if not ok then
+    return false
+  end
+  local text = table.concat(content, "\n"):lower()
+  return text:find("claude") ~= nil
+end
+
+local function find_claude_direction_by_screen()
+  for _, dir in ipairs(DIRECTIONS) do
+    vim.fn.system("zellij action move-focus " .. dir)
+
+    if is_claude_pane() then
+      -- Move back to nvim before returning
+      vim.fn.system("zellij action move-focus " .. OPPOSITES[dir])
+      return dir
+    end
+
+    vim.fn.system("zellij action move-focus " .. OPPOSITES[dir])
+  end
+  return nil
+end
+
+local function find_claude_direction()
+  -- Fast path: detect from layout (works for template-defined panes)
+  local dir = find_claude_direction_from_layout()
+  if dir then
+    return dir
+  end
+
+  -- Slow path: check adjacent panes' screen content (works for Run-opened panes)
+  return find_claude_direction_by_screen()
+end
+
 local function send_to_zellij(text, direction)
-  -- Focus the Claude pane
   vim.fn.system("zellij action move-focus " .. direction)
 
-  -- Build byte sequence: bracketed paste start + text + bracketed paste end
   local bytes = { 27, 91, 50, 48, 48, 126 } -- ESC[200~
   for i = 1, #text do
     bytes[#bytes + 1] = string.byte(text, i)
@@ -102,17 +132,15 @@ local function send_prompt()
 
   local direction = find_claude_direction()
   if not direction then
-    vim.notify("No Claude pane found in current Zellij tab", vim.log.levels.WARN)
+    vim.notify("No Claude pane found in any direction", vim.log.levels.WARN)
     return
   end
 
   local prompt_names = vim.tbl_keys(Config.cli.prompts)
   table.sort(prompt_names)
 
-  -- Capture context now (includes visual selection if in visual mode)
   local context = Context.get()
 
-  -- Build items with pre-resolved text
   local items = {}
   for _, name in ipairs(prompt_names) do
     local text = context:render({ prompt = name })

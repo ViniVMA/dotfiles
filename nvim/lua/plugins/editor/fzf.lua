@@ -1,3 +1,16 @@
+-- VSCode-style toggle: flips a single rg flag in the running cmd and resumes.
+-- Used for Alt+R (regex), Alt+C (match case), Alt+W (whole word).
+local function toggle_rg_flag(flag)
+  return function(_, opts)
+    local utils = require("fzf-lua.utils")
+    local o = vim.tbl_deep_extend("keep", {
+      cmd = utils.toggle_cmd_flag(assert(opts._cmd or opts.cmd), flag),
+      resume = true,
+    }, opts.__call_opts or {})
+    opts.__call_fn(o)
+  end
+end
+
 return {
   {
     "ibhagwan/fzf-lua",
@@ -41,6 +54,13 @@ return {
         rg_glob = true, -- enable glob parsing
         glob_flag = "--iglob", -- case insensitive globs
         glob_separator = "%s%-%-", -- query separator pattern (lua): ' --'
+        -- VSCode-like default: literal text, smart-case. Use Alt+R/C/W to toggle.
+        rg_opts = "--column --line-number --no-heading --color=always --smart-case --max-columns=4096 -F -e",
+        actions = {
+          ["alt-r"] = toggle_rg_flag("-F"), -- toggle regex (removes/adds fixed-strings)
+          ["alt-c"] = toggle_rg_flag("-s"), -- toggle Match Case (overrides smart-case)
+          ["alt-w"] = toggle_rg_flag("-w"), -- toggle Match Whole Word
+        },
       },
       finder = {
         prompt = "LSP Finder> ",
@@ -64,7 +84,8 @@ return {
         "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>",
         desc = "Switch Buffer",
       },
-      { "<leader>/", "<cmd>FzfLua live_grep<cr>", desc = "Grep" },
+      -- Alt+R toggle regex, Alt+C Match Case, Alt+W Whole Word, Ctrl+G fuzzy mode
+      { "<leader>/", "<cmd>FzfLua live_grep<cr>", desc = "Grep (literal, alt-r/c/w to toggle)" },
       { "<leader>:", "<cmd>FzfLua command_history<cr>", desc = "Command History" },
       -- find
       { "<leader>fb", "<cmd>FzfLua buffers sort_mru=true sort_lastused=true<cr>", desc = "Buffers" },

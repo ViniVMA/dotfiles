@@ -75,7 +75,7 @@ end
 
 local function is_claude_pane()
   local tmpfile = os.tmpname()
-  vim.fn.system("zellij action dump-screen " .. tmpfile)
+  vim.fn.system("zellij action dump-screen --full " .. tmpfile)
   local ok, content = pcall(vim.fn.readfile, tmpfile)
   os.remove(tmpfile)
   if not ok then

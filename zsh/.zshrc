@@ -9,6 +9,7 @@ compinit
 export PATH="/opt/homebrew/bin:$PATH"
 
 
+
 eval "$(oh-my-posh init zsh)"
 
 

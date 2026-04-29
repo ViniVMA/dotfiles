@@ -1,6 +1,6 @@
 # dotfiles
 
-macOS dev environment — Neovim, Wezterm, Zellij, AeroSpace, Karabiner, SketchyBar, Zsh. Everything symlinked from `~/dev/dotfiles`.
+macOS dev environment — Neovim, Wezterm, tmux, AeroSpace, Karabiner, SketchyBar, Zsh. Everything symlinked from `~/dev/dotfiles`.
 
 ## Installation
 
@@ -8,7 +8,7 @@ macOS dev environment — Neovim, Wezterm, Zellij, AeroSpace, Karabiner, Sketchy
 
 ```bash
 # CLI tools
-brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode ical-buddy zellij tmux fastfetch jq
+brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode ical-buddy tmux fastfetch jq
 
 # GUI apps
 brew install --cask wezterm nikitabobko/tap/aerospace karabiner-elements font-hack-nerd-font sf-symbols
@@ -18,9 +18,6 @@ brew install felixkratz/formulae/sketchybar
 brew services start sketchybar
 curl -L https://github.com/kvndrsslr/sketchybar-app-font/releases/download/v2.0.31/sketchybar-app-font.ttf -o ~/Library/Fonts/sketchybar-app-font.ttf
 
-# zjstatus plugin for zellij
-curl -L https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm \
-  -o ~/.config/zellij/plugins/zjstatus.wasm
 ```
 
 ### Symlinks
@@ -29,7 +26,6 @@ curl -L https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm 
 # Config directories
 ln -s ~/dev/dotfiles/nvim ~/.config/nvim
 ln -s ~/dev/dotfiles/wezterm ~/.config/wezterm
-ln -s ~/dev/dotfiles/zellij ~/.config/zellij
 ln -s ~/dev/dotfiles/tmux ~/.config/tmux
 ln -s ~/dev/dotfiles/karabiner ~/.config/karabiner
 ln -s ~/dev/dotfiles/sketchybar ~/.config/sketchybar
@@ -116,7 +112,7 @@ Tiling window manager. All main bindings use **Hyper** (Caps Lock held).
 
 ## Wezterm
 
-Terminal emulator only — multiplexing is handled by Zellij (launched automatically). Font: Geist Mono (15pt), with Maple Mono, Departure Mono, Commit Mono, and Monaspace fallbacks.
+Terminal emulator only — multiplexing is handled by tmux (launched automatically as session `main`). Font: Geist Mono (15pt), with Maple Mono, Departure Mono, Commit Mono, and Monaspace fallbacks.
 
 | Key | Action |
 |-----|--------|
@@ -125,48 +121,62 @@ Terminal emulator only — multiplexing is handled by Zellij (launched automatic
 | `Shift + Enter` | Send newline |
 | `Ctrl + Space` | Send null character |
 
-## Zellij
+## tmux
 
-Terminal multiplexer with custom zjstatus status bar. Launches automatically inside Wezterm.
+Terminal multiplexer launched automatically by Wezterm as session `main`. Leader is `C-a` (double-tap to send literal `C-a` to the underlying shell). Plugins managed by [TPM](https://github.com/tmux-plugins/tpm): tmux-sensible, vim-tmux-navigator, tmux-resurrect, tmux-continuum.
 
-### Panes & Tabs
-
-| Key | Action |
-|-----|--------|
-| `Alt + h/j/k/l` | Focus pane left / down / up / right |
-| `Alt + H` / `Alt + L` | Previous / next tab |
-| `Alt + 1-9` | Go to tab by index |
-| `Alt + t` | New tab |
-| `Alt + \` | Split pane right |
-| `Alt + -` | Split pane down |
-| `Alt + q` | Close pane |
-| `Alt + z` | Toggle pane fullscreen |
-| `Alt + x` | Toggle floating panes |
-| `Alt + i` | Edit scrollback in Neovim |
-| `Alt + r` | Resize mode (h/j/k/l to resize, Esc to exit) |
-| `Alt + m` | Move mode (h/j/k/l to move pane, [/] to move tab, Esc to exit) |
-
-### Navigation & Tools
+### Panes
 
 | Key | Action |
 |-----|--------|
-| `Alt + [` | Scroll mode (j/k to scroll, d/u for half-page) |
-| `Alt + /` | Search mode |
-| `Alt + s` | Session manager |
-| `Alt + p` | Sessionizer (zoxide projects via fzf) |
+| `C-a h/j/k/l` | Focus pane left / down / up / right |
+| `C-a \` | Split right |
+| `C-a -` | Split down |
+| `C-a z` | Toggle pane zoom |
+| `C-a q` | Close pane |
+| `C-a Up/Down/Left/Right` | Resize pane (repeats with `-r`) |
+| `C-a r` | Resize mode (h/j/k/l small step, H/J/K/L big step, Esc to exit) |
+| `C-a m` | Move mode (h/j/k/l swap with neighboring pane, Esc to exit) |
+| `C-a i` | Edit current pane scrollback in Neovim |
 
-### Launch in Current Pane
+### Windows (tabs)
 
 | Key | Action |
 |-----|--------|
-| `Alt + e` | Neovim |
-| `Alt + d` | Lazydocker |
-| `Alt + c` | Claude Code |
-| `Alt + g` | Lazygit |
+| `C-a t` | New window |
+| `C-a H` / `C-a L` | Previous / next window |
+| `C-a 1-9` | Jump to window by index |
+| `C-a ,` | Rename window |
+| `C-a [` / `C-a ]` | Move window left / right |
+
+### Sessions & Copy
+
+| Key | Action |
+|-----|--------|
+| `C-a p` | Sessionizer (zoxide projects via fzf, switch-client when nested) |
+| `C-a d` | Detach |
+| `C-a R` | Reload config |
+| `C-a v` | Enter copy-mode (vi-style) |
+| `v` / `y` (in copy-mode) | Begin selection / yank to macOS clipboard |
+| `Esc` (in copy-mode) | Exit |
+| `C-a /` | Search in scrollback |
+
+### Launchers
+
+| Key | Action |
+|-----|--------|
+| `C-a c` | Claude Code (split right) |
+| `C-a e` | Neovim (new window) |
+| `C-a g` | Lazygit (popup) |
+| `C-a D` | Lazydocker (popup) |
 
 ### Status Bar
 
-zjstatus plugin showing session name, current mode, tabs, system info (CPU / RAM / battery via fastfetch), and time.
+Top of screen with one blank padding row below. Shows session name, mode indicator (NORMAL/LEADER/COPY/RESIZE/MOVE), window list (active in green), CPU/RAM/battery via `tmux/scripts/sysinfo.sh`, and date.
+
+### Mouse
+
+Mouse mode is on but plain wheel does not enter copy-mode. In apps that request mouse (nvim, lazygit, less, htop) wheel forwards normally. In alt-screen TUIs without mouse (e.g. claude) wheel sends `PageUp`/`PageDown`. In plain shells use `Shift + Wheel` for wezterm scrollback.
 
 ## Neovim
 
@@ -314,7 +324,7 @@ Leader key is **Space**. Plugin manager: lazy.nvim. Fuzzy finder: fzf-lua. File 
 
 ## Shell (Zsh)
 
-Prompt: [oh-my-posh](https://ohmyposh.dev/) (star theme). History: [atuin](https://atuin.sh/). Directory jumping: [zoxide](https://github.com/ajeetdsouza/zoxide). Tool versions: [mise](https://mise.jdx.dev/). Vi mode: [zsh-vi-mode](https://github.com/jeffreytse/zsh-vi-mode). `vim` is aliased to `nvim`. Zellij tabs auto-rename to current directory.
+Prompt: [oh-my-posh](https://ohmyposh.dev/) (star theme). History: [atuin](https://atuin.sh/). Directory jumping: [zoxide](https://github.com/ajeetdsouza/zoxide). Tool versions: [mise](https://mise.jdx.dev/). Vi mode: [zsh-vi-mode](https://github.com/jeffreytse/zsh-vi-mode). `vim` is aliased to `nvim`. tmux windows auto-rename to current directory.
 
 ### Git Aliases
 
@@ -348,7 +358,8 @@ dotfiles/
 ├── karabiner/      # Karabiner-Elements (Caps Lock -> Hyper key)
 ├── sketchybar/     # SketchyBar status bar (AeroSpace workspaces, battery, clock, calendar)
 ├── zsh/            # Zsh config (.zshrc)
-├── zellij/         # Zellij terminal multiplexer (zjstatus bar, koda theme)
+├── tmux/           # tmux multiplexer (custom statusbar, leader = C-a)
+├── zellij/         # Legacy — replaced by tmux, kept temporarily for reference
 ├── lazygit/        # LazyGit config (not symlinked)
 └── nushell/        # Nushell config (not symlinked)
 ```

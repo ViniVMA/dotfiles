@@ -89,7 +89,15 @@ return {
     },
     {
       "<leader>ap",
-      function() require("sidekick.cli").prompt() end,
+      function()
+        require("sidekick.cli").prompt({
+          cb = function(_, text)
+            if text then
+              require("sidekick.cli").send({ text = text, focus = true })
+            end
+          end,
+        })
+      end,
       desc = "Sidekick Ask Prompt",
       mode = { "n", "v" },
     },

@@ -93,16 +93,16 @@ eval "$(~/.local/bin/mise activate zsh)"
 
 . "$HOME/.local/bin/env"
 
-# Update Zellij tab name to current directory basename
-function _zellij_tab_name() {
-    if [[ -n "$ZELLIJ" ]]; then
-        local tab_name="${PWD##*/}"
-        [[ -z "$tab_name" ]] && tab_name="/"
-        (( ${#tab_name} > 20 )) && tab_name="${tab_name:0:19}…"
-        command zellij action rename-tab "$tab_name"
+# Update tmux window name to current directory basename
+function _tmux_window_name() {
+    if [[ -n "$TMUX" ]]; then
+        local name="${PWD##*/}"
+        [[ -z "$name" ]] && name="/"
+        (( ${#name} > 20 )) && name="${name:0:19}…"
+        command tmux rename-window "$name"
     fi
 }
-chpwd_functions+=(_zellij_tab_name)
-_zellij_tab_name
+chpwd_functions+=(_tmux_window_name)
+_tmux_window_name
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

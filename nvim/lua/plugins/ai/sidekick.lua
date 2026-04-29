@@ -92,5 +92,11 @@ return {
       desc = "Sidekick Ask Prompt",
       mode = { "n", "v" },
     },
+    {
+      "<leader>aA",
+      function() require("sidekick.cli").select() end,
+      desc = "Sidekick Attach to Session",
+      mode = { "n", "v" },
+    },
   },
 }

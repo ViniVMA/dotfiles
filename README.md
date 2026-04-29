@@ -8,7 +8,7 @@ macOS dev environment — Neovim, Wezterm, Zellij, AeroSpace, Karabiner, Sketchy
 
 ```bash
 # CLI tools
-brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode ical-buddy zellij fastfetch jq
+brew install neovim lazygit zoxide oh-my-posh atuin mise fzf ripgrep fd git-delta stylua zsh-vi-mode ical-buddy zellij tmux fastfetch jq
 
 # GUI apps
 brew install --cask wezterm nikitabobko/tap/aerospace karabiner-elements font-hack-nerd-font sf-symbols
@@ -30,12 +30,20 @@ curl -L https://github.com/dj95/zjstatus/releases/latest/download/zjstatus.wasm 
 ln -s ~/dev/dotfiles/nvim ~/.config/nvim
 ln -s ~/dev/dotfiles/wezterm ~/.config/wezterm
 ln -s ~/dev/dotfiles/zellij ~/.config/zellij
+ln -s ~/dev/dotfiles/tmux ~/.config/tmux
 ln -s ~/dev/dotfiles/karabiner ~/.config/karabiner
 ln -s ~/dev/dotfiles/sketchybar ~/.config/sketchybar
 
 # Individual files
 ln -s ~/dev/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dev/dotfiles/aerospace/.aerospace.toml ~/.aerospace.toml
+```
+
+### TPM (tmux plugin manager)
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm
+# Then start tmux and press: prefix + I (default prefix is C-a)
 ```
 
 ## Keyboard Philosophy

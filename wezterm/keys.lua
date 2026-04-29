@@ -2,7 +2,7 @@ local wezterm = require("wezterm") --[[@as Wezterm]]
 
 local act = wezterm.action
 
--- Multiplexing is handled by Zellij.
+-- Multiplexing is handled by tmux.
 -- WezTerm only handles terminal-level concerns here.
 
 ---@type StrictConfig

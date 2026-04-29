@@ -31,7 +31,7 @@ return {
         enum = "Convert {this} from a TypeScript enum to an `as const` object pattern with a matching type alias.",
       },
       mux = {
-        backend = "zellij",
+        backend = "tmux",
         enabled = true,
       },
       win = {
@@ -87,7 +87,7 @@ return {
       mode = { "n", "v" },
     },
     {
-      "<leader>az",
+      "<leader>ap",
       function() require("sidekick.cli").prompt() end,
       desc = "Sidekick Ask Prompt",
       mode = { "n", "v" },

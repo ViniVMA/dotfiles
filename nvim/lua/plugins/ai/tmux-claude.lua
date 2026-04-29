@@ -64,50 +64,6 @@ local function send_review_comments()
   vim.notify("Sent review comments to Claude", vim.log.levels.INFO)
 end
 
-local function send_prompt()
-  local Config = require("sidekick.config")
-  local Context = require("sidekick.cli.context")
-
-  local pane_id = find_claude_pane()
-  if not pane_id then
-    vim.notify("No Claude pane found in this window", vim.log.levels.WARN)
-    return
-  end
-
-  local prompt_names = vim.tbl_keys(Config.cli.prompts)
-  table.sort(prompt_names)
-
-  local context = Context.get()
-
-  local items = {}
-  for _, name in ipairs(prompt_names) do
-    local text = context:render({ prompt = name })
-    if text and text ~= "" then
-      items[#items + 1] = { name = name, text = text }
-    end
-  end
-
-  if #items == 0 then
-    vim.notify("No prompts could be resolved", vim.log.levels.WARN)
-    return
-  end
-
-  vim.ui.select(items, {
-    prompt = "Send to tmux Claude:",
-    format_item = function(item)
-      local tpl = Config.cli.prompts[item.name]
-      tpl = type(tpl) == "string" and tpl or (type(tpl) == "table" and tpl.msg or "[function]")
-      return ("[%s] %s"):format(item.name, tpl)
-    end,
-  }, function(choice)
-    if not choice then
-      return
-    end
-    send_to_tmux(choice.text, pane_id)
-    vim.notify("Sent to Claude: " .. choice.name, vim.log.levels.INFO)
-  end)
-end
-
 return {
   dir = vim.fn.stdpath("config"),
   name = "tmux-claude",
@@ -115,12 +71,6 @@ return {
     return vim.env.TMUX ~= nil
   end,
   keys = {
-    {
-      "<leader>ap",
-      send_prompt,
-      desc = "Send Prompt to tmux Claude",
-      mode = { "n", "v" },
-    },
     {
       "<leader>aS",
       send_review_comments,

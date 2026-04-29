@@ -126,6 +126,29 @@ local function send_to_zellij(text, direction)
   vim.fn.system("zellij action write " .. table.concat(bytes, " "))
 end
 
+local function send_review_comments()
+  local ok, export = pcall(require, "review.export")
+  if not ok then
+    vim.notify("review.nvim not loaded", vim.log.levels.WARN)
+    return
+  end
+
+  local store_ok, store = pcall(require, "review.store")
+  if store_ok and store.count() == 0 then
+    vim.notify("No review comments to send", vim.log.levels.WARN)
+    return
+  end
+
+  local direction = find_claude_direction()
+  if not direction then
+    vim.notify("No Claude pane found in any direction", vim.log.levels.WARN)
+    return
+  end
+
+  send_to_zellij(export.generate_markdown(), direction)
+  vim.notify("Sent review comments to Claude", vim.log.levels.INFO)
+end
+
 local function send_prompt()
   local Config = require("sidekick.config")
   local Context = require("sidekick.cli.context")
@@ -182,6 +205,11 @@ return {
       send_prompt,
       desc = "Send Prompt to Zellij Claude",
       mode = { "n", "v" },
+    },
+    {
+      "<leader>aS",
+      send_review_comments,
+      desc = "Send Review Comments to Zellij Claude",
     },
   },
 }

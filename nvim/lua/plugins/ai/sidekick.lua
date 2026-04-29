@@ -1,5 +1,22 @@
 return {
   "folke/sidekick.nvim",
+  init = function()
+    -- Kill any sidekick-managed tmux pane currently attached to this nvim
+    -- when nvim exits, so claude sessions don't leak.
+    vim.api.nvim_create_autocmd("VimLeavePre", {
+      group = vim.api.nvim_create_augroup("sidekick-cleanup", { clear = true }),
+      callback = function()
+        if not vim.env.TMUX then return end
+        local ok, State = pcall(require, "sidekick.cli.state")
+        if not ok then return end
+        for _, state in ipairs(State.get({ started = true })) do
+          if state.attached and state.session and state.session.tmux_pane_id then
+            pcall(vim.fn.system, { "tmux", "kill-pane", "-t", state.session.tmux_pane_id })
+          end
+        end
+      end,
+    })
+  end,
   opts = {
     -- add any options here
     cli = {

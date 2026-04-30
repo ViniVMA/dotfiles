@@ -51,6 +51,9 @@ return {
         backend = "tmux",
         enabled = true,
         create = "split",
+        split = {
+          size = 0.4,
+        },
       },
       win = {
         wo = {
@@ -75,7 +78,7 @@ return {
       desc = "Goto/Apply Next Edit Suggestion",
     },
     {
-      "<C-a>",
+      "<M-a>",
       function() require("sidekick.cli").toggle() end,
       mode = { "n", "x", "i", "t" },
       desc = "Sidekick Toggle",
@@ -122,6 +125,12 @@ return {
       "<leader>aA",
       function() require("sidekick.cli").select() end,
       desc = "Sidekick Attach to Session",
+      mode = { "n", "v" },
+    },
+    {
+      "<leader>as",
+      function() require("review.export").to_sidekick() end,
+      desc = "Sidekick Send Review Comments",
       mode = { "n", "v" },
     },
   },

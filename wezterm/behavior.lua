@@ -20,4 +20,5 @@ return {
 	enable_csi_u_key_encoding = false,
 	default_prog = { "/opt/homebrew/bin/tmux", "new-session", "-A", "-s", "main" },
 	default_workspace = "main",
+	max_fps = 240,
 }

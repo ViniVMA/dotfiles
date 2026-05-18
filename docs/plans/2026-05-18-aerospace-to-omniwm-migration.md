@@ -120,39 +120,64 @@ Float rules: none for now; revisit if anything misbehaves.
 
 ### 4b. Goku service-mode layer
 
-Create `~/.config/karabiner.edn` with: (a) the two existing rules ported from
-JSON (Caps→Hyper/Escape, physical-Escape disable), and (b) the service-mode
-layer below (toggle-gated; switch to frontmost-app condition once OmniWM
-bundle ID verified):
+Goku writes to a separate **"Goku" profile** in karabiner.json (existing
+"Default profile" stays untouched). Rollback during eval = switch profiles in
+Karabiner-Elements menu bar; no file edits needed.
+
+The Goku profile must be pre-created in Karabiner-Elements (Goku updates but
+does not create profiles) — we add it once via jq:
+```bash
+jq '.profiles += [{"name":"Goku","complex_modifications":{"rules":[]},
+   "selected":false,"virtual_hid_keyboard":{"caps_lock_delay_milliseconds":0,
+   "keyboard_type_v2":"ansi"}}]' ~/.config/karabiner/karabiner.json > /tmp/k.json
+mv /tmp/k.json ~/.config/karabiner/karabiner.json
+```
+
+Then create `~/.config/karabiner.edn` with: (a) the two existing rules ported
+from JSON (Caps→Hyper/Escape, physical-Escape disable), and (b) the
+service-mode layer (variable-gated on `service-mode=1`):
 
 ```clojure
-{:layers
- {:service-mode {:key :a :alone {:key :a}}}
+{:profiles {:Goku {:default true
+                   :caps_lock_delay_milliseconds 0
+                   :keyboard_type_v2 "ansi"}}
  :main
- [{:des "OmniWM service mode"
-   :rules [[:!CTOSa [:service-mode 1]]
-           [:escape [:service-mode 0] [:service-mode]]
-           [:h [:!CTOSleft_arrow]  [:service-mode]]
-           [:j [:!CTOSdown_arrow]  [:service-mode]]
-           [:k [:!CTOSup_arrow]    [:service-mode]]
-           [:l [:!CTOSright_arrow] [:service-mode]]
-           [:b [:!CTOSb] [:service-mode]]
-           [:c [:!CTOSc] [:service-mode]]
-           [:d [:!CTOSd] [:service-mode]]
-           ;; ...one line per workspace letter
-           [:slash     [:!CTOSslash]     [:service-mode]]
-           [:r         [:!CTOSr]         [:service-mode]]
-           [:f         [:!CTOSf]         [:service-mode]]
-           [:backspace [:!CTOSbackspace] [:service-mode]]]}]}
+ [{:des "Shift+CapsLock → real Caps Lock toggle"
+   :rules [[:!Scaps_lock :caps_lock]]}
+  {:des "Caps Lock → Hyper (hold) / Escape (tap)"
+   :rules [[:caps_lock :!TOCleft_shift nil {:alone :escape}]]}
+  {:des "Disable physical Escape"
+   :rules [[:escape :vk_none]]}
+  {:des "OmniWM service mode: enter on Hyper+a"
+   :rules [[:!CTOSa [["service-mode" 1]]]]}
+  {:des "OmniWM service mode: bindings"
+   :rules [[:h [:!TOCleft_arrow  ["service-mode" 0]] ["service-mode" 1]]
+           [:j [:!TOCdown_arrow  ["service-mode" 0]] ["service-mode" 1]]
+           [:k [:!TOCup_arrow    ["service-mode" 0]] ["service-mode" 1]]
+           [:l [:!TOCright_arrow ["service-mode" 0]] ["service-mode" 1]]
+           [:b [:!TOCb ["service-mode" 0]] ["service-mode" 1]]
+           ;; ...one line per workspace letter (c d e g m o p s w t v n 1 2 3 4)
+           [:!Sf [:!TOCf ["service-mode" 0]] ["service-mode" 1]]    ; service+shift+f → File_Mgmt
+           [:!Sr [:!TOCr ["service-mode" 0]] ["service-mode" 1]]    ; service+shift+r → Research
+           [:slash [:!TOCslash ["service-mode" 0]] ["service-mode" 1]]
+           [:escape [["service-mode" 0]] ["service-mode" 1]]]}]}
 ```
+
+Deferred from service mode (no chord assigned): `f` (toggle floating + center
+JXA), `r` (flatten-workspace-tree), `backspace` (close-all-but-current),
+`comma` (accordion layout — moot since all workspaces are Niri), `shift-c/h/j/k/l`
+(join-with — Niri has no join). Re-evaluate post-eval.
 
 ### 4c. Chord-family contract
 
-- **Hyper+letter** → "Switch to Workspace" (unchanged from Aerospace).
-- **Hyper+Shift+letter** → "Move Window to Workspace" (new in OmniWM).
-- **Service mode + bare letter** → Goku emits Hyper+Shift+letter.
+- **Hyper+letter** (cmd+ctrl+opt+shift+letter) → "Switch to Workspace" (unchanged from Aerospace).
+- **Cmd+Ctrl+Opt+letter** (Hyper *minus* shift) → "Move Window to Workspace" (new in OmniWM).
+- **Service mode + bare letter** → Goku emits Cmd+Ctrl+Opt+letter, OmniWM receives it as the move-window chord.
 
-Both flows feel identical to muscle memory.
+Why not Hyper+Shift+letter (as originally drafted): the user's Hyper definition
+*includes* Shift (Caps Lock → `left_shift + cmd + ctrl + opt`), so Hyper+B and
+Hyper+Shift+B collapse to the same modifier set. Cmd+Ctrl+Opt+letter is the
+only adjacent chord family that's distinguishable.
 
 ### 4d. Deferred
 

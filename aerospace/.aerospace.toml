@@ -5,7 +5,7 @@
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
 
 # Start AeroSpace at login
-start-at-login = true
+start-at-login = false
 
 after-startup-command = [
   'exec-and-forget borders active_color=0x66808080 inactive_color=0x00000000 width=6.0 style=round',

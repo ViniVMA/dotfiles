@@ -1,2 +1,14 @@
 nushell/history.txt
 .worktrees/
+
+# nvim log
+.nvimlog
+
+# karabiner auto-generated + manual backups
+karabiner/automatic_backups/
+karabiner/*.pre-*
+
+# config backups
+*.bak
+*.bak-*
+*.orig

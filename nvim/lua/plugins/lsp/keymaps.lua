@@ -93,7 +93,7 @@ function M.has_capability(buffer, method)
   method = method:find("/") and method or "textDocument/" .. method
   local clients = vim.lsp.get_clients({ bufnr = buffer })
   for _, client in ipairs(clients) do
-    if client.supports_method(method, buffer) then return true end
+    if client:supports_method(method, { bufnr = buffer }) then return true end
   end
   return false
 end
@@ -139,7 +139,7 @@ function M.on_attach(client, buffer)
     end
   end
 
-  if client.supports_method("textDocument/inlayHint") then
+  if client:supports_method("textDocument/inlayHint") then
     vim.keymap.set(
       "n",
       "<leader>th",

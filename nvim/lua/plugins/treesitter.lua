@@ -1,147 +1,86 @@
+-- nvim-treesitter `main` branch (master is frozen and unsupported on Neovim 0.12+).
+-- main drops the `.configs.setup{ modules }` API: highlight/indent/textobjects are
+-- now wired up by hand against the queries Neovim ships with.
 return {
   "nvim-treesitter/nvim-treesitter",
-  branch = "master",
-  dependencies = {
-    { "nvim-treesitter/nvim-treesitter-textobjects", lazy = true },
-    { "windwp/nvim-ts-autotag",                      lazy = true },
-    { "JoosepAlviste/nvim-ts-context-commentstring", lazy = true },
-  },
-  event = "VeryLazy",
-  lazy = vim.fn.argc(-1) == 0, -- load treesitter immediately when opening a file from the cmdline
-  cmd = {
-    "TSBufDisable",
-    "TSBufEnable",
-    "TSBufToggle",
-    "TSDisable",
-    "TSEnable",
-    "TSToggle",
-    "TSInstall",
-    "TSInstallInfo",
-    "TSInstallSync",
-    "TSModuleInfo",
-    "TSUninstall",
-    "TSUpdate",
-    "TSUpdateSync",
-  },
+  branch = "main",
   build = ":TSUpdate",
-  init = function(plugin)
-    require("lazy.core.loader").add_to_rtp(plugin)
-    pcall(require, "nvim-treesitter.query_predicates")
-  end,
-  opts_extend = { "ensure_installed" },
-  opts = function(_, opts)
-    -- Check if mason is available and load it
-    local mason_ok = pcall(require, "mason")
-    if mason_ok then require("lazy").load { plugins = { "mason.nvim" } } end
-    opts = vim.tbl_deep_extend("force", opts or {}, {
-      auto_install = vim.fn.executable "tree-sitter" == 1, -- only enable auto install if `tree-sitter` cli is installed
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      incremental_selection = { enable = true },
-      indent = { enable = true },
-      textobjects = {
-        select = {
-          enable = true,
-          lookahead = true,
-          keymaps = {
-            ["ak"] = { query = "@block.outer", desc = "around block" },
-            ["ik"] = { query = "@block.inner", desc = "inside block" },
-            ["ac"] = { query = "@class.outer", desc = "around class" },
-            ["ic"] = { query = "@class.inner", desc = "inside class" },
-            ["a?"] = { query = "@conditional.outer", desc = "around conditional" },
-            ["i?"] = { query = "@conditional.inner", desc = "inside conditional" },
-            ["af"] = { query = "@function.outer", desc = "around function " },
-            ["if"] = { query = "@function.inner", desc = "inside function " },
-            ["ao"] = { query = "@loop.outer", desc = "around loop" },
-            ["io"] = { query = "@loop.inner", desc = "inside loop" },
-            ["aa"] = { query = "@parameter.outer", desc = "around argument" },
-            ["ia"] = { query = "@parameter.inner", desc = "inside argument" },
-          },
-        },
-        move = {
-          enable = true,
-          set_jumps = true,
-          goto_next_start = {
-            ["]k"] = { query = "@block.outer", desc = "Next block start" },
-            ["]f"] = { query = "@function.outer", desc = "Next function start" },
-            ["]a"] = { query = "@parameter.inner", desc = "Next argument start" },
-          },
-          goto_next_end = {
-            ["]K"] = { query = "@block.outer", desc = "Next block end" },
-            ["]F"] = { query = "@function.outer", desc = "Next function end" },
-            ["]A"] = { query = "@parameter.inner", desc = "Next argument end" },
-          },
-          goto_previous_start = {
-            ["[k"] = { query = "@block.outer", desc = "Previous block start" },
-            ["[f"] = { query = "@function.outer", desc = "Previous function start" },
-            ["[a"] = { query = "@parameter.inner", desc = "Previous argument start" },
-          },
-          goto_previous_end = {
-            ["[K"] = { query = "@block.outer", desc = "Previous block end" },
-            ["[F"] = { query = "@function.outer", desc = "Previous function end" },
-            ["[A"] = { query = "@parameter.inner", desc = "Previous argument end" },
-          },
-        },
-        swap = {
-          enable = true,
-          swap_next = {
-            [">K"] = { query = "@block.outer", desc = "Swap next block" },
-            [">F"] = { query = "@function.outer", desc = "Swap next function" },
-            [">A"] = { query = "@parameter.inner", desc = "Swap next argument" },
-          },
-          swap_previous = {
-            ["<K"] = { query = "@block.outer", desc = "Swap previous block" },
-            ["<F"] = { query = "@function.outer", desc = "Swap previous function" },
-            ["<A"] = { query = "@parameter.inner", desc = "Swap previous argument" },
-          },
-        },
-      },
-    })
-    if opts.ensure_installed ~= "all" then
-      local default_parsers = {
-        "bash", "c", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc",
-        "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "json", "yaml",
-        "go", "gomod", "gosum", "gotmpl"
-      }
-      opts.ensure_installed = opts.ensure_installed or {}
-      for _, parser in ipairs(default_parsers) do
-        if not vim.tbl_contains(opts.ensure_installed, parser) then
-          table.insert(opts.ensure_installed, parser)
+  lazy = false, -- main wires highlighting via a FileType autocmd registered here
+  dependencies = {
+    { "nvim-treesitter/nvim-treesitter-textobjects", branch = "main" },
+    { "windwp/nvim-ts-autotag" },
+    { "JoosepAlviste/nvim-ts-context-commentstring" },
+  },
+  config = function()
+    local parsers = {
+      "bash", "c", "lua", "markdown", "markdown_inline", "python", "query", "vim", "vimdoc",
+      "javascript", "typescript", "tsx", "vue", "html", "css", "scss", "json", "yaml",
+      "go", "gomod", "gosum", "gotmpl",
+    }
+    require("nvim-treesitter").install(parsers) -- no-op for already-installed parsers
+
+    -- Highlight (+ experimental indent) per buffer when a parser is available.
+    vim.api.nvim_create_autocmd("FileType", {
+      callback = function(ev)
+        if pcall(vim.treesitter.start, ev.buf) then
+          -- ponytail: treesitter indent is experimental upstream; was enabled on master.
+          -- Drop this line to fall back to built-in indent if it misbehaves.
+          vim.bo[ev.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
         end
+      end,
+    })
+
+    -- Textobjects (main branch): select/move/swap are explicit keymaps now, not a module.
+    require("nvim-treesitter-textobjects").setup({
+      select = { lookahead = true },
+      move = { set_jumps = true },
+    })
+    local select = require("nvim-treesitter-textobjects.select")
+    local move = require("nvim-treesitter-textobjects.move")
+    local swap = require("nvim-treesitter-textobjects.swap")
+
+    for lhs, q in pairs({
+      ak = "@block.outer", ik = "@block.inner",
+      ac = "@class.outer", ic = "@class.inner",
+      ["a?"] = "@conditional.outer", ["i?"] = "@conditional.inner",
+      af = "@function.outer", ["if"] = "@function.inner",
+      ao = "@loop.outer", io = "@loop.inner",
+      aa = "@parameter.outer", ia = "@parameter.inner",
+    }) do
+      vim.keymap.set({ "x", "o" }, lhs, function() select.select_textobject(q, "textobjects") end, { desc = "select " .. q })
+    end
+
+    for fn, maps in pairs({
+      goto_next_start = { ["]k"] = "@block.outer", ["]f"] = "@function.outer", ["]a"] = "@parameter.inner" },
+      goto_next_end = { ["]K"] = "@block.outer", ["]F"] = "@function.outer", ["]A"] = "@parameter.inner" },
+      goto_previous_start = { ["[k"] = "@block.outer", ["[f"] = "@function.outer", ["[a"] = "@parameter.inner" },
+      goto_previous_end = { ["[K"] = "@block.outer", ["[F"] = "@function.outer", ["[A"] = "@parameter.inner" },
+    }) do
+      for lhs, q in pairs(maps) do
+        vim.keymap.set({ "n", "x", "o" }, lhs, function() move[fn](q, "textobjects") end, { desc = fn .. " " .. q })
       end
     end
-    return opts
-  end,
-  config = function(_, opts)
-    require("nvim-treesitter.configs").setup(opts)
 
-    -- Setup context commentstring for better Vue commenting
-    require("ts_context_commentstring").setup({
-      enable_autocmd = false,
-    })
+    for lhs, q in pairs({ [">K"] = "@block.outer", [">F"] = "@function.outer", [">A"] = "@parameter.inner" }) do
+      vim.keymap.set("n", lhs, function() swap.swap_next(q) end, { desc = "swap next " .. q })
+    end
+    for lhs, q in pairs({ ["<K"] = "@block.outer", ["<F"] = "@function.outer", ["<A"] = "@parameter.inner" }) do
+      vim.keymap.set("n", lhs, function() swap.swap_previous(q) end, { desc = "swap prev " .. q })
+    end
 
-    -- Integrate ts_context_commentstring with vim.cmd.normal
+    -- Context-aware commentstring (independent of nvim-treesitter modules).
+    require("ts_context_commentstring").setup({ enable_autocmd = false })
     local get_option = vim.filetype.get_option
     vim.filetype.get_option = function(filetype, option)
       return option == "commentstring"
-        and require("ts_context_commentstring.internal").calculate_commentstring()
+          and require("ts_context_commentstring.internal").calculate_commentstring()
         or get_option(filetype, option)
     end
 
-    -- Setup autotag for Vue and other web filetypes
+    -- Auto-close/rename HTML/JSX/Vue tags (independent plugin).
     require("nvim-ts-autotag").setup({
-      opts = {
-        enable_close = true,
-        enable_rename = true,
-        enable_close_on_slash = false,
-      },
-      per_filetype = {
-        vue = {
-          enable_close = true,
-        },
-      },
+      opts = { enable_close = true, enable_rename = true, enable_close_on_slash = false },
+      per_filetype = { vue = { enable_close = true } },
     })
   end,
 }

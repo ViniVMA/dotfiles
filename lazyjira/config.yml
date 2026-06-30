@@ -1,0 +1,3 @@
+gui:
+    # Fixed columns (lazygit's is a ratio); auto-shrinks on narrow terminals.
+    sidePanelWidth: 80

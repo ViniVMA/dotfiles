@@ -15,10 +15,6 @@ tmux=/opt/homebrew/bin/tmux
 # Resolve kitty even when not on PATH (popup/overlay may not source your rc).
 kitty=$(command -v kitty || echo /Applications/kitty.app/Contents/MacOS/kitty)
 
-# Make sure the tmux session exists (detached) so attaching is instant.
-"$tmux" has-session -t="$name" 2>/dev/null || \
-  "$tmux" new-session -ds "$name" -c "$selected"
-
 # Focus an existing kitty tab for this project (matched by a stable user var,
 # since tab titles now track the live folder); otherwise open a new tab.
 "$kitty" @ --to "$sock" focus-tab --match "var:project=${name}" 2>/dev/null || \

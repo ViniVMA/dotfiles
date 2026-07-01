@@ -2,10 +2,11 @@
 # tmux-tab.sh — give each kitty tab its OWN tmux session.
 #
 # Session name = basename of the tab's working directory (or $1 if passed).
-# - A *detached* session of that name is reattached  -> persistence across reopen.
+# - Closing a tab ENDS its session (destroy-unattached on, in tmux.conf), so
+#   background sessions/processes (e.g. a stray claude) don't pile up. Reopen = fresh.
 # - A session already *attached* in another tab gets a -2 / -3 ... suffix
 #   -> two tabs never mirror each other.
-# tmux still owns panes / copy-mode / resize+move modes / persistence inside a tab.
+# tmux still owns panes / copy-mode / resize+move modes within a live tab.
 
 tmux=/opt/homebrew/bin/tmux
 # Resolve kitty even when not on PATH (this runs as a non-interactive shell).

@@ -16,6 +16,12 @@ return {
     },
     typescript = {
       updateImportsOnFileMove = { enabled = "always" },
+      -- ponytail: stops tsserver scanning every node_modules/package.json for
+      -- auto-imports — that scan is what pegs vtsls at 200%+ CPU on big repos.
+      -- Cost: no import suggestions for not-yet-imported packages. Set "auto" to restore.
+      preferences = {
+        includePackageJsonAutoImports = "off",
+      },
       suggest = {
         completeFunctionCalls = true,
       },
@@ -30,6 +36,9 @@ return {
     },
     javascript = {
       updateImportsOnFileMove = { enabled = "always" },
+      preferences = {
+        includePackageJsonAutoImports = "off",
+      },
       suggest = {
         completeFunctionCalls = true,
       },

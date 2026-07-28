@@ -29,7 +29,7 @@ onboarding = false
 # dracula, gruvbox, gruvbox-light, one-light, solarized, solarized-light,
 # kanagawa-lotus, rose-pine, rose-pine-dawn, vesper. NOTE: `config check` does
 # NOT validate this — a typo silently falls back rather than erroring.
-name = "terminal"
+name = "vesper"
 
 auto_switch = false
 [theme.custom]
@@ -38,6 +38,13 @@ auto_switch = false
 # kitty/vesper.conf. Same hex as kitty's active_tab_background, so tab and border
 # agree; change both files together.
 accent = "#DDA0FF"
+# Flatten the grey highlight box herdr paints behind the focused sidebar row, by
+# matching it to kitty's background (vesper.conf `background`). The focused space is
+# then marked only by its bold white name, which herdr styles per-focus anyway.
+# Valid keys here are accent, panel_bg, surface_dim, mauve, green, yellow, red and
+# peach — `surface` is NOT one, config check rejects it. surface_dim may back other
+# chrome too, so if something else loses its distinction, drop this line.
+surface_dim = "#101010"
 
 [keys]
 # tmux: unbind C-b / set -g prefix C-a
@@ -202,6 +209,7 @@ show_agent_labels_on_pane_borders = true
 # names tabs after their foreground program instead.
 prompt_new_tab_name = false
 
+agent_panel_sort = "spaces"
 [ui.sidebar.spaces]
 # Branch dimmed on every space, so it recedes under the workspace name the way the
 # agents panel renders its second line. Styling a token means declaring `rows`, so
@@ -227,7 +235,7 @@ prompt_new_tab_name = false
 # design), so cpu/ram rendered identically on every space.
 rows = [
   ["state_icon", "workspace"],
-  [{ token = "branch", dim = true }, "git_status"],
+  ["branch", "git_status"],
 ]
 
 [ui.toast]
@@ -237,3 +245,6 @@ delivery = "system"
 [experimental]
 # Keep pane scrollback across a full server restart (e.g. a reboot).
 pane_history = true
+# Render images natively inside herdr panes via the kitty graphics protocol. Needs
+# a kitty-graphics-capable outer terminal, which kitty is. Experimental upstream.
+kitty_graphics = true

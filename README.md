@@ -426,8 +426,9 @@ it, and only when already stopped.
 - Repeatable (`-r`) arrow resize — use resize mode for sustained resizing
 - TPM and its plugins (tmux-sensible, vim-tmux-navigator, tmux-resurrect,
   tmux-continuum) — herdr has no plugin manager; persistence is built in
-- sidekick.nvim's external-pane mode — its mux layer speaks only tmux/zellij,
-  so cli sessions now run in an nvim terminal window
+- sidekick.nvim entirely — its mux layer speaks only tmux/zellij, so it was
+  replaced by herdr-context.nvim (see AI below); `Tab` next-edit-suggestions and its
+  prompt templates went with it
 
 ### Mouse
 
@@ -556,17 +557,39 @@ Leader key is **Space**. Plugin manager: lazy.nvim. Fuzzy finder: fzf-lua. File 
 | `leader gde` | Open diffview |
 | `leader gdq` | Close diffview |
 
-### AI (Sidekick)
+### AI (herdr-context)
+
+[herdr-context.nvim](https://github.com/makyinmars/herdr-context.nvim) stages code,
+symbols, hunks and diagnostics into the prompt of an agent already running in a
+herdr pane. Upstream's default keys, and upstream's options apart from
+`focus_after_send`.
 
 | Key | Action |
 |-----|--------|
-| `leader aa` | Toggle Sidekick CLI (float) |
-| `leader as` | Toggle Sidekick CLI (split right) |
-| `leader ac` | Toggle Claude session |
-| `leader ap` | Ask prompt |
-| `Ctrl + .` | Switch focus to/from Sidekick |
-| `Ctrl + q` | Toggle Sidekick (from terminal) |
-| `Tab` | Jump to / apply next edit suggestion |
+| `leader ac` | Compose a context bundle (preview, then stage) |
+| `leader ap` | Prompt with the selection attached |
+| `leader ay` | Stage an `@path#L10-L20` reference |
+| `leader aY` | Stage reference + selected code |
+| `leader ad` | Stage diagnostics for the line/selection |
+| `leader at` | Choose the destination agent |
+| `leader aa` | Toggle the live agent drawer |
+
+Nothing is submitted: context lands in the agent's composer and you press enter.
+`focus_after_send = true` moves you to that pane first, so there is no navigating
+over. Note a focus command marks the agent as **seen**, so it drops out of `done` in
+the sidebar.
+
+review.nvim's comments are registered as a context provider, so they appear as a
+toggleable source inside `leader ac` (`nvim/lua/config/herdr-review.lua`) — its own
+`export.to_sidekick()` is hard-wired to sidekick and unusable here.
+
+`leader ar` is *not* bound to the plugin's `refresh()` as upstream suggests, because
+that is `Review`; use `:HerdrContextRefresh`.
+
+**sidekick.nvim is disabled, not removed** (`enabled = false`), because two things
+have no equivalent: `Tab` next-edit-suggestions, and its library of prompt
+templates. Re-enabling is one line. The plugin also only loads inside herdr
+(`cond = vim.env.HERDR_ENV == "1"`), so a plain `Cmd+T` kitty tab has none of it.
 
 ### GitHub (Octo)
 
@@ -608,7 +631,7 @@ Prompt: [oh-my-posh](https://ohmyposh.dev/) (star theme). History: [atuin](https
 
 ```
 dotfiles/
-├── nvim/           # Neovim (lazy.nvim, fzf-lua, Neo-tree, Sidekick, LSP)
+├── nvim/           # Neovim (lazy.nvim, fzf-lua, Neo-tree, herdr-context, LSP)
 ├── wezterm/        # Wezterm terminal (modular Lua config)
 ├── aerospace/      # AeroSpace tiling window manager
 ├── karabiner/      # Karabiner-Elements (Caps Lock -> Hyper key)

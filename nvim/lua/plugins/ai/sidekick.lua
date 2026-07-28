@@ -1,11 +1,17 @@
 return {
   "folke/sidekick.nvim",
-  -- NOTE: sidekick.nvim's mux layer supports only tmux and zellij
-  -- (lua/sidekick/cli/session/init.lua: session_backends). There is no herdr
-  -- backend, so cli sessions now run in sidekick's own nvim terminal window
-  -- instead of an external multiplexer pane. The VimLeavePre autocmd that used
-  -- to kill leaked tmux panes went with it — nvim owns the terminal now, so it
-  -- dies with nvim and there is nothing to leak.
+  -- DISABLED in favour of herdr-context.nvim (see herdr-context.lua), which stages
+  -- context into the agent already running in a herdr pane instead of owning its
+  -- own terminal. sidekick's mux layer only speaks tmux/zellij, so under herdr it
+  -- had been reduced to an nvim-local terminal anyway.
+  --
+  -- Kept rather than deleted because two things here have NO herdr-context
+  -- equivalent, and re-enabling is a one-line change:
+  --   * <tab> nes_jump_or_apply() — Copilot next-edit-suggestions. herdr-context
+  --     is a context courier and does not do inline edit suggestions at all.
+  --   * cli.prompts — the 13 prompt templates below. herdr-context has composer
+  --     presets (which providers to bundle), not reusable prompt text.
+  enabled = false,
   opts = {
     -- add any options here
     cli = {

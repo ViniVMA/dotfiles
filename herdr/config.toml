@@ -1,0 +1,239 @@
+# ============================================================================
+# herdr configuration
+# ============================================================================
+# Only settings that differ from herdr's defaults live here — anything absent is
+# herdr's own behavior, which keeps this file about intent rather than restating
+# the defaults. `herdr config check` validates it (strict: it reports unknown keys
+# and invalid chords); `herdr server reload-config` applies it to a live server.
+# The full keymap, including the bindings that match herdr's defaults, is
+# documented in the repo README.
+#
+# Symlink (single file — herdr keeps sockets, logs and plugins in this dir, so the
+# whole-directory pattern used for kitty/nvim does NOT apply):
+#   ln -s ~/dev/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
+#   ln -s ~/dev/dotfiles/herdr/scripts     ~/.config/herdr/scripts
+#
+# Layer mapping from the old tmux setup:
+#   tmux session -> herdr session (one per kitty tab, via scripts/herdr-tab.sh)
+#   tmux window  -> herdr tab
+#   tmux pane    -> herdr pane
+# herdr adds a workspace ("space") layer above tabs that tmux had no equivalent
+# for. Tab naming is handled by the qu8n/herdr-automatic-rename plugin.
+
+onboarding = false
+
+[theme]
+# Matches kitty's palette (kitty/vesper.conf) rather than shipping a competing
+# one. herdr has its own built-in vesper, so this is its name, not a hex list.
+# Valid names live in the binary: catppuccin, tokyo-night, tokyo-night-day,
+# dracula, gruvbox, gruvbox-light, one-light, solarized, solarized-light,
+# kanagawa-lotus, rose-pine, rose-pine-dawn, vesper. NOTE: `config check` does
+# NOT validate this — a typo silently falls back rather than erroring.
+name = "terminal"
+
+auto_switch = false
+[theme.custom]
+# tmux: pane-active-border-style "fg=#a3d6a3,bold" (koda green). Now the chrome
+# purple — Vesper's stock accent is peach #FFC799, overridden here and in
+# kitty/vesper.conf. Same hex as kitty's active_tab_background, so tab and border
+# agree; change both files together.
+accent = "#DDA0FF"
+
+[keys]
+# tmux: unbind C-b / set -g prefix C-a
+prefix = "ctrl+a"
+
+# tmux: bind '\' split-window -h  (side-by-side). split_horizontal is already
+# prefix+minus by default, matching tmux's `bind '-'`.
+# NOTE: herdr's config says vertical/horizontal while its API and pane menu say
+# "Split right"/"Split down". This assumes vertical = right. If a split comes out
+# the wrong way round, that's the whole fix — swap this to split_horizontal.
+split_vertical = "prefix+backslash"
+
+# tmux: bind q kill-pane. Frees prefix+q for detach below.
+close_pane = "prefix+q"
+
+# tmux: bind v copy-mode. Undocumented in `--default-config` but real, and unset
+# by default, so this is the only way to get copy mode on a key.
+copy_mode = "prefix+v"
+
+# tmux: bind m -> move_mode, then h/j/k/l swap-pane. herdr has no custom modal key
+# tables, so the mode is flattened to four chords. Also undocumented but real.
+swap_pane_left = "prefix+alt+h"
+swap_pane_down = "prefix+alt+j"
+swap_pane_up = "prefix+alt+k"
+swap_pane_right = "prefix+alt+l"
+
+# tmux: bind t new-window. prefix+c is the claude launcher below.
+new_tab = "prefix+t"
+# tmux: bind H previous-window / bind L next-window
+previous_tab = "prefix+shift+h"
+next_tab = "prefix+shift+l"
+# tmux: bind ',' rename-window
+rename_tab = "prefix+comma"
+
+# tmux: bind d detach-client (herdr's default prefix+q is close_pane here)
+detach = "prefix+d"
+# tmux: bind i  capture-pane -> nvim popup. prefix+e is the nvim launcher.
+edit_scrollback = "prefix+i"
+
+# Jump straight to a space by index. Unset by default.
+switch_workspace = "prefix+shift+1..9"
+# Moved off herdr's default prefix+g, which is the lazygit launcher below.
+goto = "prefix+shift+o"
+
+# ============================================================================
+# Launchers  (tmux: display-popup -E -w 90% -h 90% / split-window)
+# ============================================================================
+# tmux wrapped these in `zsh -ic` for a login PATH. herdr runs the command string
+# directly with no shell, inheriting the PATH of whatever launched the server —
+# via kitty -> herdr-tab.sh that's your interactive PATH, so these resolve.
+# CAVEAT: `brew services start herdr` (launchd) gives the server a minimal PATH
+# instead, breaking these and the sessionizer's fzf/zoxide. Let kitty spawn it.
+
+# tmux: bind c split-window -h ... claude
+[[keys.command]]
+key = "prefix+c"
+type = "pane"
+command = "claude --dangerously-skip-permissions"
+
+# tmux: bind e new-window nvim
+# herdr's command types are shell/pane/popup — there is no "new tab running cmd",
+# so this lands as a pane rather than a whole tab. Closest available.
+[[keys.command]]
+key = "prefix+e"
+type = "pane"
+command = "nvim"
+
+# tmux: bind g display-popup 90% lazygit
+[[keys.command]]
+key = "prefix+g"
+type = "popup"
+command = "lazygit"
+width = "90%"
+height = "90%"
+
+# tmux: bind J display-popup 90% lazyjira
+[[keys.command]]
+key = "prefix+shift+j"
+type = "popup"
+command = "lazyjira"
+width = "90%"
+height = "90%"
+
+# tmux: bind p display-popup -w 60% -h 50% sessionizer.sh
+[[keys.command]]
+key = "prefix+p"
+type = "popup"
+command = "/Users/vini/.config/herdr/scripts/sessionizer.sh"
+width = "60%"
+height = "50%"
+
+# Toggle the persiyanov/herdr-reviewr sidebar (local git diff review, comment on
+# lines, send the comments to the agent). The plugin ships no default key.
+# `type = "plugin_action"` takes <plugin_id>.<action_id> and is another command
+# type missing from `--default-config`. Prefix-based rather than the README's
+# cmd+r, so kitty never sees it.
+[[keys.command]]
+key = "prefix+shift+v"
+type = "plugin_action"
+command = "persiyanov.reviewr.toggle"
+
+# Tyru5/herdr-floax floating scratch shell (one per space, persists across
+# dismissals via tmux/dtach). prefix+f is the plugin's own documented default and
+# is free. Added here rather than by its scripts/install-keybinding.sh, which
+# appends to the end of this file, past [experimental].
+[[keys.command]]
+key = "prefix+f"
+type = "plugin_action"
+command = "herdr-floax.toggle"
+description = "Toggle floating pane"
+
+# thanhdat77/herdr-navigator — one fuzzy index over workspaces, agents, projects,
+# sessions, zoxide dirs and actions, with context-aware Enter (focus, create a
+# workspace, attach a session). Replaced jeffarese/herdr-bar, which did a narrower
+# version of the same thing; bar was uninstalled and its prefix+shift+k freed.
+# Navigator's README suggests prefix+t, which is new_tab here. prefix+n is free
+# because next_tab moved to prefix+shift+l for tmux parity.
+# Its jump-back and open-side actions are unbound; add them if wanted.
+# NOTE: it names workspaces it creates "dir: <name>", which looks odd in the
+# sidebar but is load-bearing — src/sources.rs derives WorkspaceKind from that
+# prefix, and stripping it makes Navigator create duplicates instead of focusing
+# the existing workspace. Leave the prefix alone.
+[[keys.command]]
+key = "prefix+n"
+type = "plugin_action"
+command = "herdr-navigator.open"
+description = "Navigator: jump to anything"
+
+# ============================================================================
+# Arrow resize  (tmux: bind -r Left/Down/Up/Right resize-pane 5/3/3/5)
+# ============================================================================
+# No `-r` equivalent — herdr can't repeat without re-pressing the prefix. Use
+# prefix+r (resize mode, herdr's default) for sustained resizing; these are the
+# one-shot nudges.
+
+[[keys.command]]
+key = "prefix+left"
+type = "shell"
+command = "herdr pane resize --current --direction left --amount 5"
+
+[[keys.command]]
+key = "prefix+down"
+type = "shell"
+command = "herdr pane resize --current --direction down --amount 3"
+
+[[keys.command]]
+key = "prefix+up"
+type = "shell"
+command = "herdr pane resize --current --direction up --amount 3"
+
+[[keys.command]]
+key = "prefix+right"
+type = "shell"
+command = "herdr pane resize --current --direction right --amount 5"
+
+[ui]
+accent = "#DDA0FF"
+# The tmux statusbar showed "index:process" per window; agent labels on split
+# borders carry the same information. Off by default in herdr.
+show_agent_labels_on_pane_borders = true
+# No naming prompt — `C-a t` just makes a tab. The herdr-automatic-rename plugin
+# names tabs after their foreground program instead.
+prompt_new_tab_name = false
+
+[ui.sidebar.spaces]
+# Branch dimmed on every space, so it recedes under the workspace name the way the
+# agents panel renders its second line. Styling a token means declaring `rows`, so
+# these restate herdr's own defaults for spaces — the only change is on `branch`.
+#
+# Accent on ONLY the focused space's branch is not expressible, and this is the
+# settled answer after trying it. herdr's contextual default bolds the workspace
+# *name* on focus but renders `branch` identically focused or not, so there is no
+# native behavior to fall back to. There is no conditional styling either:
+# `rows_by_agent` is the only `rows_by_*` in the binary, and [theme.custom] exposes
+# only accent/panel_bg/surface/surface_dim/mauve/green/yellow/red/peach — nothing
+# targeting a focused or selected row. `fg = "#DDA0FF"` here colours every branch
+# (unfocused ones just render as a muted accent), which was rejected.
+#
+# Doing it properly would need two mutually-exclusive custom tokens ($br_hot styled
+# accent, $br_cold dimmed) maintained by a plugin on the `workspace.focused` event,
+# the branch recomputed via `git -C <pane cwd> branch --show-current` because
+# `workspace get` exposes no branch field, and `git_status` moved onto the name row
+# so the empty-row-drop trick still works. Disproportionate for one line's colour.
+#
+# Also deliberately no system-metric row: getpipher/herdr-sysmon collects one set of
+# whole-machine values and pushes it to EVERY workspace (its push_all does this by
+# design), so cpu/ram rendered identically on every space.
+rows = [
+  ["state_icon", "workspace"],
+  [{ token = "branch", dim = true }, "git_status"],
+]
+
+[ui.toast]
+# Desktop notifications when a background agent changes state.
+delivery = "system"
+
+[experimental]
+# Keep pane scrollback across a full server restart (e.g. a reboot).
+pane_history = true

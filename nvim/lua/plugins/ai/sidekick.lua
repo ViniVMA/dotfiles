@@ -1,22 +1,11 @@
 return {
   "folke/sidekick.nvim",
-  init = function()
-    -- Kill any sidekick-managed tmux pane currently attached to this nvim
-    -- when nvim exits, so claude sessions don't leak.
-    vim.api.nvim_create_autocmd("VimLeavePre", {
-      group = vim.api.nvim_create_augroup("sidekick-cleanup", { clear = true }),
-      callback = function()
-        if not vim.env.TMUX then return end
-        local ok, State = pcall(require, "sidekick.cli.state")
-        if not ok then return end
-        for _, state in ipairs(State.get({ started = true })) do
-          if state.attached and state.session and state.session.tmux_pane_id then
-            pcall(vim.fn.system, { "tmux", "kill-pane", "-t", state.session.tmux_pane_id })
-          end
-        end
-      end,
-    })
-  end,
+  -- NOTE: sidekick.nvim's mux layer supports only tmux and zellij
+  -- (lua/sidekick/cli/session/init.lua: session_backends). There is no herdr
+  -- backend, so cli sessions now run in sidekick's own nvim terminal window
+  -- instead of an external multiplexer pane. The VimLeavePre autocmd that used
+  -- to kill leaked tmux panes went with it — nvim owns the terminal now, so it
+  -- dies with nvim and there is nothing to leak.
   opts = {
     -- add any options here
     cli = {
@@ -48,12 +37,7 @@ return {
         enum = "Convert {this} from a TypeScript enum to an `as const` object pattern with a matching type alias.",
       },
       mux = {
-        backend = "tmux",
-        enabled = true,
-        create = "split",
-        split = {
-          size = 0.4,
-        },
+        enabled = false,
       },
       win = {
         wo = {

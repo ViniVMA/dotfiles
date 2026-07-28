@@ -18,7 +18,7 @@ return {
 	automatically_reload_config = true,
 	enable_kitty_keyboard = true,
 	enable_csi_u_key_encoding = false,
-	default_prog = { "/opt/homebrew/bin/tmux", "new-session", "-A", "-s", "main" },
+	default_prog = { "/opt/homebrew/bin/herdr", "--session", "main" },
 	default_workspace = "main",
 	max_fps = 240,
 }

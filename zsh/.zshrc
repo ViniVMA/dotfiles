@@ -96,6 +96,17 @@ alias ggpnp='git pull origin $(current_branch) && git push origin $(current_bran
 alias vim='nvim'
 alias claude='claude --allow-dangerously-skip-permissions'
 alias cc='claude'
+# Reattach to the most recently active herdr session (also Cmd+Shift+R in kitty).
+alias hl='~/.config/herdr/scripts/herdr-last.sh'
+
+# herdr-automatic-rename plugin: names each tab after its foreground program.
+# The plugin works off herdr's own events; this hook just makes renames immediate
+# on the shell side. Glob so the commit-hashed install dir isn't pinned.
+for _f in ${HOME}/.config/herdr/plugins/github/herdr-automatic-rename-*/shell/hook.zsh(N); do
+    source $_f
+    break
+done
+unset _f
 
 . "$HOME/.atuin/bin/env"
 
@@ -105,17 +116,5 @@ source $(brew --prefix)/opt/zsh-vi-mode/share/zsh-vi-mode/zsh-vi-mode.plugin.zsh
 eval "$(~/.local/bin/mise activate zsh)"
 
 . "$HOME/.local/bin/env"
-
-# Update tmux window name to current directory basename
-function _tmux_window_name() {
-    if [[ -n "$TMUX" ]]; then
-        local name="${PWD##*/}"
-        [[ -z "$name" ]] && name="/"
-        (( ${#name} > 20 )) && name="${name:0:19}…"
-        command tmux rename-window "$name"
-    fi
-}
-chpwd_functions+=(_tmux_window_name)
-_tmux_window_name
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local

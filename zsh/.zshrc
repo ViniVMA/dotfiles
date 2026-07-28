@@ -8,6 +8,9 @@ compinit
 
 export PATH="/opt/homebrew/bin:$PATH"
 
+export EDITOR="nvim"
+export VISUAL="nvim"
+
 
 
 eval "$(oh-my-posh init zsh)"
@@ -28,6 +31,15 @@ eval "$(zoxide init zsh)"
 
 alias ls='ls -G'
 alias emulator='open -a Simulator'
+
+# snapshot Claude Code config/skills/chats into the ~/.claude git repo
+claude-backup() {
+  cp ~/.claude.json ~/.claude/claude.json
+  git -C ~/.claude add -A
+  git -C ~/.claude diff --cached --quiet || git -C ~/.claude commit -qm "backup $(date +%F\ %H:%M)"
+  git -C ~/.claude remote | grep -q . && git -C ~/.claude push -q
+  git -C ~/.claude log -1 --format='backed up: %h %s'
+}
 
 # Aliases
 alias g='git'

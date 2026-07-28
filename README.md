@@ -113,7 +113,7 @@ Tiling window manager. All main bindings use **Hyper** (Caps Lock held).
 | Finder, Preview, Photos, Image Capture | File Management |
 | System Settings, App Store, Activity Monitor, Disk Utility, Console, Terminal, System Information, Company Portal, Super App Store | System Administration |
 | Bitwarden, Keeper, Passwords | Extra |
-| Claude Island, Pieces, Dictionary, Books | Research |
+| Pieces, Dictionary, Books | Research |
 | KIRA, Chess | Gaming |
 | TeamViewer, Screen Sharing | VM |
 

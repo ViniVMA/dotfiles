@@ -500,11 +500,6 @@ run = ['layout tiling', 'move-node-to-workspace Extra']
 if.app-id = 'com.apple.Passwords'
 run = ['layout tiling', 'move-node-to-workspace Extra']
 
-# Claude Island
-[[on-window-detected]]
-if.app-id = 'com.celestial.ClaudeIsland'
-run = ['layout tiling', 'move-node-to-workspace Research']
-
 # Pieces
 [[on-window-detected]]
 if.app-id = 'com.pieces.x'

@@ -344,11 +344,6 @@ id = "3052678B-88C1-4295-9905-EA749A76ABFB"
 
 [[appRules]]
 assignToWorkspace = "other"
-bundleId = "com.celestial.ClaudeIsland"
-id = "93BA3B14-C50F-4A70-A8DC-1E6B97127A00"
-
-[[appRules]]
-assignToWorkspace = "other"
 bundleId = "com.pieces.x"
 id = "6AE44DE5-F39D-4069-B2BE-50CB747A1FC2"
 

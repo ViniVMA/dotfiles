@@ -103,6 +103,7 @@ goto = "prefix+shift+o"
 key = "prefix+c"
 type = "pane"
 command = "claude --dangerously-skip-permissions"
+description = "Claude Code in a new pane"
 
 # tmux: bind e new-window nvim
 # herdr's command types are shell/pane/popup — there is no "new tab running cmd",
@@ -111,6 +112,7 @@ command = "claude --dangerously-skip-permissions"
 key = "prefix+e"
 type = "pane"
 command = "nvim"
+description = "Neovim in a new pane"
 
 # tmux: bind g display-popup 90% lazygit
 [[keys.command]]
@@ -119,6 +121,7 @@ type = "popup"
 command = "lazygit"
 width = "90%"
 height = "90%"
+description = "Lazygit (popup)"
 
 # tmux: bind J display-popup 90% lazyjira
 [[keys.command]]
@@ -127,6 +130,7 @@ type = "popup"
 command = "lazyjira"
 width = "90%"
 height = "90%"
+description = "Lazyjira (popup)"
 
 # tmux: bind p display-popup -w 60% -h 50% sessionizer.sh
 [[keys.command]]
@@ -135,6 +139,7 @@ type = "popup"
 command = "/Users/vini/.config/herdr/scripts/sessionizer.sh"
 width = "60%"
 height = "50%"
+description = "Project picker: workspace in this session"
 
 # Toggle the persiyanov/herdr-reviewr sidebar (local git diff review, comment on
 # lines, send the comments to the agent). The plugin ships no default key.
@@ -145,6 +150,7 @@ height = "50%"
 key = "prefix+shift+v"
 type = "plugin_action"
 command = "persiyanov.reviewr.toggle"
+description = "reviewr: toggle the diff review sidebar"
 
 # Tyru5/herdr-floax floating scratch shell (one per space, persists across
 # dismissals via tmux/dtach). prefix+f is the plugin's own documented default and
@@ -184,21 +190,25 @@ description = "Navigator: jump to anything"
 key = "prefix+left"
 type = "shell"
 command = "herdr pane resize --current --direction left --amount 5"
+description = "Resize pane left 5"
 
 [[keys.command]]
 key = "prefix+down"
 type = "shell"
 command = "herdr pane resize --current --direction down --amount 3"
+description = "Resize pane down 3"
 
 [[keys.command]]
 key = "prefix+up"
 type = "shell"
 command = "herdr pane resize --current --direction up --amount 3"
+description = "Resize pane up 3"
 
 [[keys.command]]
 key = "prefix+right"
 type = "shell"
 command = "herdr pane resize --current --direction right --amount 5"
+description = "Resize pane right 5"
 
 [ui]
 accent = "#DDA0FF"

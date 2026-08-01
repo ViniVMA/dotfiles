@@ -1,7 +1,6 @@
 return {
   "saghen/blink.cmp",
   dependencies = {
-    "fang2hou/blink-copilot",
     { "L3MON4D3/LuaSnip", version = "v2.*", build = "make install_jsregexp" },
   },
   version = "1.*",
@@ -11,10 +10,16 @@ return {
 
       -- preset = "enter",
       preset = "super-tab",
-      ["<C-y>"] = { "select_and_accept" },
-      ["<C-q>"] = {
-        function(cmp) cmp.show({}) end,
+      ["<S-Tab>"] = {
+        function()
+          local ok, neocursor = pcall(require, "neocursor")
+          if ok and neocursor.accept() then return true end
+        end,
+        "snippet_backward",
+        "fallback",
       },
+      ["<C-y>"] = { "select_and_accept" },
+      ["<CR>"] = { "select_and_accept", "fallback" },
       ["<C-Space>"] = {
         function(cmp) cmp.show({}) end,
       },
@@ -31,6 +36,7 @@ return {
         },
       },
       menu = {
+        auto_show = false,
         draw = {
           treesitter = { "lsp", "path", "buffer", "snippets" },
           columns = {
@@ -61,29 +67,7 @@ return {
       },
     },
     sources = {
-      default = { "lsp", "path", "snippets", "buffer", "copilot" },
-      providers = {
-
-        copilot = {
-          name = "copilot",
-          module = "blink-copilot",
-          opts = {
-            max_completions = 3,
-            max_attempts = 4,
-          },
-          score_offset = 100,
-          async = true,
-          transform_items = function(_, items)
-            local CompletionItemKind = require("blink.cmp.types").CompletionItemKind
-            local kind_idx = #CompletionItemKind + 1
-            CompletionItemKind[kind_idx] = "Copilot"
-            for _, item in ipairs(items) do
-              item.kind = kind_idx
-            end
-            return items
-          end,
-        },
-      },
+      default = { "lsp", "path", "snippets", "buffer" },
     },
     cmdline = {
       enabled = false,

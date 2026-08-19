@@ -128,6 +128,13 @@ key = "prefix+shift+p"
 type = "plugin_action"
 command = "chmarax.herdr-nvim.pick-file"
 description = "herdr-nvim: open file from agent output"
+
+# herdr-gitview test binding.
+[[keys.command]]
+key = "prefix+shift+g"
+type = "plugin_action"
+command = "chmarax.gitview.toggle"
+description = "gitview: git review sidebar"
 # Throwaway Claude popup for a quick question/text edit — dismissible like
 # lazygit below, unlike prefix+c (real pane) or prefix+f (persistent floax
 # shell). Always a fresh session: resuming by id doesn't survive /clear (same

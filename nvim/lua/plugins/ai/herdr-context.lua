@@ -16,7 +16,8 @@
 -- :HerdrContextQuickfix, :HerdrContextLocationList, :HerdrContextHistory.
 return {
   "makyinmars/herdr-context.nvim",
-  -- No-op outside a herdr pane rather than erroring on every keypress. Note this
+  -- Temporarily disabled while testing ChmaraX/herdr-nvim.
+  enabled = false,
   -- means the plugin does not load in a plain kitty tab (Cmd+T).
   cond = vim.env.HERDR_ENV == "1",
   lazy = false,

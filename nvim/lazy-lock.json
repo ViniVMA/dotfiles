@@ -22,6 +22,7 @@
   "gruvbox-material": { "branch": "master", "commit": "790afe9dd085aa04eccd1da3626c5fa05c620e53" },
   "gruvdark.nvim": { "branch": "main", "commit": "529368e7efcb79295a2be2cafcaaa89539aef68b" },
   "herdr-context.nvim": { "branch": "main", "commit": "727b1affae8c84b716bc10bde7b5578129ca90f1" },
+  "herdr-nvim": { "branch": "main", "commit": "40aadeab3cef3702ef5e05069181c7168084794f" },
   "jellybeans.nvim": { "branch": "main", "commit": "28b80886b54396b13a2a85edf608926333e842b9" },
   "koda.nvim": { "branch": "main", "commit": "97129fbe8ef9467d68804a73e63c24501f56b9aa" },
   "lackluster.nvim": { "branch": "main", "commit": "b247a6f51cb43e49f3f753f4a59553b698bf5438" },

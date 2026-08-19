@@ -116,6 +116,18 @@ type = "pane"
 command = "nvim"
 description = "Neovim in a new pane"
 
+# herdr-nvim test bindings. The usual prefix+e and prefix+o remain unchanged.
+[[keys.command]]
+key = "prefix+shift+e"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.toggle"
+description = "herdr-nvim: toggle sidebar"
+
+[[keys.command]]
+key = "prefix+shift+p"
+type = "plugin_action"
+command = "chmarax.herdr-nvim.pick-file"
+description = "herdr-nvim: open file from agent output"
 # Throwaway Claude popup for a quick question/text edit — dismissible like
 # lazygit below, unlike prefix+c (real pane) or prefix+f (persistent floax
 # shell). Always a fresh session: resuming by id doesn't survive /clear (same

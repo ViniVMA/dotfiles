@@ -74,7 +74,11 @@ return {
         -- to customize, duplicate table and delete unwanted providers
       },
     },
-    config = function() require("fzf-lua").register_ui_select() end,
+    config = function(_, opts)
+      local fzf = require("fzf-lua")
+      fzf.setup(opts)
+      fzf.register_ui_select()
+    end,
 
     keys = {
       { "<c-j>", "<c-j>", ft = "fzf", mode = "t", nowait = true, desc = "FZF Navigate Down" },

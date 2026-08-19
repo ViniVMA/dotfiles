@@ -29,7 +29,7 @@ onboarding = false
 # dracula, gruvbox, gruvbox-light, one-light, solarized, solarized-light,
 # kanagawa-lotus, rose-pine, rose-pine-dawn, vesper. NOTE: `config check` does
 # NOT validate this — a typo silently falls back rather than erroring.
-name = "vesper"
+name = "catppuccin"
 
 auto_switch = false
 [theme.custom]
@@ -38,13 +38,15 @@ auto_switch = false
 # kitty/vesper.conf. Same hex as kitty's active_tab_background, so tab and border
 # agree; change both files together.
 accent = "#DDA0FF"
-# Flatten the grey highlight box herdr paints behind the focused sidebar row, by
-# matching it to kitty's background (vesper.conf `background`). The focused space is
-# then marked only by its bold white name, which herdr styles per-focus anyway.
-# Valid keys here are accent, panel_bg, surface_dim, mauve, green, yellow, red and
-# peach — `surface` is NOT one, config check rejects it. surface_dim may back other
-# chrome too, so if something else loses its distinction, drop this line.
-surface_dim = "#101010"
+# Also colors the sidebar section divider (spaces/agents) and the focused sidebar
+# row's highlight box. Valid keys here are accent, panel_bg, surface0, surface1,
+# surface_dim, overlay0, overlay1, text, subtext0, mauve, green, yellow, red, blue,
+# teal and peach — `surface` (no suffix) is NOT one, config check rejects it.
+surface_dim = "#2c2636"
+# Matches the tab bar's own background (panel_bg, vesper default #1a1a1a), so
+# inactive tabs blend into the bar instead of showing a separate grey pill behind
+# their text.
+surface0 = "#1a1a1a"
 
 [keys]
 # tmux: unbind C-b / set -g prefix C-a
@@ -113,6 +115,28 @@ key = "prefix+e"
 type = "pane"
 command = "nvim"
 description = "Neovim in a new pane"
+
+# Throwaway Claude popup for a quick question/text edit — dismissible like
+# lazygit below, unlike prefix+c (real pane) or prefix+f (persistent floax
+# shell). Always a fresh session: resuming by id doesn't survive /clear (same
+# session id keeps the old transcript, so a later --resume replays pre-clear
+# history right back), and a scratchpad question is cheap to just re-ask.
+[[keys.command]]
+key = "prefix+s"
+type = "popup"
+command = "zsh -c 'cd \"$HERDR_ACTIVE_PANE_CWD\" && claude --model haiku --dangerously-skip-permissions'"
+width = "80%"
+height = "60%"
+description = "Claude scratchpad (popup, current dir)"
+
+# Same scratchpad, always in claude-playground regardless of the calling pane.
+[[keys.command]]
+key = "prefix+shift+s"
+type = "popup"
+command = "zsh -c 'cd \"$HOME/claude-playground\" && claude --model haiku --dangerously-skip-permissions'"
+width = "80%"
+height = "60%"
+description = "Claude scratchpad (popup, claude-playground)"
 
 # tmux: bind g display-popup 90% lazygit
 [[keys.command]]
@@ -212,14 +236,29 @@ description = "Resize pane right 5"
 
 [ui]
 accent = "#DDA0FF"
+sidebar_width = 36
 # The tmux statusbar showed "index:process" per window; agent labels on split
 # borders carry the same information. Off by default in herdr.
 show_agent_labels_on_pane_borders = true
 # No naming prompt — `C-a t` just makes a tab. The herdr-automatic-rename plugin
 # names tabs after their foreground program instead.
 prompt_new_tab_name = false
+# Most workspaces here run one tab — no point showing a tab bar with nothing to
+# switch between. New tabs still work via prefix+t; the row just appears once
+# there's a second one.
+hide_tab_bar_when_single_tab = true
 
 agent_panel_sort = "spaces"
+[ui.sidebar.agents]
+# Default rows are [state_icon, workspace, tab] / [agent] — drops `tab` (redundant
+# with the tab bar itself), adds `state_text` so the second line reads
+# "working · claude" colored by state instead of a plain dim agent name, and adds
+# `pane` so an agent running across multiple panes shows which one.
+rows = [
+  ["state_icon", "workspace"],
+  ["state_text", "agent", "pane"],
+]
+
 [ui.sidebar.spaces]
 # Branch dimmed on every space, so it recedes under the workspace name the way the
 # agents panel renders its second line. Styling a token means declaring `rows`, so

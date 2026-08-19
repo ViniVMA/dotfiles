@@ -83,20 +83,6 @@ return {
       function lsp_utils.on_attach(client, buffer)
         lsp_keymaps.on_attach(client, buffer)
 
-        -- Add semantic tokens error prevention
-        if client.server_capabilities then
-          local semantic_provider = client.server_capabilities.semanticTokensProvider
-          -- If semanticTokensProvider is a boolean true or nil, set it to false to prevent indexing errors
-          if semantic_provider == nil or
-             (type(semantic_provider) == "boolean" and semantic_provider == true) then
-            client.server_capabilities.semanticTokensProvider = false
-          end
-          -- If it's a table but missing required fields, disable it
-          if type(semantic_provider) == "table" and not semantic_provider.legend then
-            client.server_capabilities.semanticTokensProvider = false
-          end
-        end
-
         if opts.inlay_hints.enabled and vim.lsp.inlay_hint then
           if
             vim.api.nvim_buf_is_valid(buffer)
@@ -118,76 +104,14 @@ return {
 
       vim.diagnostic.config(vim.deepcopy(opts.diagnostics))
 
-      -- Add global semantic tokens error prevention
-      local original_buf_request = vim.lsp.buf_request
-      vim.lsp.buf_request = function(bufnr, method, params, handler, config)
-        -- Intercept semantic tokens requests and handle nil semanticTokensProvider
-        if method == "textDocument/semanticTokens/full" or method == "textDocument/semanticTokens/range" then
-          local clients = vim.lsp.get_clients({ bufnr = bufnr })
-          local has_semantic_support = false
-          for _, client in ipairs(clients) do
-            if client.server_capabilities and client.server_capabilities.semanticTokensProvider then
-              has_semantic_support = true
-              break
-            end
-          end
-
-          if not has_semantic_support then
-            -- Skip this request if no client supports semantic tokens
-            if handler then
-              handler(nil, { code = -32601, message = "Method not found" }, { method = method })
-            end
-            return
-          end
-        end
-        return original_buf_request(bufnr, method, params, handler, config)
-      end
-
-      -- Add additional protection for the semantic tokens module
-      local ok, semantic = pcall(require, "vim.lsp.semantic_tokens")
-      if ok and semantic.send_request then
-        local original_send_request = semantic.send_request
-        semantic.send_request = function(bufnr, client_id, method, options)
-          local client = vim.lsp.get_client_by_id(client_id)
-          if not client or not client.server_capabilities then
-            return
-          end
-
-          local semantic_provider = client.server_capabilities.semanticTokensProvider
-          -- Check if semantic tokens provider is nil, false, or not a table with required fields
-          if not semantic_provider or
-             semantic_provider == false or
-             (type(semantic_provider) == "boolean" and semantic_provider == true) or
-             (type(semantic_provider) == "table" and not semantic_provider.legend) then
-            return
-          end
-
-          return original_send_request(bufnr, client_id, method, options)
-        end
-      end
-
-      -- Add a periodic check to fix any clients that get initialized with improper semantic tokens
-      local function fix_semantic_tokens()
-        local clients = vim.lsp.get_clients()
-        for _, client in ipairs(clients) do
-          if client.server_capabilities then
-            local semantic_provider = client.server_capabilities.semanticTokensProvider
-            if semantic_provider == nil or
-               (type(semantic_provider) == "boolean" and semantic_provider == true) or
-               (type(semantic_provider) == "table" and not semantic_provider.legend) then
-              client.server_capabilities.semanticTokensProvider = false
-            end
-          end
-        end
-      end
-
-      -- Apply fix immediately and on LSP attach events
-      vim.schedule(fix_semantic_tokens)
-      vim.api.nvim_create_autocmd("LspAttach", {
-        callback = function()
-          vim.schedule(fix_semantic_tokens)
-        end,
-      })
+      -- Some LSP servers declare semanticTokensProvider = true (a bare boolean,
+      -- legal per spec) instead of a full options table with a `legend` — nvim's
+      -- built-in semantic_tokens engine indexes `.legend` unconditionally and
+      -- crashes. Servers can also grant this capability dynamically well after
+      -- attach (client/registerCapability), so patching capabilities at attach
+      -- time doesn't hold — disabling the capability engine itself is the actual
+      -- fix, not squashing every place it might get invoked.
+      vim.lsp.semantic_tokens.enable(false)
 
       local servers = vim.tbl_deep_extend("force", {}, opts.servers)
 
@@ -311,6 +235,6 @@ return {
     "rachartier/tiny-inline-diagnostic.nvim",
     event = "VeryLazy",
     priority = 1000,
-    config = function() require("tiny-inline-diagnostic").setup() end,
+    opts = {},
   },
 }

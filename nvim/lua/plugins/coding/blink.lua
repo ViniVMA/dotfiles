@@ -10,15 +10,33 @@ return {
 
       -- preset = "enter",
       preset = "super-tab",
-      ["<S-Tab>"] = {
+      ["<Tab>"] = {
         function()
           local ok, neocursor = pcall(require, "neocursor")
           if ok and neocursor.accept() then return true end
         end,
-        "snippet_backward",
+        function(cmp)
+          if cmp.snippet_active() then
+            return cmp.accept()
+          else
+            return cmp.select_and_accept()
+          end
+        end,
+        "snippet_forward",
         "fallback",
       },
       ["<C-y>"] = { "select_and_accept" },
+      ["<C-e>"] = {
+        function()
+          local ok, neocursor = pcall(require, "neocursor")
+          if ok and (neocursor.has_suggestion() or neocursor.has_prediction()) then
+            neocursor.dismiss()
+            return true
+          end
+        end,
+        "cancel",
+        "fallback",
+      },
       ["<CR>"] = { "select_and_accept", "fallback" },
       ["<C-Space>"] = {
         function(cmp) cmp.show({}) end,

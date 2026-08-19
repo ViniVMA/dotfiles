@@ -5,6 +5,10 @@ autoload -Uz compinit
 compinit
 # OPENSPEC:END
 
+# Herdr advertises xterm-256color even when its local client runs in Kitty.
+if [[ ${HERDR_ENV:-} == 1 && -n ${KITTY_WINDOW_ID:-} ]]; then
+  export TERM=xterm-kitty
+fi
 
 export PATH="/opt/homebrew/bin:$PATH"
 
@@ -95,6 +99,7 @@ alias ggpnp='git pull origin $(current_branch) && git push origin $(current_bran
 
 alias vim='nvim'
 alias claude='claude --allow-dangerously-skip-permissions'
+alias opencode='opencode --auto'
 alias cc='claude'
 # Reattach to the most recently active herdr session (also Cmd+Shift+R in kitty).
 alias hl='~/.config/herdr/scripts/herdr-last.sh'
@@ -118,3 +123,4 @@ eval "$(~/.local/bin/mise activate zsh)"
 . "$HOME/.local/bin/env"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+export PATH="$PATH:$HOME/.bun/bin"

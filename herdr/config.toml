@@ -268,6 +268,7 @@ prompt_new_tab_name = false
 hide_tab_bar_when_single_tab = true
 
 agent_panel_sort = "spaces"
+status_indicators = "symbols"
 [ui.sidebar.agents]
 # Default rows are [state_icon, workspace, tab] / [agent] — drops `tab` (redundant
 # with the tab bar itself), adds `state_text` so the second line reads
@@ -309,6 +310,10 @@ rows = [
 [ui.toast]
 # Desktop notifications when a background agent changes state.
 delivery = "system"
+
+[session]
+# Resume supported agents into their native OMP conversations after restore.
+resume_agents_on_restore = true
 
 [experimental]
 # Keep pane scrollback across a full server restart (e.g. a reboot).

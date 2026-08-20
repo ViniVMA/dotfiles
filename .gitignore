@@ -12,3 +12,6 @@ karabiner/*.pre-*
 *.bak
 *.bak-*
 *.orig
+
+# OMP runtime locks
+omp/agent/*.lock

@@ -35,6 +35,21 @@ ln -s ~/dev/dotfiles/sketchybar ~/.config/sketchybar
 ln -s ~/dev/dotfiles/herdr/config.toml ~/.config/herdr/config.toml
 ln -s ~/dev/dotfiles/herdr/scripts ~/.config/herdr/scripts
 
+# Oh My Pi keeps conversations and credentials in ~/.omp/agent, so link only
+# the public, reproducible settings files.
+(
+  mkdir -p ~/.omp/agent
+  backup_dir="$(mktemp -d "$HOME/.omp/agent/pre-dotfiles-backup.XXXXXX")" || exit 1
+  for file in config.yml mcp.json; do
+    target="$HOME/.omp/agent/$file"
+    if [ -e "$target" ] && [ ! -L "$target" ]; then
+      mv "$target" "$backup_dir/$file"
+    fi
+    ln -sfn "$HOME/dev/dotfiles/omp/agent/$file" "$target"
+  done
+  rmdir "$backup_dir" 2>/dev/null || true
+)
+
 # Individual files
 ln -s ~/dev/dotfiles/zsh/.zshrc ~/.zshrc
 ln -s ~/dev/dotfiles/aerospace/.aerospace.toml ~/.aerospace.toml

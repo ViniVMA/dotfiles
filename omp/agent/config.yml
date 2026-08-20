@@ -1,0 +1,107 @@
+modelRoles:
+  tiny: openai-codex/gpt-5.6-luna:low
+  smol: openai-codex/gpt-5.6-luna:xhigh
+  commit: openai-codex/gpt-5.6-luna:low
+  default: openai-codex/gpt-5.6-luna:xhigh
+  task: openai-codex/gpt-5.6-terra:high
+  vision: anthropic/claude-sonnet-5:high
+  designer: anthropic/claude-sonnet-5:high
+  advisor: openai-codex/gpt-5.6-terra:high
+  slow: anthropic/claude-opus-4-8:xhigh
+  plan: openai-codex/gpt-5.6-sol:xhigh
+  REVIEWER: anthropic/claude-opus-4-8:xhigh
+theme:
+  dark: dark-monochrome
+  light: dark-monochrome
+setupVersion: 1
+task:
+  agentPrewalk:
+    {}
+  eager: preferred
+  enableEffort: false
+  agentModelOverrides:
+    code-reviewer: "@slow"
+    codex-rescue: "@slow"
+    digest: "@smol"
+statusLine:
+  separator: slash
+  preset: default
+  transparent: true
+  showHookStatus: true
+  compactThinkingLevel: false
+  sessionAccent: false
+terminal:
+  showProgress: true
+tui:
+  textSizing: true
+  tight: false
+display:
+  showTokenUsage: true
+  cacheMissMarker: true
+  hideToolActivity: true
+defaultThinkingLevel: auto
+omitThinking: false
+steeringMode: one-at-a-time
+interruptMode: immediate
+stt:
+  modelName: parakeet
+branchSummary:
+  enabled: true
+compaction:
+  thresholdPercent: 30
+  strategy: handoff
+  midTurnEnabled: true
+  enabled: true
+  thresholdTokens: 300000
+  handoffSaveToDisk: true
+  remoteEnabled: true
+  idleEnabled: false
+autolearn:
+  enabled: true
+memory:
+  backend: mnemopi
+providers:
+  memoryModel: online
+mnemopi:
+  llmMode: smol
+edit:
+  mode: hashline
+read:
+  renderMarkdown: true
+bash:
+  enabled: true
+github:
+  enabled: true
+checkpoint:
+  enabled: true
+plan:
+  enabled: true
+  defaultOnStartup: false
+symbolPreset: nerd
+colorBlindMode: false
+disabledExtensions:
+  - skill:openspec-apply-change
+  - skill:openspec-archive-change
+  - skill:openspec-explore
+  - skill:openspec-propose
+  - prompt:opsx-apply
+  - prompt:opsx-archive
+  - prompt:opsx-explore
+  - prompt:opsx-propose
+  - skill:handoff
+  - skill:second-brain-ingest
+  - skill:second-brain-query
+  - skill:second-brain-lint
+  - slash-command:opsx:apply
+  - slash-command:opsx:archive
+  - slash-command:opsx:explore
+  - slash-command:opsx:propose
+  - slash-command:propose
+  - slash-command:visual-recap
+  - skill:visual-recap
+includeWorkspaceTree: false
+personality: pragmatic
+advisor:
+  enabled: true
+dev:
+  autoqaConsent: granted
